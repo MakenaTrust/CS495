@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "169690982351",
+    "project_id": "wrist-bands",
+    "storage_bucket": "wrist-bands.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169690982351:android:ca0934e4596198ef41d4ba",
+        "android_client_info": {
+          "package_name": "com.wristBands.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "169690982351-aoglh60ohimel79ajtvunvl7h71men5a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBHzI_BBuSGKfqr_vElCF9EkkNzkSV7u4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "169690982351-aoglh60ohimel79ajtvunvl7h71men5a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "169690982351-5euu65oh8c0qkbucrvm7cr6ss6bedh7h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.flutter.platformDesign"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
