@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 /*
 THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
+
 void main() async {
  WidgetsFlutterBinding.ensureInitialized();
  await Firebase.initializeApp();
