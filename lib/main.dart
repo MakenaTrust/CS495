@@ -5,76 +5,134 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /*
-THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
+//THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
 
 void main() async {
- WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp();
- runApp(AuthApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(AuthApp());
 }
- 
+
 class AuthApp extends StatefulWidget {
- const AuthApp({Key? key}) : super(key: key);
- 
- @override
- _AuthAppState createState() => _AuthAppState();
+  const AuthApp({Key? key}) : super(key: key);
+
+  @override
+  _AuthAppState createState() => _AuthAppState();
 }
- 
+
 class _AuthAppState extends State<AuthApp> {
- final emailController = TextEditingController();
- final passwordController = TextEditingController();
- @override
- Widget build(BuildContext context) {
-   User? user = FirebaseAuth.instance.currentUser;
-   return MaterialApp(
-     home: Scaffold(
-       appBar: AppBar(
-         title:
-             Text('Auth User (Logged ' + (user == null ? 'out' : 'in') + ')'),
-       ),
-       body: Center(
-         child: Column(
-           children: [
-             TextField(controller: emailController),
-             TextField(controller: passwordController),
-             //USE THIS IF YOU WANT PASSWROD TO NOT SHOW
-             //TextField(controller: passwordController, obscureText: true,),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: [
-                 ElevatedButton(
-                     child: Text('Sign Up'),
-                     onPressed: () async {
-                       await FirebaseAuth.instance
-                           .createUserWithEmailAndPassword(
-                         email: emailController.text,
-                         password: passwordController.text,
-                       );
-                       setState(() {});
-                     }),
-                 ElevatedButton(
-                     child: Text('Sign In'),
-                     onPressed: () async {
-                       await FirebaseAuth.instance.signInWithEmailAndPassword(
-                         email: emailController.text,
-                         password: passwordController.text,
-                       );
-                       setState(() {});
-                     }),
-                 ElevatedButton(
-                     child: Text('Log Out'),
-                     onPressed: () async {
-                       await FirebaseAuth.instance.signOut();
-                       setState(() {});
-                     }),
-               ],
-             ),
-           ],
-         ),
-       ),
-     ),
-   );
- }
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  String errorMessage = '';
+  @override
+  Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title:
+              Text('Auth User (Logged ' + (user == null ? 'out' : 'in') + ')'),
+        ),
+        body: Form(
+          key: _key,
+          child: Center(
+            child: Column(
+              children: [
+                TextFormField(
+                    controller: emailController, validator: validateEmail),
+                TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    validator: validatePassword),
+                //USE THIS IF YOU WANT PASSWROD TO NOT SHOW
+                //TextField(controller: passwordController, obscureText: true,),
+                Center(
+                  child: Text(errorMessage),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        child: Text('Sign Up'),
+                        onPressed: () async {
+                          if (_key.currentState!.validate()) {
+                            try {
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                              errorMessage = '';
+                            } on FirebaseAuthException catch (error) {
+                              errorMessage = error.message!;
+                            }
+                            setState(() {});
+                          }
+                        }),
+                    ElevatedButton(
+                        child: Text('Sign In'),
+                        onPressed: () async {
+                          if (_key.currentState!.validate()) {
+                            try {
+                              await FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                              errorMessage = '';
+                            } on FirebaseAuthException catch (error) {
+                              errorMessage = error.message!;
+                            }
+                            setState(() {});
+                          }
+                        }),
+                    ElevatedButton(
+                        child: Text('Log Out'),
+                        onPressed: () async {
+                          try {
+                            await FirebaseAuth.instance.signOut();
+                            errorMessage = '';
+                          } on FirebaseAuthException catch (error) {
+                            errorMessage = error.message!;
+                          }
+                          setState(() {});
+                        }),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String? validateEmail(String? formEmail) {
+  if (formEmail == null || formEmail.isEmpty)
+    return 'E-mail address is required.';
+
+  String pattern = r'\w+@\w+\.\w+';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(formEmail)) return 'Invalid E-mail Address format.';
+  return null;
+}
+
+String? validatePassword(String? formPassword) {
+  if (formPassword == null || formPassword.isEmpty)
+    return 'Password is required.';
+
+  String pattern =
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~]).{8,}$';
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(formPassword))
+    return '''
+      Password must be at least 8 characters,
+      include an uppercase letter, number, and symbol.
+      ''';
+  return null;
 }
 */
 
