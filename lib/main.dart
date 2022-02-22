@@ -4,6 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Wallet.dart';
+import 'Search.dart';
+import 'Profile.dart';
+import 'SendReceive.dart';
+
 /*
 //THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
 
@@ -168,6 +173,29 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  late List<Widget> Pages;
+  late Widget _Wallet;
+  late Widget _Search;
+  late Widget _SendReceive;
+  late Widget _Profile;
+  late int selectedIndex;
+  late Widget _currPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _Wallet = const Wallet();
+    _Search = const Search();
+    _SendReceive = const SendReceive();
+    _Profile = const Profile();
+    Pages = [_Wallet, _Search, _SendReceive, _Profile];
+    selectedIndex = 0;
+    _currPage = _Wallet;
+  }
+
+  /* This doesn't do anything? Commenting it out didn't seem to change anything but gonna leave it here just in case
+  
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -185,11 +213,12 @@ class _MyHomePageState extends State<MyHomePage> {
       'Index 3: Profile',
       style: optionStyle,
     ),
-  ];
+  ];*/
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _currPage = Pages[index];
     });
   }
 
@@ -199,35 +228,32 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-      ),
+      body: _currPage,
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.tickets),
-            label: 'Wallet',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.arrow_right_arrow_left),
-            label: 'Send/Receive',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.profile_circled),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blueAccent[800],
-        onTap: _onItemTapped,
-      ),
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.tickets),
+              label: 'Wallet',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.arrow_right_arrow_left),
+              label: 'Send/Receive',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.profile_circled),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blueAccent[800],
+          onTap: (index) {
+            _onItemTapped(index);
+          }),
     );
   }
 }
