@@ -1,13 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Wallet.dart';
-import 'Search.dart';
-import 'Profile.dart';
-import 'SendReceive.dart';
+import 'welcome_screen.dart';
+import 'login_screen.dart';
+import 'signup_screen.dart';
+import 'home_screen.dart';
 
 /*
 //THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
@@ -141,25 +141,36 @@ String? validatePassword(String? formPassword) {
 }
 */
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(AuthApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AuthApp extends StatelessWidget {
+  const AuthApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App Demo',
+      title: 'WristBands',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Wrist Bands'),
+      initialRoute: 'welcome_screen',
+      routes: {
+        'welcome_screen': (context) => WelcomeScreen(),
+        'registration_screen': (context) => RegistrationScreen(),
+        'login_screen': (context) => LoginScreen(),
+        'home_screen': (context) => const HomeScreen(
+              title: '',
+            )
+      },
+      // home: const MyHomePage(title: 'Wrist Bands'),
     );
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -257,3 +268,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
