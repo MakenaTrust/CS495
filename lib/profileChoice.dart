@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 // import 'custom/rounded_button.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class ProfileChoiceScreen extends StatefulWidget {
+  const ProfileChoiceScreen({Key? key}) : super(key: key);
+
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _ProfileChoiceState createState() => _ProfileChoiceState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _ProfileChoiceState extends State<ProfileChoiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -22,9 +24,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Log In'),
+                  child: const Text('Event Goer'),
                   onPressed: () {
-                    Navigator.pushNamed(context, 'login_screen');
+                    // Navigator.pushNamed(context, 'registration_screen');
                   },
                 ),
                 ElevatedButton(
@@ -32,9 +34,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         primary: Colors.lightBlue,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
-                    child: Text('Register'),
+                    child: const Text('Event Holder'),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'accType_screen');
+                      Navigator.pushNamed(context, 'holder_screen');
                     }),
               ]),
         ));

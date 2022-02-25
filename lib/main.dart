@@ -8,6 +8,7 @@ import 'welcome_screen.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 import 'home_screen.dart';
+import 'accType_screen.dart';
 
 /*
 //THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
@@ -141,7 +142,7 @@ String? validatePassword(String? formPassword) {
 }
 */
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(AuthApp());
@@ -160,6 +161,7 @@ class AuthApp extends StatelessWidget {
       initialRoute: 'welcome_screen',
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),
+        'accType_screen': (context) => AccTypeScreen(),
         'registration_screen': (context) => RegistrationScreen(),
         'login_screen': (context) => LoginScreen(),
         'home_screen': (context) => const HomeScreen(

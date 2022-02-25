@@ -12,8 +12,9 @@ import 'SendReceive.dart';
 User? loggedinUser;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
+  const HomeScreen({this.uid, required this.title});
 
+  final String? uid;
   final String title;
 
   @override
