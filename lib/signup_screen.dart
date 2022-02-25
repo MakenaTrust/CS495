@@ -135,38 +135,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
-                  });
-                  try {
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
-                    final user = await _auth.signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text);
-                    final user1 = _auth.currentUser;
-                    final userid = user1?.uid;
-                    var collection =
-                        FirebaseFirestore.instance.collection("Users");
-                    collection.doc(userid).set({
-                      "email": emailController.text,
-                      'password': passwordController.text,
-                      "username": userNameController.text,
-                      "firstName": fNameController.text,
-                      "lastName": lNameController.text
-                    });
-
-                    if (user != null) {
-                      Navigator.pushNamed(context, 'login_screen');
-                    }
-                    // registerToFb();
                     errorMessage = '';
-                  } on FirebaseAuthException catch (error) {
-                    errorMessage = error.message!;
-                  }
-                  setState(() {
-                    showSpinner = false;
                   });
+                  if (_formKey.currentState!.validate()) {
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text);
+                      final user1 = _auth.currentUser;
+                      final userid = user1?.uid;
+                      var collection =
+                          FirebaseFirestore.instance.collection("Users");
+                      collection.doc(userid).set({
+                        "email": emailController.text,
+                        'password': passwordController.text,
+                        "username": userNameController.text,
+                        "firstName": fNameController.text,
+                        "lastName": lNameController.text
+                      });
+                      if (user != null) {
+                        Navigator.pushNamed(context, 'login_screen');
+                      }
+                      // errorMessage = '';
+                    } on FirebaseAuthException catch (error) {
+                      errorMessage = error.message!;
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  }
                 },
               )
             ],
@@ -178,8 +180,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 // }
 
   String? validateEmail(String? formEmail) {
-    if (formEmail == null || formEmail.isEmpty)
+    if (formEmail == null || formEmail.isEmpty) {
       return 'E-mail address is required.';
+    }
     String pattern = r'\w+@\w+\.\w+';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(formEmail)) return 'Invalid E-mail Address format.';
@@ -192,54 +195,55 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~]).{8,}$';
     RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(formPassword))
+    if (!regex.hasMatch(formPassword)) {
       return '''
       Password must be at least 8 characters,
       include an uppercase letter, number, and symbol.
       ''';
+    }
     return null;
   }
 
-  void registerToFb() {
-    firebaseAuth
-        .createUserWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text)
-        .then((result) {
-      dbRef.child(result.user!.uid).set({
-        "email": emailController.text,
-        "password": passwordController.text,
-        // "age": ageController.text,
-        // "name": nameController.text
-      }).then((res) {
-        showSpinner = false;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                    uid: result.user!.uid,
-                    title: '',
-                  )),
-        );
-      });
-    }).catchError((err) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Error"),
-              content: Text(err.message),
-              actions: [
-                TextButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    });
-  }
+  // void registerToFb() {
+  //   firebaseAuth
+  //       .createUserWithEmailAndPassword(
+  //           email: emailController.text, password: passwordController.text)
+  //       .then((result) {
+  //     dbRef.child(result.user!.uid).set({
+  //       "email": emailController.text,
+  //       "password": passwordController.text,
+  //       // "age": ageController.text,
+  //       // "name": nameController.text
+  //     }).then((res) {
+  //       showSpinner = false;
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) => HomeScreen(
+  //                   uid: result.user!.uid,
+  //                   title: '',
+  //                 )),
+  //       );
+  //     });
+  //   }).catchError((err) {
+  //     showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             title: Text("Error"),
+  //             content: Text(err.message),
+  //             actions: [
+  //               TextButton(
+  //                 child: Text("Ok"),
+  //                 onPressed: () {
+  //                   Navigator.of(context).pop();
+  //                 },
+  //               )
+  //             ],
+  //           );
+  //         });
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -247,6 +251,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    fNameController.dispose();
+    userNameController.dispose();
+    lNameController.dispose();
     // ageController.dispose();
   }
 }
