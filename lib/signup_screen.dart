@@ -156,7 +156,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         'password': passwordController.text,
                         "username": userNameController.text,
                         "firstName": fNameController.text,
-                        "lastName": lNameController.text
+                        "lastName": lNameController.text,
+                        "holder": false
                       });
                       if (user != null) {
                         Navigator.pushNamed(context, 'login_screen');

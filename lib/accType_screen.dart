@@ -39,7 +39,7 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
                             borderRadius: BorderRadius.circular(50))),
                     child: Text('Event Holder'),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'registration_screen');
+                      Navigator.pushNamed(context, 'holder_screen');
                     }),
               ]),
         ));
