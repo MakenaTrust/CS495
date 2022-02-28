@@ -3,12 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package: date_time_field/new_task_form.dart';
 
 import 'welcome_screen.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 import 'home_screen.dart';
 import 'accType_screen.dart';
+import 'holder_screen.dart';
+import 'eventCreation_screen.dart';
+import 'eventCreationSuccess_screen.dart';
+import 'Profile.dart';
 
 /*
 //THIS IS HOW YOU ARE ABLE TO CREATE AN ACCOUNT AND IT AUTOMATICALLY LINKS TO FIREBASE. CAN LOG IN AND OUT
@@ -164,9 +169,14 @@ class AuthApp extends StatelessWidget {
         'accType_screen': (context) => AccTypeScreen(),
         'registration_screen': (context) => RegistrationScreen(),
         'login_screen': (context) => LoginScreen(),
+        'holder_screen': (contect) => HolderScreen(),
         'home_screen': (context) => const HomeScreen(
               title: '',
-            )
+            ),
+        'eventCreation_screen': (context) => EventCreationScreen(),
+        'eventCreationSuccess_screen': (context) =>
+            EventCreationSuccessScreen(),
+        'Profile': (context) => Profile(),
       },
       // home: const MyHomePage(title: 'Wrist Bands'),
     );

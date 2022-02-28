@@ -7,19 +7,18 @@ import 'package:flutter/cupertino.dart';
 
 import 'home_screen.dart';
 
-class HolderScreen extends StatefulWidget {
+class EventCreationScreen extends StatefulWidget {
   @override
-  _HolderScreenState createState() => _HolderScreenState();
+  _EventCreationScreenState createState() => _EventCreationScreenState();
 }
 
-class _HolderScreenState extends State<HolderScreen> {
+class _EventCreationScreenState extends State<EventCreationScreen> {
   final _auth = FirebaseAuth.instance;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController fNameController = TextEditingController();
-  TextEditingController lNameController = TextEditingController();
-  TextEditingController bDayController = TextEditingController();
+  TextEditingController eventNameController = TextEditingController();
+  TextEditingController eventDateController = TextEditingController();
+  TextEditingController eventLocationController = TextEditingController();
+  TextEditingController capacityController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
@@ -45,29 +44,25 @@ class _HolderScreenState extends State<HolderScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextFormField(
-                keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
-                controller: emailController,
-                validator: validateEmail,
+                controller: eventNameController,
+                //validator: validateEventName,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Enter your email',
+                  labelText: 'Event Name',
                 ),
               ),
               const SizedBox(
                 height: 8.0,
               ),
               TextFormField(
-                obscureText: true,
                 textAlign: TextAlign.center,
-                controller: passwordController,
-                validator: validatePassword,
+                controller: eventDateController,
+                //validator: validateEventDate,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Enter your password',
+                  labelText: 'Event Date',
                 ),
-                // decoration: kTextFieldDecoration.copyWith(
-                //     hintText: 'Enter your Password')
               ),
               Center(
                 child: Text(errorMessage),
@@ -77,14 +72,14 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
               TextFormField(
                 textAlign: TextAlign.center,
-                controller: userNameController,
+                controller: eventLocationController,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Enter your username',
+                  labelText: 'Event Location',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter your username';
+                    return 'Event Location';
                   }
                   return null;
                 },
@@ -94,14 +89,14 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
               TextFormField(
                 textAlign: TextAlign.center,
-                controller: fNameController,
+                controller: capacityController,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Enter your first name',
+                  labelText: 'Event Capacity',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter your first name';
+                    return 'Event Capacity';
                   }
                   return null;
                 },
@@ -111,14 +106,14 @@ class _HolderScreenState extends State<HolderScreen> {
               ),
               TextFormField(
                 textAlign: TextAlign.center,
-                controller: lNameController,
+                controller: typeController,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Enter your last name',
+                  labelText: 'Type of Event',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Enter your last name';
+                    return 'Type of Event';
                   }
                   return null;
                 },
@@ -131,7 +126,7 @@ class _HolderScreenState extends State<HolderScreen> {
                     primary: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
-                child: Text('Register'),
+                child: Text('Register Event'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
@@ -141,26 +136,27 @@ class _HolderScreenState extends State<HolderScreen> {
                     try {
                       await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
+                        email: eventNameController.text,
+                        password: eventDateController.text,
                       );
                       final user = await _auth.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text);
+                          email: eventNameController.text,
+                          password: eventDateController.text);
                       final user1 = _auth.currentUser;
                       final userid = user1?.uid;
                       var collection =
                           FirebaseFirestore.instance.collection("Users");
                       collection.doc(userid).set({
-                        "email": emailController.text,
-                        'password': passwordController.text,
-                        "username": userNameController.text,
-                        "firstName": fNameController.text,
-                        "lastName": lNameController.text,
-                        "holder": true
+                        "email": eventNameController.text,
+                        'password': eventDateController.text,
+                        "username": eventLocationController.text,
+                        "firstName": capacityController.text,
+                        "lastName": 'NOT REAL!',
+                        "holder": false
                       });
                       if (user != null) {
-                        Navigator.pushNamed(context, 'login_screen');
+                        Navigator.pushNamed(
+                            context, 'eventCreationSuccess_screen');
                       }
                       // errorMessage = '';
                     } on FirebaseAuthException catch (error) {
@@ -180,39 +176,36 @@ class _HolderScreenState extends State<HolderScreen> {
   }
 // }
 
-  String? validateEmail(String? formEmail) {
-    if (formEmail == null || formEmail.isEmpty) {
-      return 'E-mail address is required.';
-    }
-    String pattern = r'\w+@\w+\.\w+';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(formEmail)) return 'Invalid E-mail Address format.';
-    return null;
-  }
+  // String? validateEventName(String? formEmail) {
+  //   if (formEmail == null || formEmail.isEmpty) {
+  //     return 'Event Name is required.';
+  //   };
+  //   return null;
+  // }
 
-  String? validatePassword(String? formPassword) {
-    if (formPassword == null || formPassword.isEmpty)
-      return 'Password is required.';
-    String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(formPassword)) {
-      return '''
-      Password must be at least 8 characters,
-      include an uppercase letter, number, and symbol.
-      ''';
-    }
-    return null;
-  }
+  // String? validateEventDate(String? formPassword) {
+  //   if (formPassword == null || formPassword.isEmpty)
+  //     return 'Password is required.';
+  //   String pattern =
+  //       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
+  //   RegExp regex = RegExp(pattern);
+  //   if (!regex.hasMatch(formPassword)) {
+  //     return '''
+  //     Password must be at least 8 characters,
+  //     include an uppercase letter, number, and symbol.
+  //     ''';
+  //   }
+  //   return null;
+  // }
 
   // void registerToFb() {
   //   firebaseAuth
   //       .createUserWithEmailAndPassword(
-  //           email: emailController.text, password: passwordController.text)
+  //           email: eventNameController.text, password: eventDateController.text)
   //       .then((result) {
   //     dbRef.child(result.user!.uid).set({
-  //       "email": emailController.text,
-  //       "password": passwordController.text,
+  //       "email": eventNameController.text,
+  //       "password": eventDateController.text,
   //       // "age": ageController.text,
   //       // "name": nameController.text
   //     }).then((res) {
@@ -250,11 +243,11 @@ class _HolderScreenState extends State<HolderScreen> {
   void dispose() {
     super.dispose();
     // nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    fNameController.dispose();
-    userNameController.dispose();
-    lNameController.dispose();
+    eventNameController.dispose();
+    eventDateController.dispose();
+    capacityController.dispose();
+    eventLocationController.dispose();
+    typeController.dispose();
     // ageController.dispose();
   }
 }

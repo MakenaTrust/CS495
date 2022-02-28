@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+class EventCreationSuccessScreen extends StatelessWidget {
+  const EventCreationSuccessScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Text(
-                  'Event Holder Profile',
+                  'Congrats! You have made a new event.',
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
@@ -23,9 +23,9 @@ class Profile extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Create Event'),
+                  child: Text('Back to Profile'),
                   onPressed: () {
-                    Navigator.pushNamed(context, 'eventCreation_screen');
+                    Navigator.pushNamed(context, 'Profile');
                   },
                 ),
               ]),

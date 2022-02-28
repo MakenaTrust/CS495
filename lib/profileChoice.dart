@@ -26,7 +26,7 @@ class _ProfileChoiceState extends State<ProfileChoiceScreen> {
                           borderRadius: BorderRadius.circular(50))),
                   child: const Text('Event Goer'),
                   onPressed: () {
-                    // Navigator.pushNamed(context, 'registration_screen');
+                    Navigator.pushNamed(context, 'registration_screen');
                   },
                 ),
                 ElevatedButton(
