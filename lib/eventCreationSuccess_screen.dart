@@ -25,7 +25,7 @@ class EventCreationSuccessScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50))),
                   child: Text('Back to Profile'),
                   onPressed: () {
-                    Navigator.pushNamed(context, 'Profile');
+                    Navigator.pushNamed(context, 'home_screen');
                   },
                 ),
               ]),

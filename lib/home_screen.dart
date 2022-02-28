@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'Wallet.dart';
 import 'Search.dart';
 import 'Profile.dart';
-import 'eventCreation_screen.dart';
 import 'SendReceive.dart';
 
 User? loggedinUser;
