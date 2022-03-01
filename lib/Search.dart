@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_application_1/searchDetailScreen.dart';
 
 /*
 
@@ -70,9 +70,17 @@ class _ExamplePageState extends State<Search> {
       itemCount: names == null ? 0 : filteredNames.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text(filteredNames[index]),
-          onTap: () => print(filteredNames[index]),
-        );
+            title: Text(filteredNames[index]),
+            onTap: () => {
+                  print(filteredNames[
+                      index]), //HERE IS WHERE TO ADD BUTTON FUNCTIONALITY.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SearchDetailScreen(text: filteredNames[index]),
+                      ))
+                });
       },
     );
   }
@@ -96,12 +104,9 @@ class _ExamplePageState extends State<Search> {
   }
 
   void _getNames() async {
-    //final response = await Dio().get('https://swapi.co/api/people');
-
+    //here is where we'd need to get all the data from the database.
     List tempList = ['win', 'huh', 'literally', 'anyone', 'how', 'hug'];
-    //for (int i = 0; i < response.data.length; i++) {
-    //  tempList.add(response.data[i]);
-    //}
+
     setState(() {
       names = tempList;
       names.shuffle();

@@ -34,16 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
   late Widget _Profile;
   late int selectedIndex;
   late Widget _currPage;
+  late int pageNum = 0;
 
   @override
   void initState() {
+    print(pageNum);
     super.initState();
     _Wallet = const Wallet();
     _Search = Search();
     _SendReceive = const SendReceive();
     _Profile = Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
-    selectedIndex = 0;
+    selectedIndex = pageNum;
     _currPage = _Wallet;
     getCurrentUser();
   }
