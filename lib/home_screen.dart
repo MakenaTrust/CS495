@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _Wallet = const Wallet();
-    _Search = const Search();
+    _Search = Search();
     _SendReceive = const SendReceive();
     _Profile = const Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
