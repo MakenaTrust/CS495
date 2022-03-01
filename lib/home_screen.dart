@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _Wallet = const Wallet();
     _Search = Search();
     _SendReceive = const SendReceive();
-    _Profile = const Profile();
+    _Profile = Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
     selectedIndex = 0;
     _currPage = _Wallet;
