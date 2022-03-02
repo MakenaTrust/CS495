@@ -29,6 +29,17 @@ class SearchDetailScreen extends StatelessWidget {
                     Navigator.pushNamed(context, 'home_screen');
                   },
                 ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50))),
+                  child: Text('Cancel purchase'),
+                  onPressed: () {
+                    //Navigator.pushNamed(context, 'home_screen');
+                    Navigator.pop(context);
+                  },
+                )
               ]),
         ));
   }
