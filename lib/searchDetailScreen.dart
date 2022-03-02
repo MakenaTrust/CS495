@@ -24,7 +24,7 @@ class SearchDetailScreen extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('To Wallet'),
+                  child: Text('Purchase and go to Wallet'),
                   onPressed: () {
                     Navigator.pushNamed(context, 'home_screen');
                   },

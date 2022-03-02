@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'DataController.dart';
+import 'searchDetailScreen.dart';
 
 /*
 
@@ -77,29 +78,38 @@ class _ExamplePageState extends State<Search> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
-                    return Card(
-                      child: Row(
-                        children: <Widget>[
-                          // Image.network(
-                          //   data['imageUrl'],
-                          //   width: 150,
-                          //   height: 100,
-                          //   fit: BoxFit.fill,
-                          // ),
-                          SizedBox(
-                            width: 40,
-                            height: 60,
+                    return GestureDetector(
+                        onTap: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchDetailScreen(
+                                        text: data['EventName']),
+                                  ))
+                            },
+                        child: Card(
+                          child: Row(
+                            children: <Widget>[
+                              // Image.network(
+                              //   data['imageUrl'],
+                              //   width: 150,
+                              //   height: 100,
+                              //   fit: BoxFit.fill,
+                              // ),
+                              SizedBox(
+                                width: 40,
+                                height: 60,
+                              ),
+                              Text(
+                                data['EventName'],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            data['EventName'],
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                        ));
                   },
                 );
         },
@@ -148,14 +158,14 @@ class _ExamplePageState extends State<Search> {
   //   });
   // }
 
-  void _getNames() async {
-    //here is where we'd need to get all the data from the database.
-    List tempList = ['win', 'huh', 'literally', 'anyone', 'how', 'hug'];
+  //void _getNames() async {
+  //here is where we'd need to get all the data from the database.
+  //  List tempList = ['win', 'huh', 'literally', 'anyone', 'how', 'hug'];
 
-    setState(() {
-      names = tempList;
-      names.shuffle();
-      filteredNames = names;
-    });
-  }
+  //  setState(() {
+  //    names = tempList;
+  //    names.shuffle();
+  //    filteredNames = names;
+  //  });
+  // }
 }
