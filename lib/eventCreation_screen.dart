@@ -4,6 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+// import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 import 'home_screen.dart';
 
@@ -16,9 +18,10 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   final _auth = FirebaseAuth.instance;
   TextEditingController eventNameController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
+  TextEditingController eventTimeController = TextEditingController();
   TextEditingController eventLocationController = TextEditingController();
-  TextEditingController capacityController = TextEditingController();
-  TextEditingController typeController = TextEditingController();
+  TextEditingController eventCapacityController = TextEditingController();
+  TextEditingController eventTypeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
@@ -56,14 +59,33 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                 height: 8.0,
               ),
               TextFormField(
-                textAlign: TextAlign.center,
-                controller: eventDateController,
-                //validator: validateEventDate,
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  labelText: 'Event Date',
-                ),
+                  textAlign: TextAlign.center,
+                  controller: eventDateController,
+                  //validator: validateEventDate,
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: 'Event Date',
+                  ),
+                  onTap: () {
+                    _selectDate(context);
+                  }),
+              Center(
+                child: Text(errorMessage),
               ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: eventTimeController,
+                  //validator: validateEventDate,
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: 'Event Start Time',
+                  ),
+                  onTap: () {
+                    _selectTime(context);
+                  }),
               Center(
                 child: Text(errorMessage),
               ),
@@ -89,7 +111,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
               ),
               TextFormField(
                 textAlign: TextAlign.center,
-                controller: capacityController,
+                controller: eventCapacityController,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
                   labelText: 'Event Capacity',
@@ -106,7 +128,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
               ),
               TextFormField(
                 textAlign: TextAlign.center,
-                controller: typeController,
+                controller: eventTypeController,
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
                   labelText: 'Type of Event',
@@ -134,30 +156,22 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                   });
                   if (_formKey.currentState!.validate()) {
                     try {
-                      await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: eventNameController.text,
-                        password: eventDateController.text,
-                      );
-                      final user = await _auth.signInWithEmailAndPassword(
-                          email: eventNameController.text,
-                          password: eventDateController.text);
-                      final user1 = _auth.currentUser;
-                      final userid = user1?.uid;
-                      var collection =
-                          FirebaseFirestore.instance.collection("Users");
-                      collection.doc(userid).set({
-                        "email": eventNameController.text,
-                        'password': eventDateController.text,
-                        "username": eventLocationController.text,
-                        "firstName": capacityController.text,
-                        "lastName": 'NOT REAL!',
-                        "holder": false
+                      FirebaseFirestore.instance
+                          .collection("Events")
+                          .doc(eventNameController.text)
+                          .set({
+                        "eventLocation": eventLocationController.text,
+                        "Date": eventDateController.text,
+                        "eventTime": eventTimeController.text,
+                        "EventName": eventNameController.text,
+                        "SearchEventName":
+                            eventNameController.text.toLowerCase(),
+                        "capacity": eventCapacityController.text,
+                        "eventType": eventTypeController.text,
                       });
-                      if (user != null) {
-                        Navigator.pushNamed(
-                            context, 'eventCreationSuccess_screen');
-                      }
+
+                      Navigator.pushNamed(
+                          context, 'eventCreationSuccess_screen');
                       // errorMessage = '';
                     } on FirebaseAuthException catch (error) {
                       errorMessage = error.message!;
@@ -238,6 +252,55 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   //         });
   //   });
   // }
+  _selectDate(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+    final DateTime? newSelectedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2121),
+    );
+    if (newSelectedDate != null) {
+      // eventDateController.text = DateFormat.yMMMd().format(selectedDate);
+      // ..selection = TextSelection.fromPosition(TextPOsition())
+// if (newSelectedDate != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = newSelectedDate;
+        final f = new DateFormat('yyyy-MM-dd');
+        // final stamp = DateTime.parse(DateFormat.yMMMd().format(selectedDate));
+        String date = f.format(selectedDate);
+        print(date);
+        eventDateController.text = date;
+        // eventDateController = newSelectedDate as TextEditingController;
+      });
+    }
+  }
+
+  _selectTime(BuildContext context) async {
+    TimeOfDay _selectedTime = TimeOfDay.now();
+    TimeOfDay? newSelectedTime = (await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      // firstDate: DateTime(2022),
+      // lastDate: DateTime(2121),
+      initialEntryMode: TimePickerEntryMode.input,
+    )) as TimeOfDay?;
+    if (_selectedTime != null) {
+      _selectedTime = newSelectedTime!;
+      print(_selectedTime);
+      String time = _selectedTime.toString();
+      eventTimeController.text = time.substring(10, time.length - 1);
+      // _selectedTime = newSelectedTime!;
+      // eventDateController.text = DateFormat.yMMMd().format(_selectedTime);
+      // ..selection = TextSelection.fromPosition(TextPOsition())
+// if (newSelectedDate != null && picked != selectedDate) {
+      setState(() {
+        eventTimeController =
+            time.substring(10, time.length - 1) as TextEditingController;
+        // eventDateController = newSelectedTime as TextEditingController;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -245,9 +308,10 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     // nameController.dispose();
     eventNameController.dispose();
     eventDateController.dispose();
-    capacityController.dispose();
+    eventTimeController.dispose();
+    eventCapacityController.dispose();
     eventLocationController.dispose();
-    typeController.dispose();
+    eventTypeController.dispose();
     // ageController.dispose();
   }
 }
