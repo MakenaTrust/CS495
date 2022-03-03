@@ -17,6 +17,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                Text(
+                  'Welcome to',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                Image.asset('assets/images/wristbandsLogo.png'), //   <--- image
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.lightBlue,
