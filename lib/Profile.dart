@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key? key}) : super(key: key);
@@ -11,6 +8,7 @@ class Profile extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirebaseAuth _auth = FirebaseAuth.instance;
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +38,21 @@ class Profile extends StatelessWidget {
                     Navigator.pushNamed(context, 'eventCreation_screen');
                   },
                 ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.lightBlue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                    child: Text('Log Out'),
+                    onPressed: () async {
+                      try {
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushNamed(context, 'welcome_screen');
+                        errorMessage = '';
+                      } on FirebaseAuthException catch (error) {
+                        errorMessage = error.message!;
+                      }
+                    }),
               ]),
         ));
   }

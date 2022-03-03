@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'home_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -39,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         key: _formKey,
         // inAsyncCall: showSpinner,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -131,7 +127,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     primary: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
-                child: Text('Register'),
+                child: const Text('Register'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
@@ -191,8 +187,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   String? validatePassword(String? formPassword) {
-    if (formPassword == null || formPassword.isEmpty)
+    if (formPassword == null || formPassword.isEmpty) {
       return 'Password is required.';
+    }
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
     RegExp regex = RegExp(pattern);

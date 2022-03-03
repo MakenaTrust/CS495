@@ -10,7 +10,7 @@ class SearchDetailScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -25,7 +25,7 @@ class SearchDetailScreen extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Purchase and go to Wallet'),
+                  child: const Text('Purchase and go to Wallet'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
                     Navigator.push(
@@ -40,7 +40,7 @@ class SearchDetailScreen extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Cancel purchase'),
+                  child: const Text('Cancel purchase'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
                     Navigator.pop(context);
@@ -51,7 +51,7 @@ class SearchDetailScreen extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Back'),
+                  child: const Text('Back'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
                     Navigator.pop(context);

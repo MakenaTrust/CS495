@@ -150,7 +150,7 @@ String? validatePassword(String? formPassword) {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(AuthApp());
+  runApp(const AuthApp());
 }
 
 class AuthApp extends StatelessWidget {
@@ -166,16 +166,16 @@ class AuthApp extends StatelessWidget {
       initialRoute: 'welcome_screen', //'welcome_screen',
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),
-        'accType_screen': (context) => AccTypeScreen(),
+        'accType_screen': (context) => const AccTypeScreen(),
         'registration_screen': (context) => RegistrationScreen(),
-        'login_screen': (context) => LoginScreen(),
+        'login_screen': (context) => const LoginScreen(),
         'holder_screen': (contect) => HolderScreen(),
         'home_screen': (context) => const HomeScreen(
               title: '',
             ),
-        'eventCreation_screen': (context) => EventCreationScreen(),
+        'eventCreation_screen': (context) => const EventCreationScreen(),
         'eventCreationSuccess_screen': (context) =>
-            EventCreationSuccessScreen(),
+            const EventCreationSuccessScreen(),
         'Profile': (context) => Profile(),
       },
       // home: const MyHomePage(title: 'Wrist Bands'),

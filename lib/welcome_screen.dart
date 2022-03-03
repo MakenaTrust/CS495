@@ -12,7 +12,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -22,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Log In'),
+                  child: const Text('Log In'),
                   onPressed: () {
                     Navigator.pushNamed(context, 'login_screen');
                   },
@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         primary: Colors.lightBlue,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
-                    child: Text('Register'),
+                    child: const Text('Register'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'accType_screen');
                     }),

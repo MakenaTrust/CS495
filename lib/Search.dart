@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firestore_search/firestore_search.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
-import 'package:get/get.dart';
-import 'DataController.dart';
 import 'searchDetailScreen.dart';
 
 /*
@@ -13,7 +7,7 @@ import 'searchDetailScreen.dart';
 */
 class Search extends StatefulWidget {
   @override
-  _ExamplePageState createState() => new _ExamplePageState();
+  _ExamplePageState createState() => _ExamplePageState();
 }
 
 // class DataModel{
@@ -32,12 +26,9 @@ class Search extends StatefulWidget {
 
 class _ExamplePageState extends State<Search> {
   final TextEditingController _filter = new TextEditingController();
-  String _searchText = "";
   List names = [];
 
   List filteredNames = [];
-  Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text('Search Example');
   String name = "";
 
   @override
@@ -45,14 +36,14 @@ class _ExamplePageState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(null),
+          icon: const Icon(null),
           onPressed: () {
             // Navigator.of(context).pop();
           },
         ),
         title: Card(
           child: TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.search), hintText: 'Search...'),
             onChanged: (val) {
               setState(() {
@@ -73,7 +64,7 @@ class _ExamplePageState extends State<Search> {
             : FirebaseFirestore.instance.collection("Events").snapshots(),
         builder: (context, snapshot) {
           return (snapshot.connectionState == ConnectionState.waiting)
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: const CircularProgressIndicator())
               : ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
@@ -96,13 +87,13 @@ class _ExamplePageState extends State<Search> {
                               //   height: 100,
                               //   fit: BoxFit.fill,
                               // ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 40,
                                 height: 60,
                               ),
                               Text(
                                 data['EventName'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 20,
                                 ),

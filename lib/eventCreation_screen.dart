@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-import 'home_screen.dart';
-
 class EventCreationScreen extends StatefulWidget {
+  const EventCreationScreen({Key? key}) : super(key: key);
+
   @override
   _EventCreationScreenState createState() => _EventCreationScreenState();
 }
 
 class _EventCreationScreenState extends State<EventCreationScreen> {
-  final _auth = FirebaseAuth.instance;
   TextEditingController eventNameController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
   TextEditingController eventTimeController = TextEditingController();
@@ -50,7 +47,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
         key: _formKey,
         // inAsyncCall: showSpinner,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,11 +135,11 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
               DropdownButtonFormField(
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Event Capacity',
+                  labelText: 'Event Type',
                 ),
                 value: 'Please select an event type',
                 icon: const Icon(Icons.keyboard_arrow_down),
-                items: [
+                items: const [
                   DropdownMenuItem(
                     child: Text('Please select an event type'),
                     value: 'Please select an event type',
@@ -187,7 +184,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                     primary: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
-                child: Text('Register Event'),
+                child: const Text('Register Event'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
@@ -305,10 +302,9 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
 // if (newSelectedDate != null && picked != selectedDate) {
       setState(() {
         selectedDate = newSelectedDate;
-        final f = new DateFormat('yyyy-MM-dd');
+        final f = DateFormat('yyyy-MM-dd');
         // final stamp = DateTime.parse(DateFormat.yMMMd().format(selectedDate));
         String date = f.format(selectedDate);
-        print(date);
         eventDateController.text = date;
         // eventDateController = newSelectedDate as TextEditingController;
       });
@@ -323,22 +319,19 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
       // firstDate: DateTime(2022),
       // lastDate: DateTime(2121),
       initialEntryMode: TimePickerEntryMode.input,
-    )) as TimeOfDay?;
-    if (_selectedTime != null) {
-      _selectedTime = newSelectedTime!;
-      print(_selectedTime);
-      String time = _selectedTime.toString();
-      eventTimeController.text = time.substring(10, time.length - 1);
-      // _selectedTime = newSelectedTime!;
-      // eventDateController.text = DateFormat.yMMMd().format(_selectedTime);
-      // ..selection = TextSelection.fromPosition(TextPOsition())
+    ));
+    _selectedTime = newSelectedTime!;
+    String time = _selectedTime.toString();
+    eventTimeController.text = time.substring(10, time.length - 1);
+    // _selectedTime = newSelectedTime!;
+    // eventDateController.text = DateFormat.yMMMd().format(_selectedTime);
+    // ..selection = TextSelection.fromPosition(TextPOsition())
 // if (newSelectedDate != null && picked != selectedDate) {
-      setState(() {
-        eventTimeController =
-            time.substring(10, time.length - 1) as TextEditingController;
-        // eventDateController = newSelectedTime as TextEditingController;
-      });
-    }
+    setState(() {
+      eventTimeController =
+          time.substring(10, time.length - 1) as TextEditingController;
+      // eventDateController = newSelectedTime as TextEditingController;
+    });
   }
 
   // _dropDown(BuildContext context) async {

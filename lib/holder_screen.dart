@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'home_screen.dart';
 
 class HolderScreen extends StatefulWidget {
   @override
@@ -39,7 +35,7 @@ class _HolderScreenState extends State<HolderScreen> {
         key: _formKey,
         // inAsyncCall: showSpinner,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -131,7 +127,7 @@ class _HolderScreenState extends State<HolderScreen> {
                     primary: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
-                child: Text('Register'),
+                child: const Text('Register'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
@@ -144,9 +140,6 @@ class _HolderScreenState extends State<HolderScreen> {
                         email: emailController.text,
                         password: passwordController.text,
                       );
-                      final user = await _auth.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text);
                       final user1 = _auth.currentUser;
                       final userid = user1?.uid;
                       var collection =
@@ -159,9 +152,7 @@ class _HolderScreenState extends State<HolderScreen> {
                         "lastName": lNameController.text,
                         "holder": true
                       });
-                      if (user != null) {
-                        Navigator.pushNamed(context, 'login_screen');
-                      }
+                      Navigator.pushNamed(context, 'login_screen');
                       // errorMessage = '';
                     } on FirebaseAuthException catch (error) {
                       errorMessage = error.message!;
@@ -191,8 +182,9 @@ class _HolderScreenState extends State<HolderScreen> {
   }
 
   String? validatePassword(String? formPassword) {
-    if (formPassword == null || formPassword.isEmpty)
+    if (formPassword == null || formPassword.isEmpty) {
       return 'Password is required.';
+    }
     String pattern =
         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
     RegExp regex = RegExp(pattern);

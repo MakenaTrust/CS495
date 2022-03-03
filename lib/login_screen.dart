@@ -22,11 +22,11 @@ const kTextFieldDecoration = InputDecoration(
     ));
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
-
-final _auth = FirebaseAuth.instance;
 
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
@@ -93,18 +93,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     primary: Colors.lightBlue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
-                child: Text('Log In'),
+                child: const Text('Log In'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
                   try {
-                    final user = await _auth.signInWithEmailAndPassword(
+                    await _auth.signInWithEmailAndPassword(
                         email: emailController.text,
                         password: passwordController.text);
-                    if (user != null) {
-                      Navigator.pushNamed(context, 'home_screen');
-                    }
+                    Navigator.pushNamed(context, 'home_screen');
                     errorMessage = '';
                   } on FirebaseAuthException catch (error) {
                     errorMessage = error.message!;

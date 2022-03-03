@@ -8,7 +8,7 @@ class EventCreationSuccessScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -23,7 +23,7 @@ class EventCreationSuccessScreen extends StatelessWidget {
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Back to Profile'),
+                  child: const Text('Back to Profile'),
                   onPressed: () {
                     Navigator.pushNamed(context, 'home_screen');
                   },
