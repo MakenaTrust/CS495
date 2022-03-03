@@ -43,6 +43,8 @@ dependencies:
   firebase_database: ^9.0.7
   qr_flutter: ^4.0.0
   dio: ^4.0.4
+  get: ^4.6.1
+  firestore_search: ^0.1.9
 
 
 dev_dependencies:
