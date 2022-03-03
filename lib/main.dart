@@ -163,7 +163,7 @@ class AuthApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'home_screen', //'welcome_screen',
+      initialRoute: 'welcome_screen', //'welcome_screen',
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),
         'accType_screen': (context) => AccTypeScreen(),
