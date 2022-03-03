@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Wallet.dart';
 
 class SearchDetailScreen extends StatelessWidget {
   final String text;
@@ -26,7 +27,12 @@ class SearchDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50))),
                   child: Text('Purchase and go to Wallet'),
                   onPressed: () {
-                    Navigator.pushNamed(context, 'home_screen');
+                    //Navigator.pushNamed(context, 'home_screen');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Wallet(name: text),
+                        ));
                   },
                 ),
                 ElevatedButton(
@@ -35,6 +41,17 @@ class SearchDetailScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
                   child: Text('Cancel purchase'),
+                  onPressed: () {
+                    //Navigator.pushNamed(context, 'home_screen');
+                    Navigator.pop(context);
+                  },
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.lightBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50))),
+                  child: Text('Back'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
                     Navigator.pop(context);

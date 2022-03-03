@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/searchDetailScreen.dart';
 //import 'package: date_time_field/new_task_form.dart';
 
 import 'welcome_screen.dart';
@@ -164,14 +163,16 @@ class AuthApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: 'welcome_screen',
+      initialRoute: 'home_screen', //'welcome_screen',
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),
         'accType_screen': (context) => AccTypeScreen(),
         'registration_screen': (context) => RegistrationScreen(),
         'login_screen': (context) => LoginScreen(),
         'holder_screen': (contect) => HolderScreen(),
-        'home_screen': (context) => const HomeScreen(title: ''),
+        'home_screen': (context) => const HomeScreen(
+              title: '',
+            ),
         'eventCreation_screen': (context) => EventCreationScreen(),
         'eventCreationSuccess_screen': (context) =>
             EventCreationSuccessScreen(),

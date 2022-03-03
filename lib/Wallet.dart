@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-//import qrScanner_screen.dart
+/*
+  bool setting = true;
 
-/*class Wallet extends StatelessWidget {
-  const Wallet({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Wallet here', style: Theme.of(context).textTheme.headline1),
-    );
-  }
-}*/
+  Flag({
+    this.setting,
+  });
+}
+*/
 
 var isEmpty = true;
 var isAvail = true;
+String globalName = 'nothing';
 
 class Wallet extends StatefulWidget {
-  const Wallet({Key? key}) : super(key: key);
+  final String name;
+  Wallet({Key? key, required this.name}) : super(key: key) {
+    globalName = name;
+  }
 
   @override
   State<Wallet> createState() => _WalletState();
@@ -31,37 +31,37 @@ class _WalletState extends State<Wallet> {
       appBar: AppBar(
         title: const Text('Wallet'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
+      body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[
+        if (globalName == 'nothing') ...[
           Container(
-            height: 50,
-            color: Colors.amber[600],
-            child: Center(child: Text('Wallet empty? $isEmpty.')),
+            constraints: BoxConstraints.expand(
+              height: Theme.of(context).textTheme.headline4!.fontSize! * 1.1 +
+                  200.0,
+            ),
+            padding: const EdgeInsets.all(8.0),
+            color: Colors.blue[600],
+            alignment: Alignment.center,
+            child: Text('You have no Wristbands',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: Colors.white)),
           ),
-          OutlinedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const TicketRoute()),
-                );
-              },
-              child: const Text('Search events')),
-          if (isEmpty) ...[
-            Container(
-              height: 50,
-              color: Colors.amber[500],
-              child: const Center(child: Text('No events yet')),
+        ] else ...[
+          Card(
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            Text(globalName),
+            QrImage(
+              data: globalName,
+              version: QrVersions.auto,
+              size: 200.0,
             ),
-          ] else ...[
-            Container(
-              height: 50,
-              color: Colors.amber[500],
-              child: const Center(child: Text('Event#123')),
-            ),
-          ]
+            TextButton(
+                onPressed: () => setState(() => globalName = 'nothing'),
+                child: const Text('Scan'))
+          ]))
         ],
-      ),
+      ]),
       backgroundColor: Colors.blueGrey.shade200,
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() => isEmpty = !isEmpty),
@@ -72,35 +72,17 @@ class _WalletState extends State<Wallet> {
   }
 }
 
+
 /*
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
-}
-*/
-
 class TicketRoute extends StatefulWidget {
-  const TicketRoute({Key? key}) : super(key: key);
+  const TicketRoute({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TicketRoute> createState() => _TicketState();
 }
+
 
 class _TicketState extends State<TicketRoute> {
   @override
@@ -122,11 +104,12 @@ class _TicketState extends State<TicketRoute> {
               const Text('Event#123'),
               TextButton(
                   onPressed: () {
-                    Navigator.pop(
-                      context,
-                    );
                     isEmpty = false;
                     isAvail = false;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Wallet()),
+                    );
                   },
                   child: const Text('Buy'))
             ]),
@@ -157,3 +140,4 @@ class _TicketState extends State<TicketRoute> {
     );
   }
 }
+*/
