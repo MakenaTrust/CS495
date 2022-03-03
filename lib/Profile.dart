@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+//comment
+
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
 
@@ -23,6 +25,10 @@ class _ProfileState extends State<Profile> {
   }
 
   String fname = " ";
+  String lname = " ";
+  String uName = " ";
+  bool coordinator = false;
+
   Future<void> fetchAllContact() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     var documentSnapshot = await FirebaseFirestore.instance
@@ -32,13 +38,11 @@ class _ProfileState extends State<Profile> {
         .then((user) {
       setState(() {
         fname = user.data()!['firstName'];
-        // print(fname);
+        lname = user.data()!['lastName'];
+        uName = user.data()!['username'];
+        coordinator = user.data()!['holder'];
       });
-      // return value.data()!['firstName'];
     });
-    // contactList = documentSnapshot.data['firstName'];
-    // print(contactList);
-    // contactList = documentSnapshot.data()!['firstName'];
   }
 
   @override
@@ -65,51 +69,33 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                // FutureBuilder(
-                //   future: Provider.of(context).auth.getCurrentID(),
-                // ),
+                Image.asset(
+                  'assets/images/profileTemp.png',
+                  height: 100,
+                  width: 100,
+                ),
                 Text(
-                  'Event Holder Profile',
-                  style: Theme.of(context).textTheme.headline6,
+                  '$uName',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  '$fname',
+                  '$fname' + ' ' + '$lname',
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
                 ),
-                // StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                //   stream: FirebaseFirestore.instance
-                //       .collection('Users').doc(FirebaseAuth.instance.currentUser!.uid)
-                //       .snapshots(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.data != null)
-                //       return Text('Error = ${snapshot.error}');
-                //     if (snapshot.hasData) {
-                //       final docs = snapshot.data!.docs;
-                //       return ListView.builder(
-                //         itemCount: docs.length,
-                //         itemBuilder: (_, i) {
-                //           final data = docs[i].data();
-                //           return ListTile(
-                //             title: Text(data['firstName']),
-                //           );
-                //         },
-                //       );
-                //     }
-                //     return Center(child: CircularProgressIndicator());
-                //   },
-                // ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                  child: Text('Create Event'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'eventCreation_screen');
-                  },
-                ),
+                if (coordinator == true) ...{
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.lightBlue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                    child: Text('Create Event'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'eventCreation_screen');
+                    },
+                  ),
+                },
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Colors.lightBlue,
