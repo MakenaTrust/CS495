@@ -27,6 +27,15 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
   bool showSpinner = false;
+  String currentSelectedValue = 'Music';
+
+  // String type = "Music";
+
+  // var types = [
+  //   'Sports',
+  //   'Sorority',
+  //   'Other'
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -126,20 +135,50 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
               const SizedBox(
                 height: 8.0,
               ),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: eventTypeController,
+              DropdownButtonFormField(
                 decoration: const InputDecoration(
                   alignLabelWithHint: true,
-                  labelText: 'Type of Event',
+                  labelText: 'Event Capacity',
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Type of Event';
-                  }
-                  return null;
+                value: 'Please select an event type',
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: [
+                  DropdownMenuItem(
+                    child: Text('Please select an event type'),
+                    value: 'Please select an event type',
+                  ),
+                  DropdownMenuItem(child: Text('Academic'), value: 'Academic'),
+                  DropdownMenuItem(child: Text('Dance'), value: 'Dance'),
+                  DropdownMenuItem(child: Text("Food"), value: "Food"),
+                  DropdownMenuItem(
+                      child: Text('Fraternity'), value: 'Fraternity'),
+                  DropdownMenuItem(child: Text("Music"), value: "Music"),
+                  DropdownMenuItem(child: Text("Sorority"), value: "Sorority"),
+                  DropdownMenuItem(child: Text("Sports"), value: "Sports")
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    eventTypeController.text = value.toString();
+                  });
                 },
               ),
+              // TextFormField(
+              //   textAlign: TextAlign.center,
+              //   controller: eventTypeController,
+              //   decoration: const InputDecoration(
+              //     alignLabelWithHint: true,
+              //     labelText: 'Type of Event',
+              //   ),
+              //   onTap: () {
+
+              //   },
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Type of Event';
+              //     }
+              //     return null;
+              //   },
+              // ),
               const SizedBox(
                 height: 8.0,
               ),
@@ -301,6 +340,15 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
       });
     }
   }
+
+  // _dropDown(BuildContext context) async {
+  //   DropdownButton<String>(
+  //     items: [],
+  //     onChanged: (String? val) {
+  //       Text("works");
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {

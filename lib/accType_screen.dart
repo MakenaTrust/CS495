@@ -22,12 +22,14 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                Text('Are you a visitor or coordinator?',
+                    textAlign: TextAlign.center),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.lightBlue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: Text('Event Goer'),
+                  child: Text('Visitor'),
                   onPressed: () {
                     Navigator.pushNamed(context, 'registration_screen');
                   },
@@ -37,7 +39,7 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
                         primary: Colors.lightBlue,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
-                    child: Text('Event Holder'),
+                    child: Text('Coordinator'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'holder_screen');
                     }),
