@@ -47,9 +47,14 @@ class _ProfileState extends State<Profile> {
         lname = result;
       });
     });
-    x.fetchUserUserName().then((String result) {
+    x.fetchUserName().then((String result) {
       setState(() {
         uName = result;
+      });
+    });
+    x.fetchUserHolder().then((bool result) {
+      setState(() {
+        coordinator = result;
       });
     });
     // y.fetchEventName().then((List<DocumentSnapshot> result) {

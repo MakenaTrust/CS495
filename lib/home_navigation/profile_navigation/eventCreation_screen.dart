@@ -322,14 +322,15 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     ));
     _selectedTime = newSelectedTime!;
     String time = _selectedTime.toString();
-    eventTimeController.text = time.substring(10, time.length - 1);
+    // eventTimeController.text = time.substring(10, time.length - 1);
     // _selectedTime = newSelectedTime!;
     // eventDateController.text = DateFormat.yMMMd().format(_selectedTime);
     // ..selection = TextSelection.fromPosition(TextPOsition())
 // if (newSelectedDate != null && picked != selectedDate) {
     setState(() {
       eventTimeController =
-          time.substring(10, time.length - 1) as TextEditingController;
+          TextEditingController(text: time.substring(10, time.length - 1));
+      // eventTimeController = eventTimeController.text as TextEditingController;
       // eventDateController = newSelectedTime as TextEditingController;
     });
   }

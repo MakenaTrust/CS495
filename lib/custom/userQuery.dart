@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,7 +52,7 @@ class UserQuery {
     return lname;
   }
 
-  Future<String> fetchUserUserName() async {
+  Future<String> fetchUserName() async {
     // String uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
         .collection('Users')
@@ -62,5 +64,19 @@ class UserQuery {
       // coordinator = user.data()!['holder'];
     });
     return uName;
+  }
+
+  Future<bool> fetchUserHolder() async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((user) {
+      // setState(() {
+      coordinator = user.data()!['holder'];
+      // coordinator = user.data()!['holder'];
+    });
+    return coordinator;
   }
 }
