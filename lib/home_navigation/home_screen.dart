@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'Wallet.dart';
-import 'Search.dart';
-import 'Profile.dart';
-import 'SendReceive.dart';
+import 'wallet_navigation/walletMain_screen.dart';
+import 'search_navigation/searchMain_screen.dart';
+import 'profile_navigation/profileMain_screen.dart';
+import 'sendReceive_navigation/sendReceiveMain_screen.dart';
 
 User? loggedinUser;
 

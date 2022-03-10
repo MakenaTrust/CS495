@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Wallet.dart';
+import 'wallet_navigation/walletMain_screen.dart';
 
 class SearchDetailScreen extends StatelessWidget {
   final String text;
