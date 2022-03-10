@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import '/custom/userQuery.dart';
+import '/custom/eventQuery.dart';
 
 //comment
 
@@ -15,50 +17,52 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  getUser() async {
-    final _auth = FirebaseAuth.instance;
-    final user1 = _auth.currentUser;
-    final userid = user1?.uid;
+  // getUser() async {
+  //   final _auth = FirebaseAuth.instance;
+  //   final user1 = _auth.currentUser;
+  //   final userid = user1?.uid;
 
-    print(userid);
-    return userid.toString();
-  }
+  //   print(userid);
+  //   return userid.toString();
+  // }
 
   String fname = " ";
   String lname = " ";
   String uName = " ";
+  List<DocumentSnapshot> eventName = [];
   bool coordinator = false;
-
-  Future<void> fetchAllContact() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    var documentSnapshot = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((user) {
-      setState(() {
-        fname = user.data()!['firstName'];
-        lname = user.data()!['lastName'];
-        uName = user.data()!['username'];
-        coordinator = user.data()!['holder'];
-      });
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    fetchAllContact();
-    // fetchAllContact().then((String list) {
+    UserQuery x = UserQuery();
+    // EventQuery y = EventQuery();
+    x.fetchUserFirstName().then((String result) {
+      setState(() {
+        fname = result;
+      });
+    });
+    x.fetchUserLastName().then((String result) {
+      setState(() {
+        lname = result;
+      });
+    });
+    x.fetchUserUserName().then((String result) {
+      setState(() {
+        uName = result;
+      });
+    });
+    // y.fetchEventName().then((List<DocumentSnapshot> result) {
     //   setState(() {
-    //     contactList = list;
+    //     eventName = result;
     //   });
     // });
   }
 
-  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
+  // DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
-
+  // UserQuery x = UserQuery();
+  // late Future<String> first = x.fetchUserFirstName();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +84,7 @@ class _ProfileState extends State<Profile> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
+                  // '$fname' + ' ' + '$lname' + ' ' + '$eventName',
                   '$fname' + ' ' + '$lname',
                   style: Theme.of(context).textTheme.headline6,
                   textAlign: TextAlign.center,
