@@ -16,6 +16,8 @@ class UserQuery {
   }
 
   String fname = " ";
+  String email = " ";
+  String password = " ";
   String lname = " ";
   String uName = " ";
   bool coordinator = false;
@@ -78,5 +80,102 @@ class UserQuery {
       // coordinator = user.data()!['holder'];
     });
     return coordinator;
+  }
+
+  Future<String> fetchUserEmail() async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((user) {
+      // setState(() {
+      email = user.data()!['email'];
+      // coordinator = user.data()!['holder'];
+    });
+    return email;
+  }
+
+  Future<String> fetchUserPassword() async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((user) {
+      // setState(() {
+      password = user.data()!['email'];
+      // coordinator = user.data()!['holder'];
+    });
+    return password;
+  }
+
+  Future<String> updateUserName(String newUserName) async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"username": newUserName});
+    // throw Exception("Couldn't update username");
+    //     .then((user) {
+    //   // setState(() {
+    //   coordinator = user.data()!['holder'];
+    //   // coordinator = user.data()!['holder'];
+    // });
+    return newUserName;
+  }
+
+  Future<String> updateFirstName(String newFirstName) async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    if (newFirstName != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({"firstName": newFirstName});
+      // throw Exception("Couldn't update username");
+      //     .then((user) {
+      //   // setState(() {
+      //   coordinator = user.data()!['holder'];
+      //   // coordinator = user.data()!['holder'];
+      // });
+      return newFirstName;
+    } else
+      return '';
+  }
+
+  Future<String> updateLastName(String newLastName) async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    if (newLastName != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({"lastName": newLastName});
+      // throw Exception("Couldn't update username");
+      //     .then((user) {
+      //   // setState(() {
+      //   coordinator = user.data()!['holder'];
+      //   // coordinator = user.data()!['holder'];
+      // });
+      return newLastName;
+    } else
+      return '';
+  }
+
+  Future<String> updatePassword(String newPassword) async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    if (newPassword != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({"password": newPassword});
+      // throw Exception("Couldn't update username");
+      //     .then((user) {
+      //   // setState(() {
+      //   coordinator = user.data()!['holder'];
+      //   // coordinator = user.data()!['holder'];
+      // });
+      return newPassword;
+    } else
+      return '';
   }
 }

@@ -16,10 +16,11 @@ class EventQuery {
   // String uName = " ";
   // bool coordinator = false;
 
-  Future<List<QueryDocumentSnapshot>> fetchEventName() async {
-    final QuerySnapshot result =
-        await FirebaseFirestore.instance.collection('Events').get();
-    final List<QueryDocumentSnapshot> eventName = result.docs.toList();
+  Future<QuerySnapshot> fetchEventName() async {
+    final QuerySnapshot result = FirebaseFirestore.instance
+        .collection('Events')
+        .snapshots() as QuerySnapshot<Object?>;
+    // final List<QueryDocumentSnapshot> eventName = result.docs.toList();
     // eventName.forEach((data) => print(data));
     // String uid = FirebaseAuth.instance.currentUser!.uid;
     // await FirebaseFirestore.instance
@@ -34,6 +35,6 @@ class EventQuery {
     //   // coordinator = user.data()!['holder'];
     // });
     // print(eventName);
-    return eventName;
+    return result;
   }
 }

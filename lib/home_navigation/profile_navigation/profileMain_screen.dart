@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '/custom/userQuery.dart';
 import '/custom/eventQuery.dart';
+import '/home_navigation/Profile_navigation/profileUpdate_screen.dart';
+import '/home_navigation/Profile_navigation/profileUpdateSuccess_screen.dart';
 
 //comment
 
@@ -29,14 +31,14 @@ class _ProfileState extends State<Profile> {
   String fname = " ";
   String lname = " ";
   String uName = " ";
-  List<DocumentSnapshot> eventName = [];
+  late QuerySnapshot eventName;
   bool coordinator = false;
 
   @override
   void initState() {
     super.initState();
     UserQuery x = UserQuery();
-    // EventQuery y = EventQuery();
+    EventQuery y = EventQuery();
     x.fetchUserFirstName().then((String result) {
       setState(() {
         fname = result;
@@ -57,10 +59,11 @@ class _ProfileState extends State<Profile> {
         coordinator = result;
       });
     });
-    // y.fetchEventName().then((List<DocumentSnapshot> result) {
+    // y.fetchEventName().then((QuerySnapshot result) {
     //   setState(() {
     //     eventName = result;
     //   });
+    //   print(result.docs);
     // });
   }
 
@@ -116,6 +119,20 @@ class _ProfileState extends State<Profile> {
                       try {
                         await FirebaseAuth.instance.signOut();
                         Navigator.pushNamed(context, 'welcome_screen');
+                        errorMessage = '';
+                      } on FirebaseAuthException catch (error) {
+                        errorMessage = error.message!;
+                      }
+                    }),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.lightBlue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                    child: Text('Update Profile'),
+                    onPressed: () async {
+                      try {
+                        Navigator.pushNamed(context, 'profileUpdate_screen');
                         errorMessage = '';
                       } on FirebaseAuthException catch (error) {
                         errorMessage = error.message!;

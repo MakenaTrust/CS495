@@ -14,6 +14,8 @@ import 'bandedBoot_navigation/registration_navigation/holder_screen.dart';
 import 'home_navigation/profile_navigation/eventCreation_screen.dart';
 import 'home_navigation/profile_navigation/eventCreationSuccess_screen.dart';
 import 'home_navigation/profile_navigation/profileMain_screen.dart';
+import 'home_navigation/profile_navigation/profileUpdate_screen.dart';
+import 'home_navigation/profile_navigation/profileUpdateSuccess_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +47,8 @@ class AuthApp extends StatelessWidget {
         'eventCreationSuccess_screen': (context) =>
             const EventCreationSuccessScreen(),
         'profileMain_screen': (context) => Profile(),
+        'profileUpdate_screen': (context) => ProfileUpdateScreen(),
+        'profileUpdateSuccess_screen': (context) => ProfileUpdateSuccessScreen()
       },
     );
   }
