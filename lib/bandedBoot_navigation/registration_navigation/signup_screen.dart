@@ -26,9 +26,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
         leading: const BackButton(
-          color: Colors.white,
+          color: Color(0xFF6634B0),
         ),
+        backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
       body: Form(
@@ -124,9 +126,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.lightBlue,
+                    primary: Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50))),
+                        borderRadius: BorderRadius.circular(8))),
                 child: const Text('Register'),
                 onPressed: () async {
                   setState(() {

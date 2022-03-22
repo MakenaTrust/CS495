@@ -10,15 +10,15 @@ const kTextFieldDecoration = InputDecoration(
     hintStyle: TextStyle(color: Colors.grey),
     contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      borderSide: BorderSide(color: Color(0xFF6634B0), width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
     ),
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      borderSide: BorderSide(color: Color(0xFF6634B0), width: 2.0),
+      borderRadius: BorderRadius.all(Radius.circular(8)),
     ));
 
 class LoginScreen extends StatefulWidget {
@@ -40,9 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
         leading: const BackButton(
-          color: Colors.white,
+          color: Color(0xFF6634B0),
         ),
+        backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
       body: Form(
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   validator: validatePassword,
                   decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your password.')),
+                      hintText: 'Enter your password')),
               const SizedBox(
                 height: 24.0,
               ),
@@ -90,9 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.lightBlue,
+                    primary: Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50))),
+                        borderRadius: BorderRadius.circular(8))),
                 child: const Text('Log In'),
                 onPressed: () async {
                   setState(() {

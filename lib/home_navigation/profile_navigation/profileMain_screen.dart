@@ -100,9 +100,9 @@ class _ProfileState extends State<Profile> {
                 if (coordinator == true) ...{
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue,
+                        primary: Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
+                            borderRadius: BorderRadius.circular(8))),
                     child: Text('Create Event'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'eventCreation_screen');
@@ -111,9 +111,9 @@ class _ProfileState extends State<Profile> {
                 },
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue,
+                        primary: Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
+                            borderRadius: BorderRadius.circular(8))),
                     child: Text('Log Out'),
                     onPressed: () async {
                       try {
@@ -126,9 +126,9 @@ class _ProfileState extends State<Profile> {
                     }),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue,
+                        primary: Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
+                            borderRadius: BorderRadius.circular(8))),
                     child: Text('Update Profile'),
                     onPressed: () async {
                       try {

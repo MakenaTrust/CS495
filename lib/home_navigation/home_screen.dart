@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        backgroundColor: Colors.white,
       ),
       body: _currPage,
       bottomNavigationBar: BottomNavigationBar(
@@ -88,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.arrow_right_arrow_left),
-              label: 'Send/Receive',
+              label: 'Transfer',
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.profile_circled),
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent[800],
+          selectedItemColor: Color(0xFF6634B0),
           onTap: (index) {
             _onItemTapped(index);
           }),

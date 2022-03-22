@@ -28,46 +28,58 @@ class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wallet'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Wallet'),
+      // ),
       body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[
         if (globalName == 'nothing') ...[
           Container(
-            constraints: BoxConstraints.expand(
-              height: Theme.of(context).textTheme.headline4!.fontSize! * 1.1 +
-                  200.0,
+            height: 200,
+            width: 380,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: InkWell(
+                splashColor: Colors.blue,
+                onTap: () {
+                  debugPrint('Tapped');
+                },
+                child: ClipRRect(
+                  child:
+                      Image.asset('assets/images/testBandPic.heic', scale: 1),
+                ),
+              ),
             ),
-            padding: const EdgeInsets.all(8.0),
-            color: Colors.blue[600],
-            alignment: Alignment.center,
-            child: Text('You have no Wristbands',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(color: Colors.white)),
-          ),
+          )
         ] else ...[
-          Card(
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Text(globalName),
-            QrImage(
-              data: globalName,
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
-            TextButton(
-                onPressed: () => setState(() => globalName = 'nothing'),
-                child: const Text('Scan'))
-          ]))
+          Container(
+              height: 200,
+              width: 380,
+              margin: const EdgeInsets.only(left: 10, right: 10),
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Text(globalName),
+                    QrImage(
+                      data: globalName,
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    ),
+                    TextButton(
+                        onPressed: () => setState(() => globalName = 'nothing'),
+                        child: const Text('Scan'))
+                  ])))
         ],
       ]),
-      backgroundColor: Colors.blueGrey.shade200,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => isEmpty = !isEmpty),
-        tooltip: 'Flip',
-        child: const Icon(Icons.add),
-      ),
+      backgroundColor: Colors.white,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => setState(() => isEmpty = !isEmpty),
+      //   tooltip: 'Flip',
+      //   child: const Icon(Icons.add),
+      //),
     );
   }
 }

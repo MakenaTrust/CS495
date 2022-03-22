@@ -13,9 +13,11 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Image.asset('assets/images/bandedLogo.png', scale: 15),
           leading: const BackButton(
-            color: Colors.white,
+            color: Color(0xFF6634B0),
           ),
+          backgroundColor: Colors.white,
         ),
         backgroundColor: Colors.white,
         body: Padding(
@@ -24,24 +26,52 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const Text('Are you a visitor or coordinator?',
-                    textAlign: TextAlign.center),
+                const Text(
+                  'Are you a Visitor or a Coordinator?',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 69, 65, 73),
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
+                      primary: Color(0xFF6634B0),
+                      fixedSize: const Size(80, 160),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                  child: const Text('Visitor'),
+                          borderRadius: BorderRadius.circular(8))),
+                  child: const Text(
+                    'Visitor',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
+                  ),
                   onPressed: () {
                     Navigator.pushNamed(context, 'registration_screen');
                   },
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue,
+                        primary: Color(0xFF6634B0),
+                        fixedSize: const Size(80, 160),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
-                    child: const Text('Coordinator'),
+                            borderRadius: BorderRadius.circular(8))),
+                    child: const Text(
+                      'Coordinator',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, 'holder_screen');
                     }),
