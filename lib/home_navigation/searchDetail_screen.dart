@@ -22,9 +22,9 @@ class SearchDetailScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
+                      primary: Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
+                          borderRadius: BorderRadius.circular(8))),
                   child: const Text('Purchase and go to Wallet'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
@@ -37,9 +37,9 @@ class SearchDetailScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
+                      primary: Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
+                          borderRadius: BorderRadius.circular(8))),
                   child: const Text('Cancel purchase'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
@@ -48,9 +48,9 @@ class SearchDetailScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
+                      primary: Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
+                          borderRadius: BorderRadius.circular(8))),
                   child: const Text('Back'),
                   onPressed: () {
                     //Navigator.pushNamed(context, 'home_screen');
