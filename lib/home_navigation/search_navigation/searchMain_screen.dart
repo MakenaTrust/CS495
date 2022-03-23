@@ -175,6 +175,8 @@ class _ExamplePageState extends State<Search> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String name = data['EventName'];
+                    // String date = data['Date'];
+                    // String capacity = data['capacity'];
                     return GestureDetector(
                         onTap: () => {
                               Navigator.push(
@@ -187,11 +189,23 @@ class _ExamplePageState extends State<Search> {
                         child: Card(
                           child: Column(
                             children: <Widget>[
-                              Text(
-                                "$name",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 30,
+                              Container(
+                                height: 200,
+                                width: 380,
+                                // width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Card(
+                                  child: InkWell(
+                                    splashColor: Color(0xFF6634B0),
+                                    onTap: () {
+                                      debugPrint('Tapped');
+                                    },
+                                    child: Center(
+                                      child: Text('$name',
+                                          textAlign: TextAlign.center),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],

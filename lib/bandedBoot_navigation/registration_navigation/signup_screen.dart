@@ -125,6 +125,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 8.0,
               ),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF6634B0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  child: Text(
+                    'Submit a profile picture',
+                  ),
+                  onPressed: () {}),
+              const SizedBox(
+                height: 8.0,
+              ),
+              // Container(
+              //     margin: EdgeInsets.all(15),
+              //     padding: EdgeInsets.all(15),
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.all(
+              //         Radius.circular(15),
+              //       ),
+              //       border: Border.all(color: Colors.white),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.black12,
+              //           offset: Offset(2, 2),
+              //           spreadRadius: 2,
+              //           blurRadius: 1,
+              //         ),
+              //       ],
+              //     ),
+              //     child: (imageUrl != null)
+              //         ? Image.network(imageUrl)
+              //         : Image.network('https://i.imgur.com/sUFH1Aq.png')),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(

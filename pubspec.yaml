@@ -45,6 +45,8 @@ dependencies:
   dio: ^4.0.4
   get: ^4.6.1
   firestore_search: ^0.1.9
+  scrollable_positioned_list: ^0.2.3
+  image_picker: ^0.8.4+11
 
 
 dev_dependencies:
