@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -21,7 +25,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
   bool showSpinner = false;
-
+  String imageUrl =
+      'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
+  File? imageFile;
+  final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +49,45 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
+                  child: ClipOval(
+                    // margin: EdgeInsets.all(15),
+                    // padding: EdgeInsets.all(15),
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    //   borderRadius: BorderRadius.all(
+                    //     Radius.circular(8),
+                    //   ),
+                    //   border: Border.all(color: Colors.white),
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: Colors.black12,
+                    //       offset: Offset(2, 2),
+                    //       spreadRadius: 2,
+                    //       blurRadius: 1,
+                    //     ),
+                    //   ],
+                    // ),
+                    child:
+                        // (imageUrl.isNotEmpty)
+                        //     ? Image.network(imageUrl)
+                        //     :
+                        Image.network(
+                            'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                            fit: BoxFit.cover),
+                    // height: 100,
+                    // width: 10,
+                  )),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF6634B0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  child: Text(
+                    'Submit a profile picture',
+                  ),
+                  onPressed: () {}),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
@@ -124,39 +170,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const SizedBox(
                 height: 8.0,
               ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF6634B0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8))),
-                  child: Text(
-                    'Submit a profile picture',
-                  ),
-                  onPressed: () {}),
               const SizedBox(
                 height: 8.0,
               ),
-              // Container(
-              //     margin: EdgeInsets.all(15),
-              //     padding: EdgeInsets.all(15),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.all(
-              //         Radius.circular(15),
-              //       ),
-              //       border: Border.all(color: Colors.white),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: Colors.black12,
-              //           offset: Offset(2, 2),
-              //           spreadRadius: 2,
-              //           blurRadius: 1,
-              //         ),
-              //       ],
-              //     ),
-              //     child: (imageUrl != null)
-              //         ? Image.network(imageUrl)
-              //         : Image.network('https://i.imgur.com/sUFH1Aq.png')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Color(0xFF6634B0),
@@ -236,6 +252,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
     return null;
   }
+
+  // Future getImage() async{
+  //   final pickedFile =
+  // }
 
   // void registerToFb() {
   //   firebaseAuth

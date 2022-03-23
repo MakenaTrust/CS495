@@ -10,29 +10,32 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: EdgeInsets.all(60.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                // const Text(
-                //   'Welcome to',
-                //   style: TextStyle(
-                //       fontSize: 40,
-                //       color: Color(0xFF6634B0),
-                //       fontWeight: FontWeight.bold),
-                //   textAlign: TextAlign.center,
-                // ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Image.asset('assets/images/bandedNameLogo.png', scale: 3),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
+      backgroundColor: Colors.white,
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            // const Text(
+            //   'Welcome to',
+            //   style: TextStyle(
+            //       fontSize: 40,
+            //       color: Color(0xFF6634B0),
+            //       fontWeight: FontWeight.bold),
+            //   textAlign: TextAlign.center,
+            // ),
+            const SizedBox(
+              height: 5,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child:
+                    Image.asset('assets/images/bandedNameLogo.png', scale: 3)),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
@@ -41,8 +44,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, 'login_screen');
                   },
-                ),
-                ElevatedButton(
+                )),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
@@ -50,8 +55,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: const Text('Register'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'accType_screen');
-                    }),
-              ]),
-        ));
+                    })),
+          ]),
+    );
   }
 }

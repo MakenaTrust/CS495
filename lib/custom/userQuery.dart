@@ -109,6 +109,18 @@ class UserQuery {
     });
     return password;
   }
+  //   Future<String> fetchUserPicture() async {
+  //   // String uid = FirebaseAuth.instance.currentUser!.uid;
+  //   await FirebaseFirestore.instance
+  //       .collection('Users')
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
+  //       .get()
+  //       .then((user) {
+  //     // setState(() {
+  //     password = user.data()!['picture'];
+  //   });
+  //   return password;
+  // }
 
   Future<String> updateUserName(String newUserName) async {
     // String uid = FirebaseAuth.instance.currentUser!.uid;
