@@ -40,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // print(pageNum);
     super.initState();
-    _Wallet = Wallet(name: 'nothing');
-    _Search = const Search();
-    _SendReceive = const SendReceive();
+    _Wallet = Wallet();
+    _Search = Search();
+    _SendReceive = SendReceive();
     _Profile = Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
     selectedIndex = pageNum;

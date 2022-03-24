@@ -16,6 +16,9 @@ import 'home_navigation/profile_navigation/eventCreationSuccess_screen.dart';
 import 'home_navigation/profile_navigation/profileMain_screen.dart';
 import 'home_navigation/profile_navigation/profileUpdate_screen.dart';
 import 'home_navigation/profile_navigation/profileUpdateSuccess_screen.dart';
+import 'home_navigation/wallet_navigation/walletMain_screen.dart';
+import 'home_navigation/search_navigation/searchMain_screen.dart';
+import 'home_navigation/sendReceive_navigation/sendReceiveMain_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +51,11 @@ class AuthApp extends StatelessWidget {
             const EventCreationSuccessScreen(),
         'profileMain_screen': (context) => Profile(),
         'profileUpdate_screen': (context) => ProfileUpdateScreen(),
-        'profileUpdateSuccess_screen': (context) => ProfileUpdateSuccessScreen()
+        'profileUpdateSuccess_screen': (context) =>
+            ProfileUpdateSuccessScreen(),
+        'searchMain_screen': (context) => Search(),
+        'walletMain_screen': (context) => Wallet(),
+        'sendReceiveMain_screen': (context) => SendReceive()
       },
     );
   }

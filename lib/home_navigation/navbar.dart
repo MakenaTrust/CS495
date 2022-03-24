@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class SendReceive extends StatefulWidget {
-  const SendReceive({Key? key}) : super(key: key);
-  @override
-  _ExamplePageState createState() => _ExamplePageState();
-}
+import 'search_navigation/searchMain_screen.dart';
 
-class _ExamplePageState extends State<SendReceive> {
-  int index = 0;
+class NavBar {
+  final num = 0;
+  final index = 0;
+
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
@@ -16,13 +14,13 @@ class _ExamplePageState extends State<SendReceive> {
     if (index == 3) Navigator.pushNamed(context, 'profileMain_screen');
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Send/Receive here',
-            style: Theme.of(context).textTheme.headline6),
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        backgroundColor: Colors.white,
       ),
+      body: Search(),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
@@ -52,17 +50,6 @@ class _ExamplePageState extends State<SendReceive> {
   }
 }
 
-/*class SendReceive extends StatelessWidget {
-  SendReceive({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Send/Receive here',
-          style: Theme.of(context).textTheme.headline6),
-    );
-  }
-}*/
 
 
 /*

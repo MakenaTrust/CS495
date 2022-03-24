@@ -31,7 +31,8 @@ class _ExamplePageState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
+        body: SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(
@@ -41,7 +42,7 @@ class _ExamplePageState extends State<Search> {
             controller: input,
             decoration: InputDecoration(
                 enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: const Color(0xFF6634B0)),
+                  borderSide: BorderSide(color: Color(0xFF6634B0)),
                 ),
                 focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFF6634B0)),
@@ -86,7 +87,7 @@ class _ExamplePageState extends State<Search> {
           if (clicked == false) searchPageWidget() else fullSearch(name)
         ],
       ),
-    );
+    ));
   }
 
   // Widget searchBarWidget() {

@@ -15,10 +15,8 @@ var isAvail = true;
 String globalName = 'nothing';
 
 class Wallet extends StatefulWidget {
-  final String name;
-  Wallet({Key? key, required this.name}) : super(key: key) {
-    globalName = name;
-  }
+  final String name = "nothing";
+  Wallet({Key? key}) : super(key: key);
 
   @override
   State<Wallet> createState() => _WalletState();
