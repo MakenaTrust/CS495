@@ -20,7 +20,7 @@ class EventCreationSuccessScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF6634B0),
+                      primary: const Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
                   child: const Text('Back to Profile'),

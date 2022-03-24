@@ -1,9 +1,9 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
 
 class UserQuery {
   getUser() async {
@@ -11,7 +11,7 @@ class UserQuery {
     final user1 = _auth.currentUser;
     final userid = user1?.uid;
 
-    print(userid);
+    // print(userid);
     return userid.toString();
   }
 
@@ -151,8 +151,9 @@ class UserQuery {
       //   // coordinator = user.data()!['holder'];
       // });
       return newFirstName;
-    } else
+    } else {
       return '';
+    }
   }
 
   Future<String> updateLastName(String newLastName) async {
@@ -169,8 +170,9 @@ class UserQuery {
       //   // coordinator = user.data()!['holder'];
       // });
       return newLastName;
-    } else
+    } else {
       return '';
+    }
   }
 
   Future<String> updatePassword(String newPassword) async {
@@ -187,7 +189,8 @@ class UserQuery {
       //   // coordinator = user.data()!['holder'];
       // });
       return newPassword;
-    } else
+    } else {
       return '';
+    }
   }
 }

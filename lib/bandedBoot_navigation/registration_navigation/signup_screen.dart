@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/custom/imageQuery.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+
+enum ImageSourceType { gallery, camera }
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -27,8 +30,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String imageUrl =
       'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
-  File? imageFile;
-  final picker = ImagePicker();
+  File? _image;
+  ImagePicker picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,13 +84,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   )),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF6634B0),
+                      primary: const Color(0xFF6634B0),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
-                  child: Text(
+                  child: const Text(
                     'Submit a profile picture',
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    _handleURLButtonPress(context, ImageSourceType.gallery);
+                  }),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
@@ -175,7 +180,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF6634B0),
+                    primary: const Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                 child: const Text('Register'),
@@ -251,6 +256,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ''';
     }
     return null;
+  }
+
+  void _handleURLButtonPress(BuildContext context, var type) {
+    _image = Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ImageFromGalleryEx(type)))
+        as File?;
   }
 
   // Future getImage() async{

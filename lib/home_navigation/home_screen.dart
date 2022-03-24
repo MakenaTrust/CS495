@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    print(pageNum);
+    // print(pageNum);
     super.initState();
     _Wallet = Wallet(name: 'nothing');
-    _Search = Search();
+    _Search = const Search();
     _SendReceive = const SendReceive();
     _Profile = Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getCurrentUser() async {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
         loggedinUser = user;
       }
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xFF6634B0),
+          selectedItemColor: const Color(0xFF6634B0),
           onTap: (index) {
             _onItemTapped(index);
           }),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/home_navigation/searchDetail_screen.dart';
 import 'package:flutter_application_1/custom/text_utils.dart';
+import 'dart:io';
 
 /*
 
@@ -39,26 +40,30 @@ class _ExamplePageState extends State<Search> {
           TextField(
             controller: input,
             decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF6634B0)),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: const Color(0xFF6634B0)),
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFF6634B0)),
                 ),
                 prefixIcon: IconButton(
                   onPressed: () {
                     // setState(() {});
                   },
-                  icon: Icon(Icons.search, color: Color(0xFF6634B0)),
+                  icon: const Icon(Icons.search, color: Color(0xFF6634B0)),
                 ),
                 hintText: 'Search...',
                 suffixIcon: IconButton(
                   onPressed: () {
                     clicked = false;
                     input.clear();
-                    setState(() {});
+                    setState(() {
+                      name = '';
+                      clicked = false;
+                      initState();
+                    });
                   },
-                  icon: Icon(Icons.close, color: Color(0xFF6634B0)),
+                  icon: const Icon(Icons.close, color: Color(0xFF6634B0)),
                 )),
             onTap: () {
               clicked = true;
@@ -132,23 +137,92 @@ class _ExamplePageState extends State<Search> {
 
   Widget searchPageWidget() {
     // print("searchpage");
-    return Container(
-      height: 200,
-      width: 380,
-      // width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 10, right: 10),
-      child: Card(
-        child: InkWell(
-          splashColor: Color(0xFF6634B0),
-          onTap: () {
-            debugPrint('Tapped');
-          },
-          child: ClipRRect(
-            child: Image.asset('assets/images/testBandPic.heic', scale: 1),
-          ),
-        ),
-      ),
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: (name != "")
+          ? FirebaseFirestore.instance
+              .collection('Events')
+              .where('SearchEventName',
+                  isGreaterThanOrEqualTo: name.toLowerCase())
+              .where('SearchEventName', isLessThan: name.toLowerCase() + 'z')
+              .snapshots()
+          : FirebaseFirestore.instance.collection("Events").snapshots(),
+      builder: (context, snapshot) {
+        return (snapshot.connectionState == ConnectionState.waiting)
+            ? const Center(child: const CircularProgressIndicator())
+            : ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot data = snapshot.data!.docs[index];
+                  String name = data['EventName'];
+                  String pic = data['SearchEventName'];
+                  // String picName = pic + ".png";
+                  // String date = data['Date'];
+                  // String capacity = data['capacity'];
+                  return GestureDetector(
+                      onTap: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchDetailScreen(
+                                      text: data['EventName']),
+                                ))
+                          },
+                      child: Card(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 200,
+                              width: 380,
+                              // width: MediaQuery.of(context).size.width,
+                              margin:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Card(
+                                child: InkWell(
+                                  splashColor: const Color(0xFF6634B0),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SearchDetailScreen(
+                                                  text: data['EventName']),
+                                        ));
+                                  },
+                                  child: Center(child: renderPic(pic, name)
+                                      // Text('$name',
+                                      //     textAlign: TextAlign.center),
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
+              );
+      },
     );
+
+    // return Container(
+    //   height: 200,
+    //   width: 390,
+    //   // width: MediaQuery.of(context).size.width,
+    //   margin: const EdgeInsets.only(left: 10, right: 10),
+    //   child: Card(
+    //     child: InkWell(
+    //       splashColor: const Color(0xFF6634B0),
+    //       onTap: () {
+    //         debugPrint('Tapped');
+    //       },
+    //       child: ClipRRect(
+    //         child: Image.asset('assets/images/testBandPic.heic', scale: 1),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget fullSearch(String name) {
@@ -157,7 +231,7 @@ class _ExamplePageState extends State<Search> {
       width: 800,
       height: 800,
       child: StreamBuilder<QuerySnapshot>(
-        stream: (name != "" && name != null)
+        stream: (name != "")
             ? FirebaseFirestore.instance
                 .collection('Events')
                 .where('SearchEventName',
@@ -175,6 +249,8 @@ class _ExamplePageState extends State<Search> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String name = data['EventName'];
+                    String pic = data['SearchEventName'];
+                    // String picName = pic + ".png";
                     // String date = data['Date'];
                     // String capacity = data['capacity'];
                     return GestureDetector(
@@ -197,14 +273,20 @@ class _ExamplePageState extends State<Search> {
                                     const EdgeInsets.only(left: 10, right: 10),
                                 child: Card(
                                   child: InkWell(
-                                    splashColor: Color(0xFF6634B0),
+                                    splashColor: const Color(0xFF6634B0),
                                     onTap: () {
-                                      debugPrint('Tapped');
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchDetailScreen(
+                                                    text: data['EventName']),
+                                          ));
                                     },
-                                    child: Center(
-                                      child: Text('$name',
-                                          textAlign: TextAlign.center),
-                                    ),
+                                    child: Center(child: renderPic(pic, name)
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                        ),
                                   ),
                                 ),
                               ),
@@ -218,6 +300,19 @@ class _ExamplePageState extends State<Search> {
     );
   }
 }
+
+Widget renderPic(String pic, String name) {
+  // String pic1 = pic.replaceAll(",", "");
+  String picName = pic + '.png';
+  if (File('assets/images/$pic').exists() == false) {
+    return Card(child: Text('$name', textAlign: TextAlign.center));
+  } else
+    print(picName);
+  return ClipRRect(
+    child: Image.asset('assets/images/$picName', scale: 1),
+  );
+}
+
 
 /*          stream: (name != "" && name != null)
  //             ? FirebaseFirestore.instance

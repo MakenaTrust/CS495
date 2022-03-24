@@ -183,7 +183,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF6634B0),
+                    primary: const Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                 child: const Text('Register Event'),

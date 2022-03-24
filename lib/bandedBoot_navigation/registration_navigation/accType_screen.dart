@@ -39,7 +39,7 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF6634B0),
+                      primary: const Color(0xFF6634B0),
                       fixedSize: const Size(80, 160),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8))),
@@ -60,7 +60,7 @@ class _AccTypeScreenState extends State<AccTypeScreen> {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF6634B0),
+                        primary: const Color(0xFF6634B0),
                         fixedSize: const Size(80, 160),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),

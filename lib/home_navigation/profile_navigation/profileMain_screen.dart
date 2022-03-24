@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import '/custom/userQuery.dart';
-import '/custom/eventQuery.dart';
+// import '/custom/eventQuery.dart';
 // import 'package:image_picker/image_picker.dart';
-import '/home_navigation/Profile_navigation/profileUpdate_screen.dart';
-import '/home_navigation/Profile_navigation/profileUpdateSuccess_screen.dart';
+// import '/home_navigation/Profile_navigation/profileUpdate_screen.dart';
+// import '/home_navigation/Profile_navigation/profileUpdateSuccess_screen.dart';
 
 //comment
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     UserQuery x = UserQuery();
-    EventQuery y = EventQuery();
+    // EventQuery y = EventQuery();
     x.fetchUserFirstName().then((String result) {
       setState(() {
         fname = result;
@@ -77,7 +77,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,7 +89,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 Text(
                   '$uName',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 Text(
@@ -101,10 +102,10 @@ class _ProfileState extends State<Profile> {
                 if (coordinator == true) ...{
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF6634B0),
+                        primary: const Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
-                    child: Text('Create Event'),
+                    child: const Text('Create Event'),
                     onPressed: () {
                       Navigator.pushNamed(context, 'eventCreation_screen');
                     },
@@ -112,10 +113,10 @@ class _ProfileState extends State<Profile> {
                 },
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF6634B0),
+                        primary: const Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
-                    child: Text('Log Out'),
+                    child: const Text('Log Out'),
                     onPressed: () async {
                       try {
                         await FirebaseAuth.instance.signOut();
@@ -127,10 +128,10 @@ class _ProfileState extends State<Profile> {
                     }),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF6634B0),
+                        primary: const Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
-                    child: Text('Update Profile'),
+                    child: const Text('Update Profile'),
                     onPressed: () async {
                       try {
                         Navigator.pushNamed(context, 'profileUpdate_screen');

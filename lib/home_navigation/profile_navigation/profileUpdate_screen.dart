@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:intl/intl.dart';
 import '/custom/userQuery.dart';
 import '/custom/eventQuery.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -31,7 +31,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   String fname = " ";
   String lname = " ";
   String uName = " ";
-  static const String me = "me";
+  // static const String me = "me";
   bool changed = false;
 
   @override
@@ -86,8 +86,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text('Edit the information you wish to change',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text('Edit the information you wish to change',
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
               TextFormField(
                 textAlign: TextAlign.center,
                 controller: newUsernameController,
@@ -97,7 +97,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   hintText: '$uName',
                 ),
               ),
-              Text("Change username"),
+              const Text("Change username"),
               TextFormField(
                 textAlign: TextAlign.center,
                 controller: newFirstNameController,
@@ -107,7 +107,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   hintText: '$fname',
                 ),
               ),
-              Text("Change first name"),
+              const Text("Change first name"),
               const SizedBox(
                 height: 8.0,
               ),
@@ -120,7 +120,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   hintText: '$lname',
                 ),
               ),
-              Text("Change last name"),
+              const Text("Change last name"),
               const SizedBox(
                 height: 8.0,
               ),
@@ -147,7 +147,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   return null;
                 },
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   alignLabelWithHint: true,
                   hintText: 'Enter new password',
                 ),
@@ -169,8 +169,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                       // print(value);
                       // print(p1);
                       return 'Re-enter password';
-                    } else
+                    } else {
                       return 'Passwords must match.';
+                    }
                   }
                   String pattern =
                       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
@@ -183,18 +184,18 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   alignLabelWithHint: true,
                   hintText: 'Re-enter new password',
                 ),
               ),
-              Text("Change password"),
+              const Text("Change password"),
               const SizedBox(
                 height: 8.0,
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF6634B0),
+                    primary: const Color(0xFF6634B0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8))),
                 child: const Text('Update Profile'),

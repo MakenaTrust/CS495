@@ -47,7 +47,6 @@ dependencies:
   firestore_search: ^0.1.9
   scrollable_positioned_list: ^0.2.3
   image_picker: ^0.8.4+11
-  firebase_storage: ^10.2.9
 
 
 dev_dependencies:
@@ -78,6 +77,16 @@ flutter:
     - assets/images/bandedNameLogo.png
     - assets/images/testBand.MOV
     - assets/images/testBandPic.heic
+    - assets/images/hillcrest's prom.png
+    - assets/images/makena's graduation party.png
+    - assets/images/san diego county fair.png
+    - assets/images/saba concert.png
+    - assets/images/sheck wes.png
+    - assets/images/sigma chi x waka flocka.png
+    - assets/images/alpha tau omega darty.png
+    - assets/images/phi mu date party.png
+    - assets/images/frank and meg mark's wedding.png
+    - assets/images/chris lane concert.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
