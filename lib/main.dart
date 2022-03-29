@@ -48,7 +48,7 @@ class AuthApp extends StatelessWidget {
             ),
         'eventCreation_screen': (context) => const EventCreationScreen(),
         'eventCreationSuccess_screen': (context) =>
-            const EventCreationSuccessScreen(),
+            EventCreationSuccessScreen(),
         'profileMain_screen': (context) => Profile(),
         'profileUpdate_screen': (context) => ProfileUpdateScreen(),
         'profileUpdateSuccess_screen': (context) =>

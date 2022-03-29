@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class EventCreationScreen extends StatefulWidget {
@@ -33,6 +34,14 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   //   'Sorority',
   //   'Other'
   // ];
+
+  int index = 3; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
+  void _onItemTapped(int index, BuildContext context) {
+    if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
+    if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
+    if (index == 2) Navigator.pushNamed(context, 'sendReceiveMain_screen');
+    if (index == 3) Navigator.pushNamed(context, 'profileMain_screen');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,6 +233,31 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.tickets),
+              label: 'Wallet',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.arrow_right_arrow_left),
+              label: 'Transfer',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.profile_circled),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: index,
+          selectedItemColor: Color(0xFF6634B0),
+          onTap: (index) {
+            _onItemTapped(index, context);
+          }),
     );
   }
 // }

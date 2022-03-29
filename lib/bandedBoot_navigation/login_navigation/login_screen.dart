@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     await _auth.signInWithEmailAndPassword(
                         email: emailController.text,
                         password: passwordController.text);
-                    Navigator.pushNamed(context, 'home_screen');
+                    Navigator.pushNamed(context, 'walletMain_screen');
                     errorMessage = '';
                   } on FirebaseAuthException catch (error) {
                     errorMessage = error.message!;

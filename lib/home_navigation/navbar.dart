@@ -55,7 +55,7 @@ class NavBar {
 /*
 import 'package:flutter/cupertino.dart';
 
-int index=0;
+int index=0; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
 void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
