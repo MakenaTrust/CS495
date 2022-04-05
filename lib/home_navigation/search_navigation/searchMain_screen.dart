@@ -30,7 +30,7 @@ class _ExamplePageState extends State<Search> {
     // fullSearch(name);
   }
 
-  int index = 2; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
+  int index = 1; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
@@ -41,6 +41,13 @@ class _ExamplePageState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        leading: const BackButton(
+          color: Color(0xFF6634B0),
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
