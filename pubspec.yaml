@@ -47,6 +47,7 @@ dependencies:
   firestore_search: ^0.1.9
   scrollable_positioned_list: ^0.2.3
   image_picker: ^0.8.4+11
+  geolocator: ^8.2.0
 
 
 dev_dependencies:
@@ -84,6 +85,7 @@ flutter:
     - assets/images/sheck wes.png
     - assets/images/sigma chi x waka flocka.png
     - assets/images/alpha tau omega darty.png
+    - assets/images/celeb.png
     - assets/images/phi mu date party.png
     - assets/images/frank and meg mark's wedding.png
     - assets/images/chris lane concert.png

@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/custom/imageQuery.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:geolocator/geolocator.dart';
 
 enum ImageSourceType { gallery, camera }
 
@@ -32,8 +33,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
   File? _image;
   ImagePicker picker = ImagePicker();
+  Position? _position;
+  LocationPermission? permission;
+
+  void _getCurrentLocation() async {
+    Position position = await _determinePosition();
+    setState(() {
+      _position = position;
+    });
+  }
+
+  Future<Position> _determinePosition() async {
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getCurrentLocation();
+    debugPrint("hi");
+    debugPrint("1. " + permission.toString());
+    debugPrint("2. " + _position.toString());
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/bandedLogo.png', scale: 15),

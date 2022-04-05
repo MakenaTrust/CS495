@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import '/custom/userQuery.dart';
+import 'package:geolocator/geolocator.dart';
+
 // import '/custom/eventQuery.dart';
 // import 'package:image_picker/image_picker.dart';
 // import '/home_navigation/Profile_navigation/profileUpdate_screen.dart';
@@ -77,12 +79,49 @@ class _ProfileState extends State<Profile> {
     // });
   }
 
+  Future<Position> _position = Geolocator.getCurrentPosition();
+  Position? position;
+  LocationPermission? permission;
+  late Future<Position> loc;
+
+  void _getCurrentLocation() async {
+    position = await _determinePosition();
+    print("5." + position.toString());
+    setState(() {
+      _position = position as Future<Position>;
+    });
+  }
+
+  Future<Position> _determinePosition() async {
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+    // print("3." + loc.toString());
+    loc = (await Geolocator.getCurrentPosition()) as Future<Position>;
+    return Geolocator.getCurrentPosition();
+  }
+
+  Future<Position> _getLoc() async {
+    loc = (await Geolocator.getCurrentPosition()) as Future<Position>;
+    return loc;
+  }
+
   // DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
   // UserQuery x = UserQuery();
   // late Future<String> first = x.fetchUserFirstName();
   @override
   Widget build(BuildContext context) {
+    _getLoc();
+    debugPrint("hi");
+    debugPrint("3. " + permission.toString());
+    debugPrint("4." + position.toString());
+    // debugPrint('2. ' + _position.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
