@@ -35,9 +35,10 @@ class _WalletState extends State<Wallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Wallet'),
-      // ),
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        backgroundColor: Colors.white,
+      ),
       body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[
         if (globalName == 'nothing') ...[
           Container(

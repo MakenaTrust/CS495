@@ -123,6 +123,10 @@ class _ProfileState extends State<Profile> {
     debugPrint("4." + position.toString());
     // debugPrint('2. ' + _position.toString());
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),

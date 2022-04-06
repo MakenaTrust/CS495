@@ -20,6 +20,22 @@ import 'home_navigation/wallet_navigation/walletMain_screen.dart';
 import 'home_navigation/search_navigation/searchMain_screen.dart';
 import 'home_navigation/sendReceive_navigation/sendReceiveMain_screen.dart';
 
+class NoTransitionsBuilder extends PageTransitionsBuilder {
+  const NoTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T>? route,
+    BuildContext? context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget? child,
+  ) {
+    // only return the child without warping it with animations
+    return child!;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -32,10 +48,16 @@ class AuthApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WristBands',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: const NoTransitionsBuilder(),
+            TargetPlatform.iOS: const NoTransitionsBuilder(),
+          },
+        ),
       ),
+      title: 'WristBands',
       initialRoute: 'welcome_screen', //'welcome_screen',
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),

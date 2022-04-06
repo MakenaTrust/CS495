@@ -5,7 +5,7 @@ import 'wallet_navigation/walletMain_screen.dart';
 class SearchDetailScreen extends StatelessWidget {
   final String text;
   SearchDetailScreen({Key? key, required this.text}) : super(key: key);
-  int index = 0;
+  int index = 1;
 
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');

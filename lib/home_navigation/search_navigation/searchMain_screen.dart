@@ -43,9 +43,6 @@ class _ExamplePageState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/bandedLogo.png', scale: 15),
-        leading: const BackButton(
-          color: Color(0xFF6634B0),
-        ),
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(

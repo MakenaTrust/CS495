@@ -8,7 +8,7 @@ class SendReceive extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<SendReceive> {
-  int index = 2;//CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
+  int index = 2; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
@@ -19,6 +19,10 @@ class _ExamplePageState extends State<SendReceive> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        backgroundColor: Colors.white,
+      ),
       body: Center(
         child: Text('Send/Receive here',
             style: Theme.of(context).textTheme.headline6),
