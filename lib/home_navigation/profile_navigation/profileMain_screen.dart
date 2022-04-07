@@ -151,6 +151,43 @@ class _ProfileState extends State<Profile> {
                 style: Theme.of(context).textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
+              Text(
+                '',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'Past Events:',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              Container(
+                height: 200,
+                width: 380,
+                margin: const EdgeInsets.only(left: 10, right: 10),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: InkWell(
+                    splashColor: Colors.blue,
+                    onTap: () {
+                      debugPrint('Tapped');
+                    },
+                    child: ClipRRect(
+                      child: Image.asset('assets/images/testBandPic.heic',
+                          scale: 1),
+                    ),
+                  ),
+                ),
+              ),
+              Text(
+                '',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
               if (coordinator == true) ...{
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

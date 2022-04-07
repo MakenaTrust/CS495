@@ -54,8 +54,66 @@ class _WalletState extends State<Wallet> {
                   debugPrint('Tapped');
                 },
                 child: ClipRRect(
-                  child:
-                      Image.asset('assets/images/testBandPic.heic', scale: 1),
+                  child: Image.asset('assets/images/san diego county fair.png',
+                      scale: 1),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 200,
+            width: 380,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: InkWell(
+                splashColor: Colors.blue,
+                onTap: () {
+                  debugPrint('Tapped');
+                },
+                child: ClipRRect(
+                  child: Image.asset('assets/images/phi mu date party.png',
+                      scale: 1),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 200,
+            width: 380,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: InkWell(
+                splashColor: Colors.blue,
+                onTap: () {
+                  debugPrint('Tapped');
+                },
+                child: ClipRRect(
+                  child: Image.asset(
+                      'assets/images/sigma chi x waka flocka.png',
+                      scale: 1),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            height: 200,
+            width: 380,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: InkWell(
+                splashColor: Colors.blue,
+                onTap: () {
+                  debugPrint('Tapped');
+                },
+                child: ClipRRect(
+                  child: Image.asset('assets/images/chris lane concert.png',
+                      scale: 1),
                 ),
               ),
             ),
