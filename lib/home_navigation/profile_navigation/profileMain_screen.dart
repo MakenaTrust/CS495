@@ -106,10 +106,10 @@ class _ProfileState extends State<Profile> {
     return Geolocator.getCurrentPosition();
   }
 
-  Future<Position> _getLoc() async {
+  /*Future<Position> _getLoc() async {
     loc = (await Geolocator.getCurrentPosition()) as Future<Position>;
     return loc;
-  }
+  }*/
 
   // DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
@@ -117,7 +117,7 @@ class _ProfileState extends State<Profile> {
   // late Future<String> first = x.fetchUserFirstName();
   @override
   Widget build(BuildContext context) {
-    _getLoc();
+    //_getLoc();
     debugPrint("hi");
     debugPrint("3. " + permission.toString());
     debugPrint("4." + position.toString());
