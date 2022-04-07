@@ -8,6 +8,7 @@ import 'wallet_navigation/walletMain_screen.dart';
 import 'search_navigation/searchMain_screen.dart';
 import 'profile_navigation/profileMain_screen.dart';
 import 'sendReceive_navigation/sendReceiveMain_screen.dart';
+import 'transfer_navigation/transferMain_screen.dart';
 
 User? loggedinUser;
 
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Widget _Wallet;
   late Widget _Search;
   late Widget _SendReceive;
+  late Widget _Transfer;
   late Widget _Profile;
   late int selectedIndex;
   late Widget _currPage;
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _Wallet = Wallet();
     _Search = Search();
-    _SendReceive = SendReceive();
+    _Transfer = Transfer();
     _Profile = Profile();
     Pages = [_Wallet, _Search, _SendReceive, _Profile];
     selectedIndex = pageNum;
