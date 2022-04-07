@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 // import 'custom/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -7,8 +8,35 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  Position? _position;
+  LocationPermission? permission;
+
+  void _getCurrentLocation() async {
+    Position position = await _determinePosition();
+    setState(() {
+      _position = position;
+    });
+  }
+
+  Future<Position> _determinePosition() async {
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getCurrentLocation();
+    debugPrint("hi");
+    debugPrint("1. " + permission.toString());
+    debugPrint("2. " + _position.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(

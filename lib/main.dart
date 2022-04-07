@@ -19,7 +19,6 @@ import 'home_navigation/profile_navigation/profileUpdateSuccess_screen.dart';
 import 'home_navigation/wallet_navigation/walletMain_screen.dart';
 import 'home_navigation/search_navigation/searchMain_screen.dart';
 import 'home_navigation/sendReceive_navigation/sendReceiveMain_screen.dart';
-import 'home_navigation/transfer_navigation/transferMain_screen.dart';
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
   const NoTransitionsBuilder();
@@ -63,7 +62,7 @@ class AuthApp extends StatelessWidget {
       routes: {
         'welcome_screen': (context) => WelcomeScreen(),
         'accType_screen': (context) => const AccTypeScreen(),
-        'registration_screen': (context) => RegistrationScreen(),
+        'registration_screen': (context) => RegistrationScreen(picked: false),
         'login_screen': (context) => const LoginScreen(),
         'holder_screen': (contect) => HolderScreen(),
         'home_screen': (context) => const HomeScreen(
@@ -78,107 +77,106 @@ class AuthApp extends StatelessWidget {
             ProfileUpdateSuccessScreen(),
         'searchMain_screen': (context) => Search(),
         'walletMain_screen': (context) => Wallet(),
-        'sendReceiveMain_screen': (context) => Transfer()
+        'sendReceiveMain_screen': (context) => SendReceive()
       },
     );
   }
 }
 /*
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+ const MyHomePage({Key? key, required this.title}) : super(key: key);
+ 
+ final String title;
+ 
+ @override
+ State<MyHomePage> createState() => _MyHomePageState();
 }
-
+ 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  late List<Widget> Pages;
-  late Widget _Wallet;
-  late Widget _Search;
-  late Widget _SendReceive;
-  late Widget _Profile;
-  late int selectedIndex;
-  late Widget _currPage;
-
-  @override
-  void initState() {
-    super.initState();
-    _Wallet = const Wallet();
-    _Search = const Search();
-    _SendReceive = const SendReceive();
-    _Profile = const Profile();
-    Pages = [_Wallet, _Search, _SendReceive, _Profile];
-    selectedIndex = 0;
-    _currPage = _Wallet;
-  }
-
-  /* This doesn't do anything? Commenting it out didn't seem to change anything but gonna leave it here just in case
-  
+ int _selectedIndex = 0;
+ static const TextStyle optionStyle =
+     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+ 
+ late List<Widget> Pages;
+ late Widget _Wallet;
+ late Widget _Search;
+ late Widget _SendReceive;
+ late Widget _Profile;
+ late int selectedIndex;
+ late Widget _currPage;
+ 
+ @override
+ void initState() {
+   super.initState();
+   _Wallet = const Wallet();
+   _Search = const Search();
+   _SendReceive = const SendReceive();
+   _Profile = const Profile();
+   Pages = [_Wallet, _Search, _SendReceive, _Profile];
+   selectedIndex = 0;
+   _currPage = _Wallet;
+ }
+ 
+ /* This doesn't do anything? Commenting it out didn't seem to change anything but gonna leave it here just in case
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
-  ];*/
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _currPage = Pages[index];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: _currPage,
-      bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.tickets),
-              label: 'Wallet',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.arrow_right_arrow_left),
-              label: 'Send/Receive',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.profile_circled),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent[800],
-          onTap: (index) {
-            _onItemTapped(index);
-          }),
-    );
-  }
+   Text(
+     'Index 0: Home',
+     style: optionStyle,
+   ),
+   Text(
+     'Index 1: Business',
+     style: optionStyle,
+   ),
+   Text(
+     'Index 2: School',
+     style: optionStyle,
+   ),
+   Text(
+     'Index 3: Profile',
+     style: optionStyle,
+   ),
+ ];*/
+ 
+ void _onItemTapped(int index) {
+   setState(() {
+     _selectedIndex = index;
+     _currPage = Pages[index];
+   });
+ }
+ 
+ @override
+ Widget build(BuildContext context) {
+   return Scaffold(
+     appBar: AppBar(
+       title: Text(widget.title),
+     ),
+     body: _currPage,
+     bottomNavigationBar: BottomNavigationBar(
+         type: BottomNavigationBarType.fixed,
+         items: const <BottomNavigationBarItem>[
+           BottomNavigationBarItem(
+             icon: Icon(CupertinoIcons.tickets),
+             label: 'Wallet',
+           ),
+           BottomNavigationBarItem(
+             icon: Icon(CupertinoIcons.search),
+             label: 'Search',
+           ),
+           BottomNavigationBarItem(
+             icon: Icon(CupertinoIcons.arrow_right_arrow_left),
+             label: 'Send/Receive',
+           ),
+           BottomNavigationBarItem(
+             icon: Icon(CupertinoIcons.profile_circled),
+             label: 'Profile',
+           ),
+         ],
+         currentIndex: _selectedIndex,
+         selectedItemColor: Colors.blueAccent[800],
+         onTap: (index) {
+           _onItemTapped(index);
+         }),
+   );
+ }
 }
 */

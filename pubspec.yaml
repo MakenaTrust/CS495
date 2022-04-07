@@ -48,6 +48,8 @@ dependencies:
   scrollable_positioned_list: ^0.2.3
   image_picker: ^0.8.4+11
   geolocator: ^8.2.0
+  uuid: ^3.0.6
+  firebase_storage: ^10.2.8
 
 
 dev_dependencies:

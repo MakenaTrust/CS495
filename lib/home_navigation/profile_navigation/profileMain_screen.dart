@@ -43,6 +43,7 @@ class _ProfileState extends State<Profile> {
   String fname = " ";
   String lname = " ";
   String uName = " ";
+  String file = " ";
   late QuerySnapshot eventName;
   bool coordinator = false;
 
@@ -69,6 +70,11 @@ class _ProfileState extends State<Profile> {
     x.fetchUserHolder().then((bool result) {
       setState(() {
         coordinator = result;
+      });
+      x.fetchUserPicture().then((String result) {
+        setState(() {
+          file = result;
+        });
       });
     });
     // y.fetchEventName().then((QuerySnapshot result) {
@@ -134,11 +140,11 @@ class _ProfileState extends State<Profile> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Image.asset(
-                'assets/images/profileTemp.png',
-                height: 100,
-                width: 100,
-              ),
+              CircleAvatar(
+                  child: ClipOval(
+                      child: Image.network(file,
+                          width: 100, height: 150, fit: BoxFit.cover)),
+                  radius: 50.0),
               Text(
                 '$uName',
                 style:

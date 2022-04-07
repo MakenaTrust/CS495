@@ -20,6 +20,7 @@ class UserQuery {
   String password = " ";
   String lname = " ";
   String uName = " ";
+  String fileName = " ";
   bool coordinator = false;
 
   Future<String> fetchUserFirstName() async {
@@ -108,6 +109,20 @@ class UserQuery {
       // coordinator = user.data()!['holder'];
     });
     return password;
+  }
+
+  Future<String> fetchUserPicture() async {
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((user) {
+      // setState(() {
+      fileName = user.data()!['filename'];
+      // coordinator = user.data()!['holder'];
+    });
+    return fileName;
   }
   //   Future<String> fetchUserPicture() async {
   //   // String uid = FirebaseAuth.instance.currentUser!.uid;

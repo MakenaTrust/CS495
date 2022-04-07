@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,11 +9,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/custom/imageQuery.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 enum ImageSourceType { gallery, camera }
 
 class RegistrationScreen extends StatefulWidget {
+  String? picID;
+  bool picked;
+
+  RegistrationScreen({this.picID, required this.picked});
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -29,39 +35,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   String errorMessage = '';
   bool showSpinner = false;
+  String dbURL =
+      'https://firebasestorage.googleapis.com/v0/b/wrist-bands.appspot.com/o/Users%2Fwww.holdenadvisors.com:wp-content:uploads:2017:04:blank-profile-picture-973460_960_720.png?alt=media&token=f3bfac51-9ac1-4c80-9016-2458c30c5be5';
   String imageUrl =
       'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
-  File? _image;
+  File? _photo;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   ImagePicker picker = ImagePicker();
-  Position? _position;
-  LocationPermission? permission;
 
-  void _getCurrentLocation() async {
-    Position position = await _determinePosition();
+  void getDB() async {
+    firebase_storage.FirebaseStorage storages =
+        firebase_storage.FirebaseStorage.instance;
     setState(() {
-      _position = position;
+      this.storage = storages;
     });
   }
 
-  Future<Position> _determinePosition() async {
-    permission = await Geolocator.checkPermission();
+  @override
+  void initState() {
+    super.initState();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location Permissions are denied');
-      }
-    }
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    getDB();
+    //until this is completed user stays null we can use it to check whether it's loaded
   }
 
   @override
   Widget build(BuildContext context) {
-    _getCurrentLocation();
-    debugPrint("hi");
-    debugPrint("1. " + permission.toString());
-    debugPrint("2. " + _position.toString());
     return Scaffold(
       appBar: AppBar(
         title: Image.asset('assets/images/bandedLogo.png', scale: 15),
@@ -82,34 +82,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             children: <Widget>[
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 100.0),
-                  child: ClipOval(
-                    // margin: EdgeInsets.all(15),
-                    // padding: EdgeInsets.all(15),
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    //   borderRadius: BorderRadius.all(
-                    //     Radius.circular(8),
-                    //   ),
-                    //   border: Border.all(color: Colors.white),
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: Colors.black12,
-                    //       offset: Offset(2, 2),
-                    //       spreadRadius: 2,
-                    //       blurRadius: 1,
-                    //     ),
-                    //   ],
-                    // ),
-                    child:
-                        // (imageUrl.isNotEmpty)
-                        //     ? Image.network(imageUrl)
-                        //     :
-                        Image.network(
-                            'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
-                            fit: BoxFit.cover),
-                    // height: 100,
-                    // width: 10,
-                  )),
+                  child: FutureBuilder<String>(
+                      future: getPic(
+                          context, widget.picID.toString(), widget.picked),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return new CircleAvatar(
+                              child: ClipOval(
+                                  child: Image.network(snapshot.data.toString(),
+                                      width: 150,
+                                      height: 150,
+                                      fit: BoxFit.cover)),
+                              radius: 100.0);
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return new CircleAvatar(
+                              child: ClipOval(
+                                  child: Image.network(
+                                      'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                                      width: 150,
+                                      height: 150,
+                                      fit: BoxFit.cover)),
+                              radius: 100.0);
+                        }
+                        return CircularProgressIndicator();
+                      }
+                      // child: ClipRRect(
+                      //         borderRadius: BorderRadius.circular(50),
+                      //         child: Image.network(
+                      //           getPic(widget.picID.toString()),
+                      //           width: 100,
+                      //           height: 100,
+                      //           fit: BoxFit.fitHeight,
+                      //         ))
+                      // (imageUrl.isNotEmpty)
+                      //     ? Image.network(imageUrl)
+                      //     :
+                      // height: 100,
+                      // width: 10,
+                      )),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: const Color(0xFF6634B0),
@@ -119,7 +132,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     'Submit a profile picture',
                   ),
                   onPressed: () {
-                    _handleURLButtonPress(context, ImageSourceType.gallery);
+                    _showPicker(context);
                   }),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
@@ -237,9 +250,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         "username": userNameController.text,
                         "firstName": fNameController.text,
                         "lastName": lNameController.text,
+                        "filename": dbURL,
                         "holder": false
                       });
                       if (user != null) {
+                        print("not null");
                         Navigator.pushNamed(context, 'login_screen');
                       }
                       // errorMessage = '';
@@ -279,62 +294,98 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(formPassword)) {
       return '''
-      Password must be at least 8 characters,
-      include an uppercase letter, number, and symbol.
-      ''';
+     Password must be at least 8 characters,
+     include an uppercase letter, number, and symbol.
+     ''';
     }
     return null;
   }
 
-  void _handleURLButtonPress(BuildContext context, var type) {
-    _image = Navigator.push(context,
+  void _handleGalButtonPress(BuildContext context, var type) {
+    _photo = Navigator.push(context,
             MaterialPageRoute(builder: (context) => ImageFromGalleryEx(type)))
         as File?;
   }
 
-  // Future getImage() async{
-  //   final pickedFile =
+  // void _handleCamButtonPress(BuildContext context, var type) {
+  //   _photo = Navigator.push(context,
+  //           MaterialPageRoute(builder: (context) => ImageFromGalleryEx(type)))
+  //       as File?;
   // }
 
-  // void registerToFb() {
-  //   firebaseAuth
-  //       .createUserWithEmailAndPassword(
-  //           email: emailController.text, password: passwordController.text)
-  //       .then((result) {
-  //     dbRef.child(result.user!.uid).set({
-  //       "email": emailController.text,
-  //       "password": passwordController.text,
-  //       // "age": ageController.text,
-  //       // "name": nameController.text
-  //     }).then((res) {
-  //       showSpinner = false;
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) => HomeScreen(
-  //                   uid: result.user!.uid,
-  //                   title: '',
-  //                 )),
-  //       );
-  //     });
-  //   }).catchError((err) {
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             title: Text("Error"),
-  //             content: Text(err.message),
-  //             actions: [
-  //               TextButton(
-  //                 child: Text("Ok"),
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //               )
-  //             ],
-  //           );
-  //         });
-  //   });
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: const Icon(Icons.photo_library),
+                      title: const Text('Gallery'),
+                      onTap: () {
+                        _handleGalButtonPress(context, ImageSourceType.gallery);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: const Text('Camera'),
+                    onTap: () {
+                      _handleGalButtonPress(context, ImageSourceType.camera);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<String> getPic(
+      BuildContext context, String unique, bool picker) async {
+    setState(() {
+      // picker = true;
+    });
+    Image image;
+    // String text =
+    //     'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
+    // ;
+    if (picker == false)
+      unique =
+          'www.holdenadvisors.com:wp-content:uploads:2017:04:blank-profile-picture-973460_960_720.png';
+    // if (picker == false)
+    // return 'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
+    // else
+    //   debugPrint("in get pic");
+    final images = await firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('Users/${unique.toString()}');
+    String pic = await images.getDownloadURL();
+    dbURL = pic;
+    // filename = unique.toString() as TextEditingController;
+    print(pic);
+    return pic;
+    // debugPrint(pic);
+  }
+
+  // Future uploadFile(var _image) async {
+  //   if (_image == null) return;
+  //   final userid = FirebaseAuth.instance.currentUser?.uid;
+  //   print("UID");
+  //   print(userid);
+  //   final destination = 'Users/$userid';
+
+  //   //   try {
+  //   //     final ref = firebase_storage.FirebaseStorage.instance
+  //   //         .ref(destination)
+  //   //         .child(userid);
+  //   //     await ref.putFile(_image!);
+  //   //   } catch (e) {
+  //   //     print('error occured');
+  //   //   }
+  //   // }
   // }
 
   @override
