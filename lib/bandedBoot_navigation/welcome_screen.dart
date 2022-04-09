@@ -82,7 +82,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             borderRadius: BorderRadius.circular(8))),
                     child: const Text('Register'),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'accType_screen');
+                      Navigator.pushNamed(context, 'registration_screen');
                     })),
           ]),
     );

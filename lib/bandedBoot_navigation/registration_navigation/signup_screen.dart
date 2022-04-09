@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/custom/imageQuery.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -89,6 +90,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           return new CircleAvatar(
+                              backgroundColor: Colors.white,
+                              // backgroundImage:
+                              //     AssetImage('assets/images/profileTemp.png'),
                               child: ClipOval(
                                   child: Image.network(snapshot.data.toString(),
                                       width: 150,
@@ -99,13 +103,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return new CircleAvatar(
-                              child: ClipOval(
-                                  child: Image.network(
-                                      'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
-                                      width: 150,
-                                      height: 150,
-                                      fit: BoxFit.cover)),
-                              radius: 100.0);
+                            child: LoadingAnimationWidget.hexagonDots(
+                                color: Color(0xFF6634B0), size: 100),
+                            //     child: ClipOval(
+                            //         child: Image.network(
+                            //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                            //             width: 150,
+                            //             height: 150,
+                            //             fit: BoxFit.cover)),
+                            // radius: 100.0
+                          );
                         }
                         return CircularProgressIndicator();
                       }
