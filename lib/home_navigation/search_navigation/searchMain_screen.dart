@@ -74,7 +74,7 @@ class _ExamplePageState extends State<Search> {
                       setState(() {
                         name = '';
                         clicked = false;
-                        initState();
+                        // initState();
                       });
                     },
                     icon: const Icon(Icons.close, color: Color(0xFF6634B0)),
@@ -177,73 +177,78 @@ class _ExamplePageState extends State<Search> {
 
   Widget searchPageWidget() {
     // print("searchpage");
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: (name != "")
-          ? FirebaseFirestore.instance
-              .collection('Events')
-              .where('SearchEventName',
-                  isGreaterThanOrEqualTo: name.toLowerCase())
-              .where('SearchEventName', isLessThan: name.toLowerCase() + 'z')
-              .snapshots()
-          : FirebaseFirestore.instance.collection("Events").snapshots(),
-      builder: (context, snapshot) {
-        return (snapshot.connectionState == ConnectionState.waiting)
-            ? const Center(child: const CircularProgressIndicator())
-            : ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot data = snapshot.data!.docs[index];
-                  String name = data['EventName'];
-                  String pic = data['SearchEventName'];
-                  // String picName = pic + ".png";
-                  // String date = data['Date'];
-                  // String capacity = data['capacity'];
-                  return GestureDetector(
-                      onTap: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SearchDetailScreen(
-                                      text: data['EventName']),
-                                ))
-                          },
-                      child: Card(
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              height: 200,
-                              width: 380,
-                              // width: MediaQuery.of(context).size.width,
-                              margin:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Card(
-                                child: InkWell(
-                                  splashColor: const Color(0xFF6634B0),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SearchDetailScreen(
-                                                  text: data['EventName']),
-                                        ));
-                                  },
-                                  child: Center(child: renderPic(pic, name)
-                                      // Text('$name',
-                                      //     textAlign: TextAlign.center),
-                                      ),
+    return Container(
+      width: 800,
+      height: 800,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: (name != "")
+            ? FirebaseFirestore.instance
+                .collection('Events')
+                .where('SearchEventName',
+                    isGreaterThanOrEqualTo: name.toLowerCase())
+                .where('SearchEventName', isLessThan: name.toLowerCase() + 'z')
+                .snapshots()
+            : FirebaseFirestore.instance.collection("Events").snapshots(),
+        builder: (context, snapshot) {
+          return (snapshot.connectionState == ConnectionState.waiting)
+              ? const Center(child: const CircularProgressIndicator())
+              : ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot data = snapshot.data!.docs[index];
+                    String name = data['EventName'];
+                    String pic = data['SearchEventName'];
+                    // String picName = pic + ".png";
+                    // String date = data['Date'];
+                    // String capacity = data['capacity'];
+                    return GestureDetector(
+                        onTap: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchDetailScreen(
+                                        text: data['EventName']),
+                                  ))
+                            },
+                        child: SingleChildScrollView(
+                            child: Card(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 200,
+                                width: 380,
+                                // width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Card(
+                                  child: InkWell(
+                                    splashColor: const Color(0xFF6634B0),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchDetailScreen(
+                                                    text: data['EventName']),
+                                          ));
+                                    },
+                                    child: Center(child: renderPic(pic, name)
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ));
-                },
-              );
-      },
+                            ],
+                          ),
+                        )));
+                  },
+                );
+        },
+      ),
     );
 
     // return Container(
@@ -284,6 +289,7 @@ class _ExamplePageState extends State<Search> {
               ? const Center(child: const CircularProgressIndicator())
               : ListView.builder(
                   scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {

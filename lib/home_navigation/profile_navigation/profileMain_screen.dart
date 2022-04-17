@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import '/custom/userQuery.dart';
 import 'package:geolocator/geolocator.dart';
@@ -124,7 +126,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     //_getLoc();
-    debugPrint("hi");
     debugPrint("3. " + permission.toString());
     debugPrint("4." + position.toString());
     // debugPrint('2. ' + _position.toString());
@@ -142,8 +143,38 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               CircleAvatar(
                   child: ClipOval(
-                      child: Image.network(file,
-                          width: 100, height: 150, fit: BoxFit.cover)),
+                    child: CachedNetworkImage(
+                      imageUrl: file,
+                      // placeholder: (context, file) =>
+                      //     CircularProgressIndicator(),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          LoadingAnimationWidget.hexagonDots(
+                              color: Color(0xFF6634B0), size: 100),
+                      //     child: ClipOval(
+                      //         child: Image.network(
+                      //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                      //             width: 150,
+                      //             height: 150,
+                      //             fit: BoxFit.cover)),
+                      // radius: 100.0
+                    ),
+                  ),
+                  // width: 100,
+                  // height: 150,
+                  // fit: BoxFit.cover
+                  // ),
+                  // child: ClipOval(
+                  //     child: Image.network(file, loadingBuilder:
+                  //         (BuildContext context, Widget child,
+                  //             ImageChunkEvent? loadingProgress) {
+                  //   if (loadingProgress == null) {
+                  //     return child;
+                  //   }
+                  //   return CircleAvatar(
+                  //     child: LoadingAnimationWidget.hexagonDots(
+                  //         color: Color(0xFF6634B0), size: 100),
+                  //   );
+                  // }, width: 100, height: 150, fit: BoxFit.cover)),
                   radius: 50.0),
               Text(
                 '$uName',

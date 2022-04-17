@@ -5,31 +5,38 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_database/firebase_database.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/bandedBoot_navigation/registration_navigation/signup_screen.dart';
+import 'package:flutter_application_1/home_navigation/profile_navigation/eventCreation_screen.dart';
+
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+enum ImageSourceType { gallery, camera }
+
 class ImageFromGalleryEx extends StatefulWidget {
   final type;
-  ImageFromGalleryEx(this.type);
+  final file;
+  ImageFromGalleryEx(this.type, this.file);
 
   @override
-  ImageFromGalleryExState createState() => ImageFromGalleryExState(this.type);
+  ImageFromGalleryExState createState() =>
+      ImageFromGalleryExState(this.type, this.file);
 }
 
 class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
   var _image;
   var imagePicker;
   var type;
+  var file;
   var unique;
   String images =
       'https://firebasestorage.googleapis.com/v0/b/wrist-bands.appspot.com/o/Users%2Fwww.holdenadvisors.com:wp-content:uploads:2017:04:blank-profile-picture-973460_960_720.png?alt=media&token=f3bfac51-9ac1-4c80-9016-2458c30c5be5';
   bool picked = false;
   bool loading = false;
 
-  ImageFromGalleryExState(this.type);
+  ImageFromGalleryExState(this.type, this.file);
 
   @override
   void initState() {
@@ -147,11 +154,17 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
               onPressed: () async {
                 (loading == true)
                     ? loadingContainer()
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegistrationScreen(
-                                picID: unique, picked: true)));
+                    : (file == 'profile')
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegistrationScreen(
+                                    picID: unique, picked: true)))
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EventCreationScreen(
+                                    picID: unique, picked: true)));
                 // _showPicker(context);
               }),
         ],
@@ -160,14 +173,16 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
   }
 
   Future uploadFile() async {
+    String prefix = 'Users/';
     picked = true;
+    if (file == "band") prefix = 'Events/';
     unique = Uuid().v1();
     if (_image == null) return;
-    final destination = 'Users/$unique';
+    final destination = '$prefix$unique';
 
     try {
       final ref = await firebase_storage.FirebaseStorage.instance
-          .ref('Users/')
+          .ref('$prefix')
           .child(unique.toString());
       await ref.putFile(_image!);
     } catch (e) {
@@ -175,7 +190,7 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
     }
     images = await firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('Users/${unique.toString()}')
+        .child('$prefix${unique.toString()}')
         .getDownloadURL();
     setState(() {
       loading = false;

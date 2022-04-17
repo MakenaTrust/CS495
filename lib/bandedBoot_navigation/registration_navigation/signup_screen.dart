@@ -309,9 +309,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _handleGalButtonPress(BuildContext context, var type) {
-    _photo = Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ImageFromGalleryEx(type)))
-        as File?;
+    String file = 'profile';
+    _photo = Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ImageFromGalleryEx(type, file))) as File?;
   }
 
   // void _handleCamButtonPress(BuildContext context, var type) {

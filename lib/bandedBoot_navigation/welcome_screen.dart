@@ -11,32 +11,48 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Position? _position;
   LocationPermission? permission;
 
-  void _getCurrentLocation() async {
-    Position position = await _determinePosition();
-    setState(() {
-      _position = position;
-    });
-  }
+  // void _getCurrentLocation() async {
+  //   Position position = await _determinePosition();
+  //   setState(() {
+  //     _position = position;
+  //   });
+  // }
 
-  Future<Position> _determinePosition() async {
+  _determinePosition() async {
     permission = await Geolocator.checkPermission();
-
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         return Future.error('Location Permissions are denied');
       }
     }
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: false)
+        .then((Position position) {
+      print(position);
+      setState(() {
+        _position = position;
+        print(position.latitude);
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _determinePosition();
+    //until this is completed user stays null we can use it to check whether it's loaded
   }
 
   @override
   Widget build(BuildContext context) {
-    _getCurrentLocation();
-    debugPrint("hi");
-    debugPrint("1. " + permission.toString());
-    debugPrint("2. " + _position.toString());
+    // _determinePosition();
+    debugPrint("Permission. " + permission.toString());
+    debugPrint("Location. " + _position.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(

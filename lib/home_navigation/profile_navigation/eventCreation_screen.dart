@@ -1,14 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_application_1/custom/imageQuery.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
-class EventCreationScreen extends StatefulWidget {
-  const EventCreationScreen({Key? key}) : super(key: key);
+enum ImageSourceType { gallery, camera }
 
+class EventCreationScreen extends StatefulWidget {
+  // const EventCreationScreen({Key? key}) : super(key: key);
+  String? picID;
+  bool picked;
+
+  EventCreationScreen({this.picID, required this.picked});
   @override
   _EventCreationScreenState createState() => _EventCreationScreenState();
 }
@@ -22,10 +33,14 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   TextEditingController eventTypeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Events");
   String errorMessage = '';
   bool showSpinner = false;
   String currentSelectedValue = 'Music';
+  File? _photo;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+  ImagePicker picker = ImagePicker();
 
   // String type = "Music";
 
@@ -54,184 +69,266 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      body: Form(
+      body: ListView(
         key: _formKey,
         // inAsyncCall: showSpinner,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: eventNameController,
-                //validator: validateEventName,
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  labelText: 'Event Name',
-                ),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100.0),
+                    child: FutureBuilder<String>(
+                        future: getBand(
+                            context, widget.picID.toString(), widget.picked),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            debugPrint(snapshot.data.toString());
+                            return Container(
+                              padding: const EdgeInsets.all(8),
+                              // height: 200,
+                              // width: 380,
+                              margin:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: InkWell(
+                                  splashColor: Colors.blue,
+                                  onTap: () {
+                                    debugPrint('Tapped');
+                                  },
+                                  child: ClipRRect(
+                                    child: Image.asset(
+                                        (snapshot.data != null)
+                                            ? snapshot.data.toString()
+                                            : 'assets/images/blueBand.png',
+                                        scale: 1),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: LoadingAnimationWidget.hexagonDots(
+                                  color: Color(0xFF6634B0), size: 100),
+                              //     child: ClipOval(
+                              //         child: Image.network(
+                              //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                              //             width: 150,
+                              //             height: 150,
+                              //             fit: BoxFit.cover)),
+                              // radius: 100.0
+                            );
+                          }
+                          return CircularProgressIndicator();
+                        }
+                        // child: ClipRRect(
+                        //         borderRadius: BorderRadius.circular(50),
+                        //         child: Image.network(
+                        //           getPic(widget.picID.toString()),
+                        //           width: 100,
+                        //           height: 100,
+                        //           fit: BoxFit.fitHeight,
+                        //         ))
+                        // (imageUrl.isNotEmpty)
+                        //     ? Image.network(imageUrl)
+                        //     :
+                        // height: 100,
+                        // width: 10,
+                        )),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color(0xFF6634B0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8))),
+                    child: const Text(
+                      'Submit a ticket picture',
+                    ),
+                    onPressed: () {
+                      _showPicker(context);
+                    }),
+                TextFormField(
                   textAlign: TextAlign.center,
-                  controller: eventDateController,
-                  //validator: validateEventDate,
+                  controller: eventNameController,
+                  //validator: validateEventName,
                   decoration: const InputDecoration(
                     alignLabelWithHint: true,
-                    labelText: 'Event Date',
+                    labelText: 'Event Name',
                   ),
-                  onTap: () {
-                    _selectDate(context);
-                  }),
-              Center(
-                child: Text(errorMessage),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: eventDateController,
+                    //validator: validateEventDate,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Date',
+                    ),
+                    onTap: () {
+                      _selectDate(context);
+                    }),
+                Center(
+                  child: Text(errorMessage),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: eventTimeController,
+                    //validator: validateEventDate,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Start Time',
+                    ),
+                    onTap: () {
+                      _selectTime(context);
+                    }),
+                Center(
+                  child: Text(errorMessage),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextFormField(
                   textAlign: TextAlign.center,
-                  controller: eventTimeController,
-                  //validator: validateEventDate,
+                  controller: eventLocationController,
                   decoration: const InputDecoration(
                     alignLabelWithHint: true,
-                    labelText: 'Event Start Time',
+                    labelText: 'Event Location',
                   ),
-                  onTap: () {
-                    _selectTime(context);
-                  }),
-              Center(
-                child: Text(errorMessage),
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: eventLocationController,
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  labelText: 'Event Location',
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Event Location';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: eventCapacityController,
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  labelText: 'Event Capacity',
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Event Capacity';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              DropdownButtonFormField(
-                decoration: const InputDecoration(
-                  alignLabelWithHint: true,
-                  labelText: 'Event Type',
-                ),
-                value: 'Please select an event type',
-                icon: const Icon(Icons.keyboard_arrow_down),
-                items: const [
-                  DropdownMenuItem(
-                    child: Text('Please select an event type'),
-                    value: 'Please select an event type',
-                  ),
-                  DropdownMenuItem(child: Text('Academic'), value: 'Academic'),
-                  DropdownMenuItem(child: Text('Dance'), value: 'Dance'),
-                  DropdownMenuItem(child: Text("Food"), value: "Food"),
-                  DropdownMenuItem(
-                      child: Text('Fraternity'), value: 'Fraternity'),
-                  DropdownMenuItem(child: Text("Music"), value: "Music"),
-                  DropdownMenuItem(child: Text("Sorority"), value: "Sorority"),
-                  DropdownMenuItem(child: Text("Sports"), value: "Sports")
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    eventTypeController.text = value.toString();
-                  });
-                },
-              ),
-              // TextFormField(
-              //   textAlign: TextAlign.center,
-              //   controller: eventTypeController,
-              //   decoration: const InputDecoration(
-              //     alignLabelWithHint: true,
-              //     labelText: 'Type of Event',
-              //   ),
-              //   onTap: () {
-
-              //   },
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Type of Event';
-              //     }
-              //     return null;
-              //   },
-              // ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFF6634B0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                child: const Text('Register Event'),
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                    errorMessage = '';
-                  });
-                  if (_formKey.currentState!.validate()) {
-                    try {
-                      FirebaseFirestore.instance
-                          .collection("Events")
-                          .doc(eventNameController.text)
-                          .set({
-                        "eventLocation": eventLocationController.text,
-                        "Date": eventDateController.text,
-                        "eventTime": eventTimeController.text,
-                        "EventName": eventNameController.text,
-                        "SearchEventName":
-                            eventNameController.text.toLowerCase(),
-                        "capacity": eventCapacityController.text,
-                        "eventType": eventTypeController.text,
-                      });
-
-                      Navigator.pushNamed(
-                          context, 'eventCreationSuccess_screen');
-                      // errorMessage = '';
-                    } on FirebaseAuthException catch (error) {
-                      errorMessage = error.message!;
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Event Location';
                     }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: eventCapacityController,
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: 'Event Capacity',
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Event Capacity';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: 'Event Type',
+                  ),
+                  value: 'Please select an event type',
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: const [
+                    DropdownMenuItem(
+                      child: Text('Please select an event type'),
+                      value: 'Please select an event type',
+                    ),
+                    DropdownMenuItem(
+                        child: Text('Academic'), value: 'Academic'),
+                    DropdownMenuItem(child: Text('Dance'), value: 'Dance'),
+                    DropdownMenuItem(child: Text("Food"), value: "Food"),
+                    DropdownMenuItem(
+                        child: Text('Fraternity'), value: 'Fraternity'),
+                    DropdownMenuItem(child: Text("Music"), value: "Music"),
+                    DropdownMenuItem(
+                        child: Text("Sorority"), value: "Sorority"),
+                    DropdownMenuItem(child: Text("Sports"), value: "Sports")
+                  ],
+                  onChanged: (value) {
                     setState(() {
-                      showSpinner = false;
+                      eventTypeController.text = value.toString();
                     });
-                  }
-                },
-              )
-            ],
+                  },
+                ),
+                // TextFormField(
+                //   textAlign: TextAlign.center,
+                //   controller: eventTypeController,
+                //   decoration: const InputDecoration(
+                //     alignLabelWithHint: true,
+                //     labelText: 'Type of Event',
+                //   ),
+                //   onTap: () {
+
+                //   },
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return 'Type of Event';
+                //     }
+                //     return null;
+                //   },
+                // ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: const Color(0xFF6634B0),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8))),
+                  child: const Text('Register Event'),
+                  onPressed: () async {
+                    setState(() {
+                      showSpinner = true;
+                      errorMessage = '';
+                    });
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        FirebaseFirestore.instance
+                            .collection("Events")
+                            .doc(eventNameController.text)
+                            .set({
+                          "eventLocation": eventLocationController.text,
+                          "Date": eventDateController.text,
+                          "eventTime": eventTimeController.text,
+                          "EventName": eventNameController.text,
+                          "SearchEventName":
+                              eventNameController.text.toLowerCase(),
+                          "capacity": eventCapacityController.text,
+                          "eventType": eventTypeController.text,
+                        });
+
+                        Navigator.pushNamed(
+                            context, 'eventCreationSuccess_screen');
+                        // errorMessage = '';
+                      } on FirebaseAuthException catch (error) {
+                        errorMessage = error.message!;
+                      }
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    }
+                  },
+                )
+              ],
+            ),
           ),
-        ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -371,14 +468,70 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     });
   }
 
-  // _dropDown(BuildContext context) async {
-  //   DropdownButton<String>(
-  //     items: [],
-  //     onChanged: (String? val) {
-  //       Text("works");
-  //     },
-  //   );
-  // }
+  void _handleGalButtonPress(BuildContext context, var type) {
+    String file = 'band';
+    _photo = Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ImageFromGalleryEx(
+                  type,
+                  file,
+                ))) as File?;
+  }
+
+  Future<String> getBand(
+      BuildContext context, String unique, bool picker) async {
+    setState(() {
+      // picker = true;
+    });
+    Image image;
+    // String text =
+    //     'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
+    // ;
+    if (picker == false) unique = '/assets/image/blueBand.png';
+    // if (picker == false)
+    // return 'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
+    // else
+    //   debugPrint("in get pic");
+    final images = await firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('Events/${unique.toString()}');
+    String pic = await images.getDownloadURL();
+    // filename = unique.toString() as TextEditingController;
+    print(pic);
+    return pic;
+    // debugPrint(pic);
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: const Icon(Icons.photo_library),
+                      title: const Text('Gallery'),
+                      onTap: () {
+                        _handleGalButtonPress(context, ImageSourceType.gallery);
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: const Text('Camera'),
+                    onTap: () {
+                      _handleGalButtonPress(context, ImageSourceType.camera);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   void dispose() {
