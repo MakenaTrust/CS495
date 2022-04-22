@@ -4,6 +4,8 @@ import 'package:flutter_application_1/home_navigation/searchDetail_screen.dart';
 import 'package:flutter_application_1/custom/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
+import '/custom/userQuery.dart';
 
 /*
 
@@ -22,10 +24,24 @@ class _ExamplePageState extends State<Search> {
   List filteredNames = [];
   String name = "";
   bool clicked = false;
+  String fname = " ";
+  String lname = " ";
 
   @override
   void initState() {
     super.initState();
+    UserQuery x = UserQuery();
+    // EventQuery y = EventQuery();
+    x.fetchUserFirstName().then((String result) {
+      setState(() {
+        fname = result;
+      });
+    });
+    x.fetchUserLastName().then((String result) {
+      setState(() {
+        lname = result;
+      });
+    });
     // clicked = false;
     // fullSearch(name);
   }
@@ -349,6 +365,12 @@ class _ExamplePageState extends State<Search> {
                                         left: 10,
                                         right: 10,
                                         child: Text('${name}',
+                                            style: GoogleFonts.spartan(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w800,
+                                                    letterSpacing: .5)),
                                             textAlign: TextAlign.center),
                                         // Text('$name',
                                         //     textAlign: TextAlign.center),
@@ -359,6 +381,40 @@ class _ExamplePageState extends State<Search> {
                                         left: 10,
                                         right: 10,
                                         child: Text('${date}',
+                                            style: GoogleFonts.spartan(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: .5)),
+                                            textAlign: TextAlign.center),
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                      ),
+                                      Positioned(
+                                        bottom: 10,
+                                        top: 120,
+                                        left: 10,
+                                        right: 10,
+                                        child: Image.asset(
+                                            'assets/images/qr.png',
+                                            scale: 130,
+                                            alignment: Alignment.center),
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                      ),
+                                      Positioned(
+                                        bottom: 10,
+                                        top: 150,
+                                        left: 0,
+                                        right: 200,
+                                        child: Text('${fname} ${lname}',
+                                            style: GoogleFonts.spartan(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 7,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: .5)),
                                             textAlign: TextAlign.center),
                                         // Text('$name',
                                         //     textAlign: TextAlign.center),

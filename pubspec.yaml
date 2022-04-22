@@ -95,6 +95,7 @@ flutter:
     - assets/images/frank and meg mark's wedding.png
     - assets/images/chris lane concert.png
     - assets/images/blueBand.png
+    - assets/images/qr.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
