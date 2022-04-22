@@ -19,6 +19,7 @@ import 'home_navigation/profile_navigation/profileUpdateSuccess_screen.dart';
 import 'home_navigation/wallet_navigation/walletMain_screen.dart';
 import 'home_navigation/search_navigation/searchMain_screen.dart';
 import 'home_navigation/sendReceive_navigation/sendReceiveMain_screen.dart';
+import 'home_navigation/transfer_navigation/transferMain_screen.dart';
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
   const NoTransitionsBuilder();
@@ -50,10 +51,10 @@ class AuthApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        pageTransitionsTheme: PageTransitionsTheme(
+        pageTransitionsTheme: const PageTransitionsTheme(
           builders: {
-            TargetPlatform.android: const NoTransitionsBuilder(),
-            TargetPlatform.iOS: const NoTransitionsBuilder(),
+            TargetPlatform.android: NoTransitionsBuilder(),
+            TargetPlatform.iOS: NoTransitionsBuilder(),
           },
         ),
       ),
@@ -79,7 +80,8 @@ class AuthApp extends StatelessWidget {
             ProfileUpdateSuccessScreen(),
         'searchMain_screen': (context) => Search(),
         'walletMain_screen': (context) => Wallet(),
-        'sendReceiveMain_screen': (context) => SendReceive()
+        'sendReceiveMain_screen': (context) => SendReceive(),
+        'transferMain_screen': (context) => Transfer()
       },
     );
   }

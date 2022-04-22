@@ -32,7 +32,7 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
   var file;
   var unique;
   String images =
-      'https://firebasestorage.googleapis.com/v0/b/wrist-bands.appspot.com/o/Users%2Fwww.holdenadvisors.com:wp-content:uploads:2017:04:blank-profile-picture-973460_960_720.png?alt=media&token=f3bfac51-9ac1-4c80-9016-2458c30c5be5';
+      'https://firebasestorage.googleapis.com/v0/b/wrist-bands.appspot.com/o/Users%2Floading.jpeg?alt=media&token=f3bfac51-9ac1-4c80-9016-2458c30c5be5';
   bool picked = false;
   bool loading = false;
 
@@ -73,55 +73,12 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
                     source: source,
                     imageQuality: 50,
                     preferredCameraDevice: CameraDevice.front);
-                setState(() async {
+                setState(() {
                   _image = File(image.path);
                   uploadFile();
                 });
               },
-              // child: FutureBuilder<String>(
-              //     future: getPic(context, unique, picked),
-              //     builder:
-              //         (BuildContext context, AsyncSnapshot<String> snapshot) {
-              //       if (picked = false) {
-              //         return Container(
-              //           decoration: BoxDecoration(color: Color(0xFF6634B0)),
-              //           width: 200,
-              //           height: 200,
-              //           child: Icon(
-              //             Icons.camera_alt,
-              //             color: Colors.white,
-              //           ),
-              //         );
-              //       } else if (snapshot.connectionState ==
-              //           ConnectionState.done) {
-              //         return new CircleAvatar(
-              //             backgroundColor: Colors.white,
-              //             // backgroundImage:
-              //             //     AssetImage('assets/images/profileTemp.png'),
-              //             child: ClipOval(
-              //                 child: Image.network(snapshot.data.toString(),
-              //                     width: 150, height: 150, fit: BoxFit.cover)),
-              //             radius: 100.0);
-              //       }
-              //       if (snapshot.connectionState == ConnectionState.waiting) {
-              //         return new CircleAvatar(
-              //           child: LoadingAnimationWidget.hexagonDots(
-              //               color: Color(0xFF6634B0), size: 100),
-              //           //     child: ClipOval(
-              //           //         child: Image.network(
-              //           //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
-              //           //             width: 150,
-              //           //             height: 150,
-              //           //             fit: BoxFit.cover)),
-              //           // radius: 100.0
-              //         );
-              //       }
-              //       return CircularProgressIndicator();
-              //     }
               child: ClipOval(
-                  // width: 200,
-                  // height: 200,
-                  // decoration: BoxDecoration(color: Color(0xFF6634B0)),
                   child: (picked == false)
                       ? Container(
                           decoration: BoxDecoration(color: Color(0xFF6634B0)),
@@ -180,6 +137,9 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
     if (_image == null) return;
     final destination = '$prefix$unique';
 
+    print("destination ");
+    print(destination);
+
     try {
       final ref = await firebase_storage.FirebaseStorage.instance
           .ref('$prefix')
@@ -192,6 +152,8 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
         .ref()
         .child('$prefix${unique.toString()}')
         .getDownloadURL();
+    print("images ");
+    print(images);
     setState(() {
       loading = false;
     });

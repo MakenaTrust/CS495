@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _Search = Search();
     _Transfer = Transfer();
     _Profile = Profile();
-    Pages = [_Wallet, _Search, _SendReceive, _Profile];
+    Pages = [_Wallet, _Search, _Transfer, _Profile];
     selectedIndex = pageNum;
     _currPage = _Wallet;
     getCurrentUser();

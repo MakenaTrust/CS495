@@ -27,7 +27,8 @@ class EventCreationScreen extends StatefulWidget {
 class _EventCreationScreenState extends State<EventCreationScreen> {
   TextEditingController eventNameController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
-  TextEditingController eventTimeController = TextEditingController();
+  TextEditingController eventStartTimeController = TextEditingController();
+  TextEditingController eventEndTimeController = TextEditingController();
   TextEditingController eventLocationController = TextEditingController();
   TextEditingController eventCapacityController = TextEditingController();
   TextEditingController eventTypeController = TextEditingController();
@@ -41,6 +42,8 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   ImagePicker picker = ImagePicker();
+  String pic =
+      'https://firebasestorage.googleapis.com/v0/b/wrist-bands.appspot.com/o/Events/48c12ce0-beaa-11ec-aadb-894fbd08ac93?alt=media&token=f69e83db-3407-40df-9527-c9b090afd731';
 
   // String type = "Music";
 
@@ -69,266 +72,288 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Form(
         key: _formKey,
-        // inAsyncCall: showSpinner,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 100.0),
-                    child: FutureBuilder<String>(
-                        future: getBand(
-                            context, widget.picID.toString(), widget.picked),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            debugPrint(snapshot.data.toString());
-                            return Container(
-                              padding: const EdgeInsets.all(8),
-                              // height: 200,
-                              // width: 380,
-                              margin:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: InkWell(
-                                  splashColor: Colors.blue,
-                                  onTap: () {
-                                    debugPrint('Tapped');
-                                  },
-                                  child: ClipRRect(
-                                    child: Image.asset(
-                                        (snapshot.data != null)
-                                            ? snapshot.data.toString()
-                                            : 'assets/images/blueBand.png',
-                                        scale: 1),
+        child: ListView(
+          // inAsyncCall: showSpinner,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: FutureBuilder<String>(
+                          future: getBand(
+                              context, widget.picID.toString(), widget.picked),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Container(
+                                height: 200,
+                                width: 380,
+                                padding: const EdgeInsets.all(8),
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: InkWell(
+                                    splashColor: Colors.blue,
+                                    onTap: () {
+                                      debugPrint('Tapped');
+                                    },
+                                    child: ClipRRect(
+                                      child: Image.network(
+                                          (snapshot.data != null)
+                                              ? snapshot.data.toString()
+                                              : 'assets/images/blueBand.png',
+                                          // height: 200,
+                                          // width: 380,
+                                          fit: BoxFit.cover),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: LoadingAnimationWidget.hexagonDots(
+                                    color: Color(0xFF6634B0), size: 100),
+                                //     child: ClipOval(
+                                //         child: Image.network(
+                                //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
+                                //             width: 150,
+                                //             height: 150,
+                                //             fit: BoxFit.cover)),
+                                // radius: 100.0
+                              );
+                            }
+                            return CircularProgressIndicator();
                           }
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: LoadingAnimationWidget.hexagonDots(
-                                  color: Color(0xFF6634B0), size: 100),
-                              //     child: ClipOval(
-                              //         child: Image.network(
-                              //             'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png',
-                              //             width: 150,
-                              //             height: 150,
-                              //             fit: BoxFit.cover)),
-                              // radius: 100.0
-                            );
-                          }
-                          return CircularProgressIndicator();
-                        }
-                        // child: ClipRRect(
-                        //         borderRadius: BorderRadius.circular(50),
-                        //         child: Image.network(
-                        //           getPic(widget.picID.toString()),
-                        //           width: 100,
-                        //           height: 100,
-                        //           fit: BoxFit.fitHeight,
-                        //         ))
-                        // (imageUrl.isNotEmpty)
-                        //     ? Image.network(imageUrl)
-                        //     :
-                        // height: 100,
-                        // width: 10,
-                        )),
-                ElevatedButton(
+                          // child: ClipRRect(
+                          //         borderRadius: BorderRadius.circular(50),
+                          //         child: Image.network(
+                          //           getPic(widget.picID.toString()),
+                          //           width: 100,
+                          //           height: 100,
+                          //           fit: BoxFit.fitHeight,
+                          //         ))
+                          // (imageUrl.isNotEmpty)
+                          //     ? Image.network(imageUrl)
+                          //     :
+                          // height: 100,
+                          // width: 10,
+                          )),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color(0xFF6634B0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                      child: const Text(
+                        'Submit a ticket picture',
+                      ),
+                      onPressed: () {
+                        _showPicker(context);
+                      }),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: eventNameController,
+                    //validator: validateEventName,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Name',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: eventDateController,
+                      //validator: validateEventDate,
+                      decoration: const InputDecoration(
+                        alignLabelWithHint: true,
+                        labelText: 'Event Date',
+                      ),
+                      onTap: () {
+                        _selectDate(context);
+                      }),
+                  Center(
+                    child: Text(errorMessage),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: eventStartTimeController,
+                      //validator: validateEventDate,
+                      decoration: const InputDecoration(
+                        alignLabelWithHint: true,
+                        labelText: 'Event Start Time',
+                      ),
+                      onTap: () {
+                        _selectTime(context, "start");
+                      }),
+                  Center(
+                    child: Text(errorMessage),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                      textAlign: TextAlign.center,
+                      controller: eventEndTimeController,
+                      //validator: validateEventDate,
+                      decoration: const InputDecoration(
+                        alignLabelWithHint: true,
+                        labelText: 'Event End Time',
+                      ),
+                      onTap: () {
+                        _selectTime(context, "end");
+                      }),
+                  Center(
+                    child: Text(errorMessage),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: eventLocationController,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Location',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Event Location';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  TextFormField(
+                    textAlign: TextAlign.center,
+                    controller: eventCapacityController,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Capacity',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Event Capacity';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                      labelText: 'Event Type',
+                    ),
+                    value: 'Please select an event type',
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: const [
+                      DropdownMenuItem(
+                        child: Text('Please select an event type'),
+                        value: 'Please select an event type',
+                      ),
+                      DropdownMenuItem(
+                          child: Text('Academic'), value: 'Academic'),
+                      DropdownMenuItem(child: Text('Dance'), value: 'Dance'),
+                      DropdownMenuItem(child: Text("Food"), value: "Food"),
+                      DropdownMenuItem(
+                          child: Text('Fraternity'), value: 'Fraternity'),
+                      DropdownMenuItem(child: Text("Music"), value: "Music"),
+                      DropdownMenuItem(
+                          child: Text("Sorority"), value: "Sorority"),
+                      DropdownMenuItem(child: Text("Sports"), value: "Sports")
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        eventTypeController.text = value.toString();
+                      });
+                    },
+                  ),
+                  // TextFormField(
+                  //   textAlign: TextAlign.center,
+                  //   controller: eventTypeController,
+                  //   decoration: const InputDecoration(
+                  //     alignLabelWithHint: true,
+                  //     labelText: 'Type of Event',
+                  //   ),
+                  //   onTap: () {
+
+                  //   },
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Type of Event';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: const Color(0xFF6634B0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8))),
-                    child: const Text(
-                      'Submit a ticket picture',
-                    ),
-                    onPressed: () {
-                      _showPicker(context);
-                    }),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: eventNameController,
-                  //validator: validateEventName,
-                  decoration: const InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: 'Event Name',
-                  ),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                    textAlign: TextAlign.center,
-                    controller: eventDateController,
-                    //validator: validateEventDate,
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      labelText: 'Event Date',
-                    ),
-                    onTap: () {
-                      _selectDate(context);
-                    }),
-                Center(
-                  child: Text(errorMessage),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                    textAlign: TextAlign.center,
-                    controller: eventTimeController,
-                    //validator: validateEventDate,
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      labelText: 'Event Start Time',
-                    ),
-                    onTap: () {
-                      _selectTime(context);
-                    }),
-                Center(
-                  child: Text(errorMessage),
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: eventLocationController,
-                  decoration: const InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: 'Event Location',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Event Location';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: eventCapacityController,
-                  decoration: const InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: 'Event Capacity',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Event Capacity';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: 'Event Type',
-                  ),
-                  value: 'Please select an event type',
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text('Please select an event type'),
-                      value: 'Please select an event type',
-                    ),
-                    DropdownMenuItem(
-                        child: Text('Academic'), value: 'Academic'),
-                    DropdownMenuItem(child: Text('Dance'), value: 'Dance'),
-                    DropdownMenuItem(child: Text("Food"), value: "Food"),
-                    DropdownMenuItem(
-                        child: Text('Fraternity'), value: 'Fraternity'),
-                    DropdownMenuItem(child: Text("Music"), value: "Music"),
-                    DropdownMenuItem(
-                        child: Text("Sorority"), value: "Sorority"),
-                    DropdownMenuItem(child: Text("Sports"), value: "Sports")
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      eventTypeController.text = value.toString();
-                    });
-                  },
-                ),
-                // TextFormField(
-                //   textAlign: TextAlign.center,
-                //   controller: eventTypeController,
-                //   decoration: const InputDecoration(
-                //     alignLabelWithHint: true,
-                //     labelText: 'Type of Event',
-                //   ),
-                //   onTap: () {
-
-                //   },
-                //   validator: (value) {
-                //     if (value!.isEmpty) {
-                //       return 'Type of Event';
-                //     }
-                //     return null;
-                //   },
-                // ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color(0xFF6634B0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8))),
-                  child: const Text('Register Event'),
-                  onPressed: () async {
-                    setState(() {
-                      showSpinner = true;
-                      errorMessage = '';
-                    });
-                    if (_formKey.currentState!.validate()) {
-                      try {
-                        FirebaseFirestore.instance
-                            .collection("Events")
-                            .doc(eventNameController.text)
-                            .set({
-                          "eventLocation": eventLocationController.text,
-                          "Date": eventDateController.text,
-                          "eventTime": eventTimeController.text,
-                          "EventName": eventNameController.text,
-                          "SearchEventName":
-                              eventNameController.text.toLowerCase(),
-                          "capacity": eventCapacityController.text,
-                          "eventType": eventTypeController.text,
-                        });
-
-                        Navigator.pushNamed(
-                            context, 'eventCreationSuccess_screen');
-                        // errorMessage = '';
-                      } on FirebaseAuthException catch (error) {
-                        errorMessage = error.message!;
-                      }
+                    child: const Text('Register Event'),
+                    onPressed: () async {
                       setState(() {
-                        showSpinner = false;
+                        showSpinner = true;
+                        errorMessage = '';
                       });
-                    }
-                  },
-                )
-              ],
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          FirebaseFirestore.instance
+                              .collection("Events")
+                              .doc(eventNameController.text)
+                              .set({
+                            "eventLocation": eventLocationController.text,
+                            "Date": eventDateController.text,
+                            "eventStartTime": eventStartTimeController.text,
+                            "eventEndTime": eventEndTimeController.text,
+                            "ticketFile": pic,
+                            "EventName": eventNameController.text,
+                            "SearchEventName":
+                                eventNameController.text.toLowerCase(),
+                            "capacity": eventCapacityController.text,
+                            "eventType": eventTypeController.text,
+                          });
+
+                          Navigator.pushNamed(
+                              context, 'eventCreationSuccess_screen');
+                          // errorMessage = '';
+                        } on FirebaseAuthException catch (error) {
+                          errorMessage = error.message!;
+                        }
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      }
+                    },
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -357,70 +382,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
           }),
     );
   }
-// }
 
-  // String? validateEventName(String? formEmail) {
-  //   if (formEmail == null || formEmail.isEmpty) {
-  //     return 'Event Name is required.';
-  //   };
-  //   return null;
-  // }
-
-  // String? validateEventDate(String? formPassword) {
-  //   if (formPassword == null || formPassword.isEmpty)
-  //     return 'Password is required.';
-  //   String pattern =
-  //       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
-  //   RegExp regex = RegExp(pattern);
-  //   if (!regex.hasMatch(formPassword)) {
-  //     return '''
-  //     Password must be at least 8 characters,
-  //     include an uppercase letter, number, and symbol.
-  //     ''';
-  //   }
-  //   return null;
-  // }
-
-  // void registerToFb() {
-  //   firebaseAuth
-  //       .createUserWithEmailAndPassword(
-  //           email: eventNameController.text, password: eventDateController.text)
-  //       .then((result) {
-  //     dbRef.child(result.user!.uid).set({
-  //       "email": eventNameController.text,
-  //       "password": eventDateController.text,
-  //       // "age": ageController.text,
-  //       // "name": nameController.text
-  //     }).then((res) {
-  //       showSpinner = false;
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) => HomeScreen(
-  //                   uid: result.user!.uid,
-  //                   title: '',
-  //                 )),
-  //       );
-  //     });
-  //   }).catchError((err) {
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             title: Text("Error"),
-  //             content: Text(err.message),
-  //             actions: [
-  //               TextButton(
-  //                 child: Text("Ok"),
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //               )
-  //             ],
-  //           );
-  //         });
-  //   });
-  // }
   _selectDate(BuildContext context) async {
     DateTime selectedDate = DateTime.now();
     final DateTime? newSelectedDate = await showDatePicker(
@@ -430,41 +392,37 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
       lastDate: DateTime(2121),
     );
     if (newSelectedDate != null) {
-      // eventDateController.text = DateFormat.yMMMd().format(selectedDate);
-      // ..selection = TextSelection.fromPosition(TextPOsition())
-// if (newSelectedDate != null && picked != selectedDate) {
       setState(() {
         selectedDate = newSelectedDate;
         final f = DateFormat('yyyy-MM-dd');
         // final stamp = DateTime.parse(DateFormat.yMMMd().format(selectedDate));
         String date = f.format(selectedDate);
         eventDateController.text = date;
+        print(eventDateController);
         // eventDateController = newSelectedDate as TextEditingController;
       });
     }
   }
 
-  _selectTime(BuildContext context) async {
+  _selectTime(BuildContext context, String startOrEnd) async {
     TimeOfDay _selectedTime = TimeOfDay.now();
     TimeOfDay? newSelectedTime = (await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      // firstDate: DateTime(2022),
-      // lastDate: DateTime(2121),
       initialEntryMode: TimePickerEntryMode.input,
     ));
     _selectedTime = newSelectedTime!;
     String time = _selectedTime.toString();
-    // eventTimeController.text = time.substring(10, time.length - 1);
-    // _selectedTime = newSelectedTime!;
-    // eventDateController.text = DateFormat.yMMMd().format(_selectedTime);
-    // ..selection = TextSelection.fromPosition(TextPOsition())
-// if (newSelectedDate != null && picked != selectedDate) {
     setState(() {
-      eventTimeController =
-          TextEditingController(text: time.substring(10, time.length - 1));
-      // eventTimeController = eventTimeController.text as TextEditingController;
-      // eventDateController = newSelectedTime as TextEditingController;
+      if (startOrEnd == 'start') {
+        eventStartTimeController =
+            TextEditingController(text: time.substring(10, time.length - 1));
+        print(eventStartTimeController);
+      } else {
+        eventEndTimeController =
+            TextEditingController(text: time.substring(10, time.length - 1));
+        print(eventEndTimeController);
+      }
     });
   }
 
@@ -488,7 +446,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     // String text =
     //     'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
     // ;
-    if (picker == false) unique = '/assets/image/blueBand.png';
+    if (picker == false) unique = 'blueBand.png';
     // if (picker == false)
     // return 'https://www.holdenadvisors.com/wp-content/uploads/2017/04/blank-profile-picture-973460_960_720.png';
     // else
@@ -496,9 +454,9 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     final images = await firebase_storage.FirebaseStorage.instance
         .ref()
         .child('Events/${unique.toString()}');
-    String pic = await images.getDownloadURL();
+    pic = await images.getDownloadURL();
     // filename = unique.toString() as TextEditingController;
-    print(pic);
+    // print(pic);
     return pic;
     // debugPrint(pic);
   }
@@ -539,7 +497,8 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     // nameController.dispose();
     eventNameController.dispose();
     eventDateController.dispose();
-    eventTimeController.dispose();
+    eventStartTimeController.dispose();
+    eventEndTimeController.dispose();
     eventCapacityController.dispose();
     eventLocationController.dispose();
     eventTypeController.dispose();

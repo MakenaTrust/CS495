@@ -34,7 +34,7 @@ class _ExamplePageState extends State<Search> {
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
-    if (index == 2) Navigator.pushNamed(context, 'sendReceiveMain_screen');
+    if (index == 2) Navigator.pushNamed(context, 'transferMain_screen');
     if (index == 3) Navigator.pushNamed(context, 'profileMain_screen');
   }
 
@@ -200,9 +200,9 @@ class _ExamplePageState extends State<Search> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String name = data['EventName'];
-                    String pic = data['SearchEventName'];
+                    String pic = data['ticketFile'];
                     // String picName = pic + ".png";
-                    // String date = data['Date'];
+                    String date = data['Date'];
                     // String capacity = data['capacity'];
                     return GestureDetector(
                         onTap: () => {
@@ -295,9 +295,9 @@ class _ExamplePageState extends State<Search> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String name = data['EventName'];
-                    String pic = data['SearchEventName'];
+                    String pic = data['ticketFile'];
                     // String picName = pic + ".png";
-                    // String date = data['Date'];
+                    String date = data['Date'];
                     // String capacity = data['capacity'];
                     return GestureDetector(
                         onTap: () => {
@@ -329,10 +329,41 @@ class _ExamplePageState extends State<Search> {
                                                     text: data['EventName']),
                                           ));
                                     },
-                                    child: Center(child: renderPic(pic, name)
+                                    child: Stack(children: <Widget>[
+                                      renderPic(pic, name),
+                                      Positioned(
+                                        bottom: 10,
+                                        top: -110,
+                                        left: 10,
+                                        right: 10,
+                                        child: Image.asset(
+                                            'assets/images/bandedNameLogo.png',
+                                            scale: 9,
+                                            alignment: Alignment.center),
                                         // Text('$name',
                                         //     textAlign: TextAlign.center),
-                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 10,
+                                        top: 85,
+                                        left: 10,
+                                        right: 10,
+                                        child: Text('${name}',
+                                            textAlign: TextAlign.center),
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                      ),
+                                      Positioned(
+                                        bottom: 10,
+                                        top: 100,
+                                        left: 10,
+                                        right: 10,
+                                        child: Text('${date}',
+                                            textAlign: TextAlign.center),
+                                        // Text('$name',
+                                        //     textAlign: TextAlign.center),
+                                      ),
+                                    ]),
                                   ),
                                 ),
                               ),
@@ -349,14 +380,13 @@ class _ExamplePageState extends State<Search> {
 
 Widget renderPic(String pic, String name) {
   // String pic1 = pic.replaceAll(",", "");
-  String picName = pic + '.png';
-  if (File('assets/images/$pic').exists() == false) {
+  // String picName = pic + '.png';
+  if (pic == null) {
     return Card(child: Text('$name', textAlign: TextAlign.center));
   } else
-    print(picName);
-  return ClipRRect(
-    child: Image.asset('assets/images/$picName', scale: 1),
-  );
+    return ClipRRect(
+      child: Image.network(pic, scale: 1),
+    );
 }
 
 
