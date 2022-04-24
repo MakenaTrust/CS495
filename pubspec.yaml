@@ -96,6 +96,7 @@ flutter:
     - assets/images/chris lane concert.png
     - assets/images/blueBand.png
     - assets/images/qr.png
+    - assets/images/maxresdefault.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
