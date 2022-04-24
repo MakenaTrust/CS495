@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 // import 'package:firebase_database/firebase_database.dart';
 
 class EventQuery {
@@ -12,6 +13,12 @@ class EventQuery {
     // print(userid);
     return userid.toString();
   }
+
+  String getUniqueEVID() {
+    String unique = Uuid().v1();
+    return unique;
+  }
+
   // String lname = " ";
   // String uName = " ";
   // bool coordinator = false;

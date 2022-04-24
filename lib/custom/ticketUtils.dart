@@ -20,7 +20,60 @@ class TicketInfo {
   String eventname;
   bool valid;
 
-  /*//Setters
+//Setters
+
+  Future<void> setVisitorCurEvent(
+    String UID,
+    String TID,
+    String EVID,
+    String transferringTo,
+    String transferringFrom,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(UID)
+        .collection('curEvents')
+        .doc(TID)
+        .update({'EVID': EVID});
+    ({'transferringTo': transferringTo});
+    ({'transferringFrom': transferringFrom});
+  }
+
+  Future<void> setVisitorPastEvent(
+    String UID,
+    String TID,
+    String EVID,
+    String transferringTo,
+    String transferringFrom,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(UID)
+        .collection('curEvents')
+        .doc(TID)
+        .update({'EVID': EVID});
+    ({'transferringTo': transferringTo});
+    ({'transferringFrom': transferringFrom});
+  }
+
+  Future<void> setVisitorSentEvent(
+    String UID,
+    String TID,
+    String EVID,
+    String transferringTo,
+    String transferringFrom,
+  ) async {
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(UID)
+        .collection('curEvents')
+        .doc(TID)
+        .update({'EVID': EVID});
+    ({'transferringTo': transferringTo});
+    ({'transferringFrom': transferringFrom});
+  }
+
+  /*
   void setOwner(String owner){ownerID = owner;}
   void setEvent(String event){eventname = event;}
   void setValid(bool v){valid = v;}
