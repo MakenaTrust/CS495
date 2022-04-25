@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'wallet_navigation/walletMain_screen.dart';
+import 'package:flutter_application_1/home_navigation/wallet_navigation/walletMain_screen.dart';
 
 class SearchDetailScreen extends StatelessWidget {
-  final String text;
-  SearchDetailScreen({Key? key, required this.text}) : super(key: key);
+  final String EVID;
+  final String EVName;
+  final String EVPicture;
+  final String EVDate;
+  SearchDetailScreen(
+      {Key? key,
+      required this.EVID,
+      required this.EVName,
+      required this.EVPicture,
+      required this.EVDate})
+      : super(key: key);
   int index = 1;
 
   void _onItemTapped(int index, BuildContext context) {
@@ -25,7 +34,7 @@ class SearchDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
-                text,
+                EVID,
                 style: Theme.of(context).textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
@@ -91,4 +100,16 @@ class SearchDetailScreen extends StatelessWidget {
           }),
     );
   }
+}
+
+Widget renderPic(String pic, String name) {
+  // String pic1 = pic.replaceAll(",", "");
+  // String picName = pic + '.png';
+  if (pic == null) {
+    return Card(child: Text('$name', textAlign: TextAlign.center));
+  } else
+    return Image.network(pic,
+        fit: BoxFit.fill,
+        color: Color.fromRGBO(255, 255, 255, .86),
+        colorBlendMode: BlendMode.modulate);
 }

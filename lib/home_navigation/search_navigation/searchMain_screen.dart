@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/home_navigation/searchDetail_screen.dart';
+import 'searchDetail_screen.dart';
 import 'package:flutter_application_1/custom/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
@@ -215,6 +215,7 @@ class _ExamplePageState extends State<Search> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
+                    String EVID = snapshot.data!.docs[index].reference.id;
                     String name = data['EventName'];
                     String pic = data['ticketFile'];
                     // String picName = pic + ".png";
@@ -226,7 +227,10 @@ class _ExamplePageState extends State<Search> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SearchDetailScreen(
-                                        text: data['EventName']),
+                                        EVID: EVID,
+                                        EVName: name,
+                                        EVPicture: pic,
+                                        EVDate: date),
                                   ))
                             },
                         child: SingleChildScrollView(
@@ -247,7 +251,10 @@ class _ExamplePageState extends State<Search> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               SearchDetailScreen(
-                                                  text: data['EventName']),
+                                                  EVID: EVID,
+                                                  EVName: name,
+                                                  EVPicture: pic,
+                                                  EVDate: date),
                                         ));
                                   },
                                   child: Center(child: fullSearch(name)
@@ -291,6 +298,7 @@ class _ExamplePageState extends State<Search> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
+                    String EVID = snapshot.data!.docs[index].reference.id;
                     String name = data['EventName'];
                     String pic = data['ticketFile'];
                     // String picName = pic + ".png";
@@ -302,7 +310,10 @@ class _ExamplePageState extends State<Search> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SearchDetailScreen(
-                                        text: data['EventName']),
+                                        EVID: EVID,
+                                        EVName: name,
+                                        EVPicture: pic,
+                                        EVDate: date),
                                   ))
                             },
                         child: Card(
@@ -324,7 +335,11 @@ class _ExamplePageState extends State<Search> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 SearchDetailScreen(
-                                                    text: data['EventName']),
+                                                    //THIS ACTUALLY UPDATES THINGS
+                                                    EVID: EVID,
+                                                    EVName: name,
+                                                    EVPicture: pic,
+                                                    EVDate: date),
                                           ));
                                     },
                                     child: Stack(children: <Widget>[

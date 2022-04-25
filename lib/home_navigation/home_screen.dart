@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'wallet_navigation/walletMain_screen.dart';
 import 'search_navigation/searchMain_screen.dart';
 import 'profile_navigation/profileMain_screen.dart';
-import 'sendReceive_navigation/sendReceiveMain_screen.dart';
 import 'transfer_navigation/transferMain_screen.dart';
 
 User? loggedinUser;
