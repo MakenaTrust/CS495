@@ -12,32 +12,30 @@ Future<void> addBlankTicketToEvent(String eventID) async {
   });
 }
 
+Future<void> updateEventTicketOwner(
+    String eventID, String ticketID, String newOwnerID) async {
+  await FirebaseFirestore.instance
+      .collection('Events')
+      .doc(eventID)
+      .collection('Tickets')
+      .doc(ticketID)
+      .update({'ownerID': newOwnerID});
+}
+
+Future<void> updateEventTicketReservetime(
+    String eventID, String ticketID, DateTime newTimestamp) async {
+  await FirebaseFirestore.instance
+      .collection('Events')
+      .doc(eventID)
+      .collection('Tickets')
+      .doc(ticketID)
+      .update({'ownerID': newTimestamp.toIso8601String()});
+}
+
 class EventTicketQuery {
   String owner = " ";
   String timebought = " ";
   String timereserved = " ";
-
-  // Updaters
-
-  Future<void> updateEventTicketOwner(
-      String eventID, String ticketID, String newOwnerID) async {
-    await FirebaseFirestore.instance
-        .collection('Events')
-        .doc(eventID)
-        .collection('Tickets')
-        .doc(ticketID)
-        .update({'ownerID': newOwnerID});
-  }
-
-  Future<void> updateEventTicketReservetime(
-      String eventID, String ticketID, DateTime newTimestamp) async {
-    await FirebaseFirestore.instance
-        .collection('Events')
-        .doc(eventID)
-        .collection('Tickets')
-        .doc(ticketID)
-        .update({'ownerID': newTimestamp.toIso8601String()});
-  }
 
   //Fetchers
 
