@@ -40,6 +40,16 @@ class _WalletState extends State<Wallet> {
         backgroundColor: Colors.white,
       ),
       body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: const Color(0xFF6634B0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8))),
+            child: const Text('NFT'),
+            onPressed: () {
+              debugPrint("pressed NFT Test");
+              Navigator.pushNamed(context, 'nft_screen');
+            }),
         if (globalName == 'nothing') ...[
           Container(
             height: 200,

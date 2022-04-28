@@ -14,6 +14,8 @@ import 'home_navigation/profile_navigation/profileUpdateSuccess_screen.dart';
 import 'home_navigation/wallet_navigation/walletMain_screen.dart';
 import 'home_navigation/search_navigation/searchMain_screen.dart';
 import 'home_navigation/transfer_navigation/transferMain_screen.dart';
+import 'home_navigation/profile_navigation/nftCreation_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
   const NoTransitionsBuilder();
@@ -34,6 +36,7 @@ class NoTransitionsBuilder extends PageTransitionsBuilder {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
   runApp(const AuthApp());
 }
 
@@ -74,7 +77,8 @@ class AuthApp extends StatelessWidget {
             ProfileUpdateSuccessScreen(),
         'searchMain_screen': (context) => Search(),
         'walletMain_screen': (context) => Wallet(),
-        'transferMain_screen': (context) => Transfer()
+        'transferMain_screen': (context) => Transfer(),
+        'nft_screen': (context) => Blockchain()
       },
     );
   }
