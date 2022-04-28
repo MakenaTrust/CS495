@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/custom/userTicketQuery.dart';
 import '/custom/eventTicketQuery.dart';
 
 //Current Tickets (Users/curEvents)
@@ -99,7 +100,15 @@ Future<void> addTicketToUserPastEvent(String userID, String ticketID,
   });
 }
 
-// Transfer Tools
+// Ticket Movement/Ownership Tools
+
+Future<void> claimUnownedTicket(
+    String newOwnerID, String tid, String evid) async {
+  await Future.wait([
+    addNewTicketToUserCurEvent(newOwnerID, tid, evid),
+    updateEventTicketOwner(evid, tid, newOwnerID),
+  ]);
+}
 
 Future<void> transferTicket(
     String fromUser, String toUser, String tid, String evid) async {
@@ -116,5 +125,17 @@ Future<void> transferTicket(
 
 Future<void> sendTicket(
     String fromUser, String toUser, String tid, String evid) async {
-  await Future.wait([addTicketToUserRecEvent(toUser, fromUser, tid, evid)]);
+  await Future.wait([
+    addTicketToUserRecEvent(toUser, fromUser, tid, evid),
+    updateUserCurEventTransferringTo(fromUser, tid, toUser),
+  ]);
+}
+
+//Needs to make sure that the Owned Ticket (curEvent) has no transferringTo
+Future<void> useOwnedTicket(String owner, String transFrom, String transTo,
+    String tid, String evid) async {
+  await Future.wait([
+    addTicketToUserPastEvent(owner, tid, evid, transFrom, transTo),
+    removeTicketFromUserCurEvent(owner, tid),
+  ]);
 }

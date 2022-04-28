@@ -1,5 +1,132 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//curEvent Updaters
+
+Future<void> updateUserCurEventEVID(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('curEvents')
+      .doc(ticketID)
+      .update({'EVID': newData});
+}
+
+Future<void> updateUserCurEventTransferringFrom(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('curEvents')
+      .doc(ticketID)
+      .update({'transferringFrom': newData});
+}
+
+Future<void> updateUserCurEventTransferringTo(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('curEvents')
+      .doc(ticketID)
+      .update({'transferringTo': newData});
+}
+
+// recEvent Updaters
+Future<void> updateUserRecEventEVID(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('recEvents')
+      .doc(ticketID)
+      .update({'EVID': newData});
+}
+
+Future<void> updateUserRecEventTransferringFrom(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('recEvents')
+      .doc(ticketID)
+      .update({'transferringFrom': newData});
+}
+
+Future<void> updateUserRecEventTransferringTo(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('recEvents')
+      .doc(ticketID)
+      .update({'transferringTo': newData});
+}
+
+//sentEvent Updaters
+
+Future<void> updateUserSentEventEVID(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('sentEvents')
+      .doc(ticketID)
+      .update({'EVID': newData});
+}
+
+Future<void> updateUserSentEventTransferringFrom(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('sentEvents')
+      .doc(ticketID)
+      .update({'transferringFrom': newData});
+}
+
+Future<void> updateUserSentEventTransferringTo(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('sentEvents')
+      .doc(ticketID)
+      .update({'transferringTo': newData});
+}
+
+//pastEvents Updaters
+
+Future<void> updateUserPastEventEVID(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('pastEvents')
+      .doc(ticketID)
+      .update({'EVID': newData});
+}
+
+Future<void> updateUserPastEventTransferringFrom(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('pastEvents')
+      .doc(ticketID)
+      .update({'transferringFrom': newData});
+}
+
+Future<void> updateUserPastEventTransferringTo(
+    String userID, String ticketID, String newData) async {
+  await FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userID)
+      .collection('pastEvents')
+      .doc(ticketID)
+      .update({'transferringTo': newData});
+}
+
 //Generic User Ticket
 class UserTicketQuery {
   String eventID = " ";
