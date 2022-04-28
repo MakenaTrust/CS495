@@ -15,6 +15,7 @@ import 'home_navigation/wallet_navigation/walletMain_screen.dart';
 import 'home_navigation/search_navigation/searchMain_screen.dart';
 import 'home_navigation/transfer_navigation/transferMain_screen.dart';
 import 'home_navigation/profile_navigation/nftCreation_screen.dart';
+import 'home_navigation/profile_navigation/nftImage_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NoTransitionsBuilder extends PageTransitionsBuilder {
@@ -78,7 +79,8 @@ class AuthApp extends StatelessWidget {
         'searchMain_screen': (context) => Search(),
         'walletMain_screen': (context) => Wallet(),
         'transferMain_screen': (context) => Transfer(),
-        'nft_screen': (context) => Blockchain()
+        'nft_screen': (context) => Blockchain(),
+        'nftImage_screen': (context) => ImageDisplay(),
       },
     );
   }

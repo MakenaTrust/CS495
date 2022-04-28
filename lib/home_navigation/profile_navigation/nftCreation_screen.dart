@@ -57,7 +57,7 @@ class _BlockchainState extends State<Blockchain> {
                             borderRadius: BorderRadius.circular(8))),
                     child: const Text('Show Image'),
                     onPressed: () {
-                      debugPrint("pressed Show Image");
+                      Navigator.pushNamed(context, 'nftImage_screen');
                     }),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -66,18 +66,12 @@ class _BlockchainState extends State<Blockchain> {
                             borderRadius: BorderRadius.circular(8))),
                     child: const Text('Mint NFT'),
                     onPressed: () async {
-                      debugPrint("pressed Mint NFT");
                       mintedImage = await mintNFT();
+                      setState(() {
+                        mintedImage = mintedImage;
+                      });
                     }),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF6634B0),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8))),
-                    child: const Text('Show NFT'),
-                    onPressed: () {
-                      debugPrint("pressed Show NFT");
-                    })
+                showMintedImage()
               ])),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -108,12 +102,12 @@ class _BlockchainState extends State<Blockchain> {
   }
 
   Future<DeployedContract> getContract() async {
-    final contractName = dotenv.env['CONTRACT_NAME'];
-    final contractAddress = dotenv.env['CONTRACT_ADDRESS'];
+    final name = dotenv.env['CONTRACT_NAME'];
+    final address = dotenv.env['CONTRACT_ADDRESS'];
     String abi = await rootBundle.loadString("assets/abi.json");
     DeployedContract contract = DeployedContract(
-      ContractAbi.fromJson(abi, contractName!),
-      EthereumAddress.fromHex(contractAddress!),
+      ContractAbi.fromJson(abi, name!),
+      EthereumAddress.fromHex(address!),
     );
     return contract;
   }
@@ -135,9 +129,8 @@ class _BlockchainState extends State<Blockchain> {
     String part1 = r'ipfs://';
     String part2 = r'/Star 1.json';
     String pictureURL = ("$part1$jsonCID$part2");
-    debugPrint('url to mint $pictureURL');
     var results = await Future.wait([
-      getImageFromJson(pictureURL),
+      getImageFromJson(),
       polygonConnection.sendTransaction(
         credentials,
         Transaction.callContract(
@@ -145,22 +138,28 @@ class _BlockchainState extends State<Blockchain> {
         fetchChainIdFromNetworkId: true,
         chainId: null,
       ),
-      Future.delayed(const Duration(seconds: 3))
     ]);
     return results[0];
   }
 
-  //swap from replaceFirst to $string creation if I have time
-  Future<Uint8List> getImageFromJson(String json) async {
+  Future<Uint8List> getImageFromJson() async {
     final jsonCID = dotenv.env['JSON_CID'];
     final imagesCID = dotenv.env['IMAGES_CID'];
-    String url = json
-        .toString()
-        .replaceFirst(r'ipfs://', r'https://ipfs.io/ipfs/')
-        .replaceFirst(jsonCID!, imagesCID!)
-        .replaceFirst('.json', '.png');
-    debugPrint(url);
+    String part1 = r'https://ipfs.io/ipfs/';
+    String part2 = r'/Star 1.png';
+    String url = ("$part1$imagesCID$part2");
     var resp = await httpConnection.get(Uri.parse(url));
     return Uint8List.fromList(resp.body.codeUnits);
+  }
+
+  Widget showMintedImage() {
+    if (mintedImage == null) {
+      return Container();
+    } else {
+      return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Text('now showing NFT:'),
+        Image.memory(mintedImage!, width: 200, height: 300),
+      ]);
+    }
   }
 }
