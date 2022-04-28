@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import '/custom/locationQuery.dart';
 // import 'custom/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -10,42 +11,19 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   Position? _position;
   LocationPermission? permission;
-
-  // void _getCurrentLocation() async {
-  //   Position position = await _determinePosition();
-  //   setState(() {
-  //     _position = position;
-  //   });
-  // }
-
-  _determinePosition() async {
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location Permissions are denied');
-      }
-    }
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: false)
-        .then((Position position) {
-      print(position);
-      setState(() {
-        _position = position;
-        print(position.latitude);
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
+  LocationQuery x = LocationQuery();
 
   @override
   void initState() {
     super.initState();
-
-    _determinePosition();
-    //until this is completed user stays null we can use it to check whether it's loaded
+    // LocationQuery x = LocationQuery();
+    // EventQuery y = EventQuery();
+    x.determinePosition().then((Position result) {
+      setState(() {
+        _position = result;
+        print("hi " + _position.toString());
+      });
+    });
   }
 
   @override
@@ -59,14 +37,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // const Text(
-            //   'Welcome to',
-            //   style: TextStyle(
-            //       fontSize: 40,
-            //       color: Color(0xFF6634B0),
-            //       fontWeight: FontWeight.bold),
-            //   textAlign: TextAlign.center,
-            // ),
             const SizedBox(
               height: 5,
             ),

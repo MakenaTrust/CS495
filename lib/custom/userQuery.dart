@@ -23,6 +23,8 @@ class UserQuery {
   String fileName = " ";
   bool coordinator = false;
 
+  
+
   Future<String> fetchUserFirstName() async {
     // String uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance

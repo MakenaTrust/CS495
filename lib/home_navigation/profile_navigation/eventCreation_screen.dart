@@ -10,6 +10,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_application_1/custom/imageQuery.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '/custom/eventTicketQuery.dart';
+import '/custom/locationQuery.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 enum ImageSourceType { gallery, camera }
@@ -336,7 +338,11 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                             "capacity": eventCapacityController.text,
                             "eventType": eventTypeController.text,
                           });
-
+                          for (int i = 0;
+                              i < int.parse(eventCapacityController.text);
+                              i++) {
+                            addBlankTicketToEvent(eventNameController.text);
+                          }
                           Navigator.pushNamed(
                               context, 'eventCreationSuccess_screen');
                           // errorMessage = '';

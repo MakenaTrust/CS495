@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import '/custom/ticketCreation.dart';
+import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
 import '/custom/userQuery.dart';
 import '/custom/ticketUtils.dart';
+import 'ownedTickets_screen.dart';
 
 Future<List<TicketInfo>> makeTicketList() async {
   List<TicketInfo> ticketlist =
@@ -51,8 +54,32 @@ class _TransferState extends State<Transfer> {
   String ticket2Event = 'ticket2Event';
   String ticket3Sender = 'ticket3Sender';
   String ticket3Event = 'ticket3Event';
+  String name = "";
+  bool clicked = false;
   //UserQuery currentUser = UserQuery();
 
+  String uname = " ";
+  String fname = " ";
+  String lname = " ";
+
+  @override
+  void initState() {
+    super.initState();
+    UserQuery x = UserQuery();
+    // EventQuery y = EventQuery();
+    x.fetchUserFirstName().then((String result) {
+      setState(() {
+        fname = result;
+      });
+    });
+    x.fetchUserLastName().then((String result) {
+      setState(() {
+        lname = result;
+      });
+    });
+    clicked = false;
+    // fullSearch(name);
+  }
 /*
   @override
   void initState() {
@@ -65,6 +92,7 @@ class _TransferState extends State<Transfer> {
   Widget build(BuildContext context) {
     convertFutureListToList();
     ticketlist = [];
+    TextEditingController input = new TextEditingController();
     print(
         'TransferState list @ build is length ' + ticketlist.length.toString());
 
@@ -87,7 +115,10 @@ class _TransferState extends State<Transfer> {
                             borderRadius: BorderRadius.circular(8))),
                     child: const Text('Send Wristband'),
                     onPressed: () {
-                      numTickets++;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OwnedTicketsScreen()));
                       //setTicketCode(testUser, testTicket, 'Place', 'Dude');
                       setState(() {});
                       /*async {
