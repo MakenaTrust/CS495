@@ -23,8 +23,6 @@ class UserQuery {
   String fileName = " ";
   bool coordinator = false;
 
-  
-
   Future<String> fetchUserFirstName() async {
     // String uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
@@ -145,6 +143,11 @@ class UserQuery {
         .collection('Users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({"username": newUserName});
+    String searchUser = newUserName.toLowerCase();
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({"searchUser": searchUser});
     // throw Exception("Couldn't update username");
     //     .then((user) {
     //   // setState(() {

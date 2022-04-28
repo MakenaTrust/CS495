@@ -34,7 +34,7 @@ class ProfileUpdateSuccessScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8))),
                 child: const Text('Back to Profile'),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'home_screen');
+                  Navigator.pushNamed(context, 'profileMain_screen');
                 },
               ),
             ]),

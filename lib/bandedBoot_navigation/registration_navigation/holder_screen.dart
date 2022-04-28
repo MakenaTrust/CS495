@@ -152,6 +152,8 @@ class _HolderScreenState extends State<HolderScreen> {
                         "username": userNameController.text,
                         "firstName": fNameController.text,
                         "lastName": lNameController.text,
+                        'searchUser':
+                            userNameController.toString().toLowerCase(),
                         "holder": true
                       });
                       Navigator.pushNamed(context, 'login_screen');

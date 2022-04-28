@@ -139,20 +139,6 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 // validator: validatePassword,
                 validator: (value) {
                   String p1 = newPasswordController1.toString();
-                  // String p2 = newPasswordController2.toString();
-                  // if (value == null) {
-                  //   // print(value);
-                  //   return 'Password is required.';
-                  // }
-                  //             String pattern =
-                  //                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[!@#\$&*~-]).{8,}$';
-                  //             RegExp regex = RegExp(pattern);
-                  //             if (!regex.hasMatch(value)) {
-                  //               return '''
-                  // Password must be at least 8 characters,
-                  // include an uppercase letter, number, and symbol.
-                  // ''';
-                  //             }
                   return null;
                 },
                 obscureText: true,
@@ -169,14 +155,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 validator: (value) {
                   String p1 = newPasswordController1.text;
                   String p2 = newPasswordController2.text;
-                  // if (value == null) {
-                  //   print(value);
-                  //   return 'Password is required.';
-                  // }
                   if (value != p1) {
                     if (p1.isEmpty & p1.isNotEmpty) {
-                      // print(value);
-                      // print(p1);
                       return 'Re-enter password';
                     } else {
                       return 'Passwords must match.';
@@ -221,7 +201,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             .updateUserName(newUsernameController.text)
                             .then((String result) {
                           setState(() {
-                            newFirstNameController.text = result;
+                            newUsernameController.text = result;
                           });
                           changed = true;
                           // Navigator.pushNamed(
@@ -255,7 +235,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             .updateLastName(newLastNameController.text)
                             .then((String result) {
                           setState(() {
-                            newUsernameController.text = result;
+                            newLastNameController.text = result;
                           });
                           changed = true;
                           // Navigator.pushNamed(

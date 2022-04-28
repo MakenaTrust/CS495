@@ -78,26 +78,49 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
                   uploadFile();
                 });
               },
-              child: ClipOval(
-                  child: (picked == false)
-                      ? Container(
-                          decoration: BoxDecoration(color: Color(0xFF6634B0)),
-                          width: 200,
-                          height: 200,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.white,
-                          ),
-                        )
-                      : (_image != null)
-                          ? Image.network(
-                              images,
-                              width: 200.0,
-                              height: 200.0,
-                              fit: BoxFit.cover,
+              child: (file == 'profile')
+                  ? ClipOval(
+                      child: (picked == false)
+                          ? Container(
+                              decoration:
+                                  BoxDecoration(color: Color(0xFF6634B0)),
+                              width: 200,
+                              height: 200,
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
                             )
-                          : LoadingAnimationWidget.hexagonDots(
-                              color: Color(0xFF6634B0), size: 100)),
+                          : (_image != null)
+                              ? Image.network(
+                                  images,
+                                  width: 200.0,
+                                  height: 200.0,
+                                  fit: BoxFit.cover,
+                                )
+                              : LoadingAnimationWidget.hexagonDots(
+                                  color: Color(0xFF6634B0), size: 100))
+                  : Card(
+                      child: (picked == false)
+                          ? Container(
+                              decoration:
+                                  BoxDecoration(color: Color(0xFF6634B0)),
+                              width: 320,
+                              height: 200,
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                              ),
+                            )
+                          : (_image != null)
+                              ? Image.network(
+                                  images,
+                                  width: 320.0,
+                                  height: 200.0,
+                                  fit: BoxFit.cover,
+                                )
+                              : LoadingAnimationWidget.hexagonDots(
+                                  color: Color(0xFF6634B0), size: 100)),
             ),
           ),
           ElevatedButton(

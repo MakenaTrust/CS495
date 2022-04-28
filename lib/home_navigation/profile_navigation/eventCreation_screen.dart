@@ -323,10 +323,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                       });
                       if (_formKey.currentState!.validate()) {
                         try {
-                          FirebaseFirestore.instance
-                              .collection("Events")
-                              .doc(eventNameController.text)
-                              .set({
+                          FirebaseFirestore.instance.collection("Events").add({
                             "eventLocation": eventLocationController.text,
                             "Date": eventDateController.text,
                             "eventStartTime": eventStartTimeController.text,

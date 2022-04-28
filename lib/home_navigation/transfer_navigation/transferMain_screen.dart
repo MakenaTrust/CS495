@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/custom/userQuery.dart';
 import '/custom/ticketUtils.dart';
 import 'ownedTickets_screen.dart';
+import '/custom/userTicketTools.dart';
 
 Future<List<TicketInfo>> makeTicketList() async {
   List<TicketInfo> ticketlist =

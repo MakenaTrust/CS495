@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/custom/userTicketTools.dart';
 import 'package:flutter_application_1/home_navigation/search_navigation/searchDetail_screen.dart';
 import 'package:flutter_application_1/custom/text_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -167,9 +168,8 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String fname = data['firstName'];
                     String lname = data['lastName'];
-                    String transferringTo = data.reference.id;
-                    String transferringFrom =
-                        FirebaseAuth.instance.currentUser!.uid;
+                    String toUser = data.reference.id;
+                    String fromUser = FirebaseAuth.instance.currentUser!.uid;
                     // print('To: ${transferringTo}');
                     // print('From: ${transferringFrom}');
                     return Card(
@@ -180,36 +180,68 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                             width: 380,
                             // width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(left: 10, right: 10),
-                            child: Card(
-                              semanticContainer: true,
-                              child: InkWell(
-                                splashColor: const Color(0xFF6634B0),
-                                onTap: () {
-                                  print("EVID " + widget.evid.toString());
-                                  print("TID " + widget.tid.toString());
-                                  print('To: ${transferringTo}');
-                                  print('From: ${transferringFrom}');
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           SearchDetailScreen(
-                                  //               text: data['EventName']),
-                                  //     ));
-                                },
-                                child: Stack(children: <Widget>[
-                                  Positioned(
-                                    bottom: 10,
-                                    left: 10,
-                                    right: 10,
-                                    child: Text('${fname} ${lname}'),
-                                    // Text('$name',
-                                    //     textAlign: TextAlign.center),
-                                  ),
-                                ]),
+                            // child:
+                            // Card(
+                            //   semanticContainer: true,
+                            //   child: InkWell(
+                            //     splashColor: const Color(0xFF6634B0),
+                            //     onTap: () {
+                            //       print("EVID " + widget.evid.toString());
+                            //       print("TID " + widget.tid.toString());
+                            //       print('To: ${toUser}');
+                            //       print('From: ${fromUser}');
+                            //       // Navigator.push(
+                            //       //     context,
+                            //       //     MaterialPageRoute(
+                            //       //       builder: (context) =>
+                            //       sendTicket(
+                            //           fromUser,
+                            //           toUser,
+                            //           widget.tid.toString(),
+                            //           widget.evid.toString());
+                            //       // ));
+                            //     },
+                            child: Stack(children: <Widget>[
+                              Positioned(
+                                bottom: 10,
+                                left: 10,
+                                right: 10,
+                                child: Text('${fname} ${lname}'),
+                                // Text('$name',
+                                //     textAlign: TextAlign.center),
                               ),
-                            ),
+                              Positioned(
+                                  bottom: 10,
+                                  right: 10,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: const Color(0xFF6634B0),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8))),
+                                    child: const Text('Send To This User'),
+                                    onPressed: () {
+                                      print("EVID " + widget.evid.toString());
+                                      print("TID " + widget.tid.toString());
+                                      print('To: ${toUser}');
+                                      print('From: ${fromUser}');
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      sendTicket(
+                                          fromUser,
+                                          toUser,
+                                          widget.tid.toString(),
+                                          widget.evid.toString());
+                                      Navigator.pushNamed(
+                                          context, 'walletMain_screen');
+                                    },
+                                  )),
+                            ]),
                           ),
+                          // ),
+                          // ),
                         ],
                       ),
                     );
