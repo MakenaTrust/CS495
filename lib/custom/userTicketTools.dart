@@ -104,10 +104,17 @@ Future<void> addTicketToUserPastEvent(String userID, String ticketID,
 Future<void> transferTicket(
     String fromUser, String toUser, String tid, String evid) async {
   await Future.wait([
+    // Needs to check that the ticket is in fromUser curEvents FIRST
+// make sure they havent used it
     addSentTicketToUserCurEvent(toUser, fromUser, tid, evid),
     addTicketToUserSentEvent(toUser, fromUser, tid, evid),
     removeTicketFromUserRecEvent(toUser, tid),
     removeTicketFromUserCurEvent(fromUser, tid),
     updateEventTicketOwner(evid, tid, toUser),
   ]);
+}
+
+Future<void> sendTicket(
+    String fromUser, String toUser, String tid, String evid) async {
+  await Future.wait([addTicketToUserRecEvent(toUser, fromUser, tid, evid)]);
 }
