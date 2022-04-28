@@ -5,10 +5,11 @@ import 'package:flutter_application_1/custom/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
+import '/custom/ticketBuilder.dart';
 import '/custom/userQuery.dart';
 
 /*
-
+ 
 */
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _ExamplePageState extends State<Search> {
   bool clicked = false;
   String fname = " ";
   String lname = " ";
+  TicketToBuild y = TicketToBuild();
 
   @override
   void initState() {
@@ -145,57 +147,10 @@ class _ExamplePageState extends State<Search> {
     );
   }
 
-  // Widget searchBarWidget() {
-  //   return Container(
-  //   height: 40,
-  //   width: MediaQuery.of(context).size.width,
-  //   margin: const EdgeInsets.only(left: 10, right: 10),
-  //   decoration: BoxDecoration(
-  //       border: Border.all(),
-  //       borderRadius: BorderRadius.circular(30),
-  //       color: const Color(0xFFFFFF)),
-  //   child: Row(
-  //     children: [
-  //       const Expanded(
-  //         child: Icon(
-  //           Icons.search_rounded,
-  //           color: Colors.black,
-  //         ),
-  //         flex: 1,
-  //       ),
-  //       Expanded(
-  //         child: _textUtils.normal16("Search", const Color(0xFF3E3E3E)),
-  //         flex: 6,
-  //       )
-  //     ],
-  //   ),
-  // );
-
-  // child: TextField(
-  //   decoration: const InputDecoration(
-  //       prefixIcon: Icon(Icons.search), hintText: 'Search...'),
-  //   onTap: () {
-  //     clicked = true;
-  //     fullSearch();
-  //   },
-  //   onChanged: (val) {
-  //     setState(() {
-  //       name = val;
-  //     });
-  //   },
-  // ),
-
-  //     child: IconButton(
-  //       onPressed:() => Navigator.of(context).push(MaterialPageRoute(builder: (_) =>))
-  //     ),
-  //   );
-  // }
-
   Widget searchPageWidget() {
     // print("searchpage");
     return Container(
       width: 800,
-      height: 800,
       child: StreamBuilder<QuerySnapshot>(
         stream: (name != "")
             ? FirebaseFirestore.instance
@@ -278,7 +233,6 @@ class _ExamplePageState extends State<Search> {
     // print("fullsearch");
     return Container(
       width: 800,
-      height: 800,
       child: StreamBuilder<QuerySnapshot>(
         stream: (name != "")
             ? FirebaseFirestore.instance
@@ -301,128 +255,9 @@ class _ExamplePageState extends State<Search> {
                     String EVID = snapshot.data!.docs[index].reference.id;
                     String name = data['EventName'];
                     String pic = data['ticketFile'];
-                    // String picName = pic + ".png";
                     String date = data['Date'];
-                    // String capacity = data['capacity'];
-                    return GestureDetector(
-                        onTap: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchDetailScreen(
-                                        EVID: EVID,
-                                        EVName: name,
-                                        EVPicture: pic,
-                                        EVDate: date),
-                                  ))
-                            },
-                        child: Card(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 200,
-                                width: 380,
-                                // width: MediaQuery.of(context).size.width,
-                                margin:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Card(
-                                  semanticContainer: true,
-                                  child: InkWell(
-                                    splashColor: const Color(0xFF6634B0),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchDetailScreen(
-                                                    //THIS ACTUALLY UPDATES THINGS
-                                                    EVID: EVID,
-                                                    EVName: name,
-                                                    EVPicture: pic,
-                                                    EVDate: date),
-                                          ));
-                                    },
-                                    child: Stack(children: <Widget>[
-                                      renderPic(pic, name),
-                                      Positioned(
-                                        bottom: 10,
-                                        top: -110,
-                                        left: 10,
-                                        right: 10,
-                                        child: Image.asset(
-                                            'assets/images/bandedNameLogo.png',
-                                            scale: 9,
-                                            alignment: Alignment.center),
-                                        // Text('$name',
-                                        //     textAlign: TextAlign.center),
-                                      ),
-                                      Positioned(
-                                        bottom: 10,
-                                        top: 85,
-                                        left: 10,
-                                        right: 10,
-                                        child: Text('${name}',
-                                            style: GoogleFonts.spartan(
-                                                textStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.w800,
-                                                    letterSpacing: .5)),
-                                            textAlign: TextAlign.center),
-                                        // Text('$name',
-                                        //     textAlign: TextAlign.center),
-                                      ),
-                                      Positioned(
-                                        bottom: 10,
-                                        top: 100,
-                                        left: 10,
-                                        right: 10,
-                                        child: Text('${date}',
-                                            style: GoogleFonts.spartan(
-                                                textStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing: .5)),
-                                            textAlign: TextAlign.center),
-                                        // Text('$name',
-                                        //     textAlign: TextAlign.center),
-                                      ),
-                                      Positioned(
-                                        bottom: 10,
-                                        top: 120,
-                                        left: 10,
-                                        right: 10,
-                                        child: Image.asset(
-                                            'assets/images/qr.png',
-                                            scale: 130,
-                                            alignment: Alignment.center),
-                                        // Text('$name',
-                                        //     textAlign: TextAlign.center),
-                                      ),
-                                      Positioned(
-                                        bottom: 10,
-                                        top: 150,
-                                        left: 0,
-                                        right: 200,
-                                        child: Text('${fname} ${lname}',
-                                            style: GoogleFonts.spartan(
-                                                textStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 7,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing: .5)),
-                                            textAlign: TextAlign.center),
-                                        // Text('$name',
-                                        //     textAlign: TextAlign.center),
-                                      ),
-                                    ]),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ));
+                    return y.ticketBuilder(
+                        name, "fname" + " " + "lname", pic, date);
                   },
                 );
         },

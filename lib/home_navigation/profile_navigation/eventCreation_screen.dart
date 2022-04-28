@@ -57,7 +57,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
     if (index == 1) Navigator.pushNamed(context, 'searchMain_screen');
-    if (index == 2) Navigator.pushNamed(context, 'sendReceiveMain_screen');
+    if (index == 2) Navigator.pushNamed(context, 'transferMain_screen');
     if (index == 3) Navigator.pushNamed(context, 'profileMain_screen');
   }
 

@@ -10,115 +10,103 @@ import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TicketToBuild extends StatefulWidget {
-  final EVName;
-  final UName;
-  final pic;
-  final date;
-  TicketToBuild(this.EVName, this.UName, this.pic, this.date);
-
-  @override
-  TicketToBuildState createState() =>
-      TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
+class TicketToBuild {
+/*extends StatefulWidget {
+ final EVName;
+ final UName;
+ final pic;
+ final date;
+ TicketToBuild(this.EVName, this.UName, this.pic, this.date);
+ 
+ @override
+ TicketToBuildState createState() =>
+     TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
 }
-
+ 
 class TicketToBuildState extends State<TicketToBuild> {
-  String EVName;
-  String UName;
-  String pic;
-  String date;
-
-  TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
-        backgroundColor: Colors.white,
-      ),
-      body: Container(
-        height: 200,
-        width: 380,
-        // width: MediaQuery.of(context).size.width,
-        margin: const EdgeInsets.only(left: 10, right: 10),
-        child: Stack(children: <Widget>[
-          renderPic(pic, EVName),
-          Positioned(
-            bottom: 10,
-            top: -110,
-            left: 10,
-            right: 10,
-            child: Image.asset('assets/images/bandedNameLogo.png',
-                scale: 9, alignment: Alignment.center),
-            // Text('$name',
-            //     textAlign: TextAlign.center),
-          ),
-          Positioned(
-            bottom: 10,
-            top: 85,
-            left: 10,
-            right: 10,
-            child: Text(EVName,
-                style: GoogleFonts.spartan(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: .5)),
-                textAlign: TextAlign.center),
-            // Text('$name',
-            //     textAlign: TextAlign.center),
-          ),
-          Positioned(
-            bottom: 10,
-            top: 100,
-            left: 10,
-            right: 10,
-            child: Text(date,
-                style: GoogleFonts.spartan(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: .5)),
-                textAlign: TextAlign.center),
-            // Text('$name',
-            //     textAlign: TextAlign.center),
-          ),
-          Positioned(
-            bottom: 10,
-            top: 120,
-            left: 10,
-            right: 10,
-            child: Image.asset('assets/images/qr.png',
-                scale: 130, alignment: Alignment.center),
-            // Text('$name',
-            //     textAlign: TextAlign.center),
-          ),
-          Positioned(
-            bottom: 10,
-            top: 150,
-            left: 0,
-            right: 200,
-            child: Text(UName,
-                style: GoogleFonts.spartan(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 7,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: .5)),
-                textAlign: TextAlign.center),
-            // Text('$name',
-            //     textAlign: TextAlign.center),
-          ),
-        ]),
-      ),
+ String EVName;
+ String UName;
+ String pic;
+ String date;
+ 
+ TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
+ 
+ @override
+ void initState() {
+   super.initState();
+ }
+ 
+ @override*/
+  Widget ticketBuilder(EVName, UName, pic, date) {
+    return Container(
+      height: 200,
+      width: 800,
+      margin: const EdgeInsets.only(left: 10, right: 10),
+      child: Stack(children: <Widget>[
+        renderPic(pic, EVName),
+        Positioned(
+          bottom: 10,
+          top: -110,
+          left: 10,
+          right: 10,
+          child: Image.asset('assets/images/bandedNameLogo.png',
+              scale: 9, alignment: Alignment.center),
+        ),
+        Positioned(
+          bottom: 10,
+          top: 85,
+          left: 10,
+          right: 10,
+          child: Text(EVName,
+              style: GoogleFonts.spartan(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: .5)),
+              textAlign: TextAlign.center),
+        ),
+        Positioned(
+          bottom: 10,
+          top: 100,
+          left: 10,
+          right: 10,
+          child: Text(date,
+              style: GoogleFonts.spartan(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: .5)),
+              textAlign: TextAlign.center),
+        ),
+        Positioned(
+          bottom: 10,
+          top: 120,
+          left: 10,
+          right: 10,
+          child: Image.asset('assets/images/qr.png',
+              scale: 130, alignment: Alignment.center),
+          // Text('$name',
+          //     textAlign: TextAlign.center),
+        ),
+        Positioned(
+          bottom: 10,
+          top: 150,
+          left: 0,
+          right: 200,
+          child: Text(UName,
+              style: GoogleFonts.spartan(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 7,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: .5)),
+              textAlign: TextAlign.center),
+          // Text('$name',
+          //     textAlign: TextAlign.center),
+        ),
+      ]),
     );
   }
 
