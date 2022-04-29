@@ -9,10 +9,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_application_1/custom/imageQuery.dart';
+import 'package:flutter_application_1/custom/imagePicker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '/custom/eventTicketQuery.dart';
-import '/custom/locationQuery.dart';
+import '/custom/Queries/eventTicketQuery.dart';
+import '/custom/locationFinder.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 enum ImageSourceType { gallery, camera }

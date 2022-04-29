@@ -6,7 +6,7 @@ import 'package:flutter_application_1/custom/text_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
-import '/custom/userQuery.dart';
+import '/custom/Queries/userQuery.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 /*

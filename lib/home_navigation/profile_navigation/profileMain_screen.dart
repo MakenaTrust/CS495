@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 // import 'package:firebase_database/firebase_database.dart';
-import '/custom/userQuery.dart';
+import '/custom/Queries/userQuery.dart';
 import 'package:geolocator/geolocator.dart';
-import '/custom/locationQuery.dart';
+import '/custom/locationFinder.dart';
 
 // import '/custom/eventQuery.dart';
 // import 'package:image_picker/image_picker.dart';

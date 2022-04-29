@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:intl/intl.dart';
-import '/custom/userQuery.dart';
-import '/custom/eventQuery.dart';
+import '/custom/Queries/userQuery.dart';
+import '/custom/Queries/eventQuery.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 //import '/custom/ticketCreation.dart';
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
-import '/custom/userQuery.dart';
+import '/custom/Queries/userQuery.dart';
 import '/custom/ticketUtils.dart';
 import 'ownedTickets_screen.dart';
 import '/custom/userTicketTools.dart';

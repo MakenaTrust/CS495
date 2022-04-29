@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/custom/userTicketQuery.dart';
-import '/custom/eventTicketQuery.dart';
+import 'package:flutter_application_1/custom/Queries/userTicketQuery.dart';
+import '/custom/Queries/eventTicketQuery.dart';
 
 //Current Tickets (Users/curEvents)
 

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/custom/imageQuery.dart';
+import 'package:flutter_application_1/custom/imagePicker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '/custom/ticketBuilder.dart';
-import '/custom/userQuery.dart';
-import '/custom/eventQuery.dart';
+import '/custom/Queries/userQuery.dart';
+import '/custom/Queries/eventQuery.dart';
 import 'searchUser_screen.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 

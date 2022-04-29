@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
 import '/custom/ticketBuilder.dart';
-import '/custom/userQuery.dart';
+import '/custom/Queries/userQuery.dart';
 
 /*
 */
