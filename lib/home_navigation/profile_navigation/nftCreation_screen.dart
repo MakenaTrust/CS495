@@ -66,7 +66,9 @@ class _BlockchainState extends State<Blockchain> {
                             borderRadius: BorderRadius.circular(8))),
                     child: const Text('Mint NFT'),
                     onPressed: () async {
+                      debugPrint("making NFT1");
                       mintedImage = await mintNFT();
+                      debugPrint("making NFT2");
                       setState(() {
                         mintedImage = mintedImage;
                       });
@@ -138,6 +140,7 @@ class _BlockchainState extends State<Blockchain> {
         fetchChainIdFromNetworkId: true,
         chainId: null,
       ),
+      Future.delayed(const Duration(seconds: 2))
     ]);
     return results[0];
   }
@@ -154,8 +157,10 @@ class _BlockchainState extends State<Blockchain> {
 
   Widget showMintedImage() {
     if (mintedImage == null) {
+      debugPrint("null picture");
       return Container();
     } else {
+      debugPrint("showing nft picture");
       return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Text('now showing NFT:'),
         Image.memory(mintedImage!, width: 200, height: 300),
