@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/custom/imageQuery.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '/custom/ticketBuilder.dart';
 import '/custom/userQuery.dart';
+import '/custom/eventQuery.dart';
 import 'searchUser_screen.dart';
 // import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -32,6 +34,13 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
   String fname = " ";
   String lname = " ";
   String uid = " ";
+  String EVName = " ";
+  String EVDate = " ";
+  String EVPicture = " ";
+
+  TicketToBuild y = TicketToBuild();
+
+  EventQuery a = EventQuery();
 
   @override
   void initState() {
@@ -48,6 +57,7 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
         lname = result;
       });
     });
+
     // fullSearch(name);
   }
 
@@ -119,6 +129,21 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
                       DocumentSnapshot data = snapshot.data!.docs[index];
                       String evid = data['EVID'];
                       String ticketID = data.reference.id;
+                      String UName = "$fname" + " " + "$lname";
+                      print('before any queries ' + evid);
+                      a.fetchEventName(evid).then((String result) {
+                        print(EVName + ' in then, before assignment');
+                        EVName = result;
+                        print(EVName + ' in then, after assignment');
+                      });
+                      print(EVName + 'outside then, before fetchPicture');
+                      a.fetchEventPicture(evid).then((String result) {
+                        EVPicture = result;
+                      });
+                      a.fetchEventDate(evid).then((String result) {
+                        EVDate = result;
+                      });
+                      print(index);
                       return GestureDetector(
                         // child: Card(
                         child: Column(
@@ -131,7 +156,8 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
                                     const EdgeInsets.only(left: 10, right: 10),
                                 child: Card(
                                     child: Stack(children: <Widget>[
-                                  Text(evid),
+                                  y.ticketBuilder(
+                                      EVName, UName, EVPicture, EVDate),
                                   Positioned(
                                       bottom: 1,
                                       // left: 10,

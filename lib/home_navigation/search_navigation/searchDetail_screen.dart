@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '/custom/ticketBuilder.dart';
+import '/custom/userTicketTools.dart';
 import 'package:flutter_application_1/home_navigation/wallet_navigation/walletMain_screen.dart';
 
 class SearchDetailScreen extends StatelessWidget {
   final String EVID;
   final String EVName;
+  final String UName;
   final String EVPicture;
   final String EVDate;
   SearchDetailScreen(
       {Key? key,
       required this.EVID,
       required this.EVName,
+      required this.UName,
       required this.EVPicture,
       required this.EVDate})
       : super(key: key);
   int index = 1;
+  TicketToBuild y = TicketToBuild();
 
   void _onItemTapped(int index, BuildContext context) {
     if (index == 0) Navigator.pushNamed(context, 'walletMain_screen');
@@ -26,6 +31,13 @@ class SearchDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Image.asset('assets/images/bandedLogo.png', scale: 15),
+        leading: const BackButton(
+          color: Color(0xFF6634B0),
+        ),
+        backgroundColor: Colors.white,
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -33,6 +45,7 @@ class SearchDetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              y.ticketBuilder(EVName, UName, EVPicture, EVDate),
               Text(
                 EVID,
                 style: Theme.of(context).textTheme.headline6,

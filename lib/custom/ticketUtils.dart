@@ -74,10 +74,10 @@ class TicketInfo {
   }
 
   /*
-  void setOwner(String owner){ownerID = owner;}
-  void setEvent(String event){eventname = event;}
-  void setValid(bool v){valid = v;}
-  */
+ void setOwner(String owner){ownerID = owner;}
+ void setEvent(String event){eventname = event;}
+ void setValid(bool v){valid = v;}
+ */
 
   //Getters
   String getOwner() {
@@ -114,17 +114,16 @@ Future<List<TicketInfo>> getUserCurEventList(String userID) async {
       tempevent = result.data()['ename'].toString();
       tempvalid = result.data()['isValid'].toString().toLowerCase() == 'true';
       tlist.add(TicketInfo(tempowner, tempevent, tempvalid));
-      print('Function list during query is length ' + tlist.length.toString());
 /*Test for tlist
-      for (int i = 0; i < tlist.length; i++) {
-        print(tlist[i].ownerID +
-            ' ' +
-            tlist[i].eventname +
-            ' ' +
-            tlist[i].valid.toString());
-        print(i);
-      }
-      */
+     for (int i = 0; i < tlist.length; i++) {
+       print(tlist[i].ownerID +
+           ' ' +
+           tlist[i].eventname +
+           ' ' +
+           tlist[i].valid.toString());
+       print(i);
+     }
+     */
 
       //Tests
 
@@ -134,65 +133,55 @@ Future<List<TicketInfo>> getUserCurEventList(String userID) async {
       //print(i);
       //i++;
     });
-    print('Function list after adding is length ' + tlist.length.toString());
-    for (int i = 0; i < tlist.length; i++) {
-      print(tlist[i].ownerID +
-          ' ' +
-          tlist[i].eventname +
-          ' ' +
-          tlist[i].valid.toString());
-      print(i);
-    }
+    for (int i = 0; i < tlist.length; i++) {}
   });
 
 //TicketInfo tempticket()
-  print('Function list after query is length ' + tlist.length.toString());
   return tlist;
 }
-
+ 
 /*
 firestoreInstance.collection("Users").get().then((querySnapshot) {
-  querySnapshot.docs.forEach((result) {
-    firestoreInstance
-        .collection("Users")
-        .doc(result.id)
-        .collection("curEvents")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data());
-      });
-    });
-  });
+ querySnapshot.docs.forEach((result) {
+   firestoreInstance
+       .collection("Users")
+       .doc(result.id)
+       .collection("curEvents")
+       .get()
+       .then((querySnapshot) {
+     querySnapshot.docs.forEach((result) {
+       print(result.data());
+     });
+   });
+ });
 });
 }
-
+ 
 for (int i = 0; i < tlist.length; i++) {
-    print(tlist[i].ownerID +
-        ' ' +
-        tlist[i].eventname +
-        ' ' +
-        tlist[i].valid.toString());
-    print(i);
-  }
-
+   print(tlist[i].ownerID +
+       ' ' +
+       tlist[i].eventname +
+       ' ' +
+       tlist[i].valid.toString());
+   print(i);
+ }
+ 
 class TicketQuery {
-  getUser() async {
-    final _auth = FirebaseAuth.instance;
-    final user1 = _auth.currentUser;
-    final userid = user1?.uid;
-
-    // print(userid);
-    return userid.toString();
-  }
-
-  String owner = " ";
-  String event = " ";
-  bool isValid = false;
-  bool isTransferring = false;
-
-  List<Ticket>? _ticketList;
-
-  
-}
+ getUser() async {
+   final _auth = FirebaseAuth.instance;
+   final user1 = _auth.currentUser;
+   final userid = user1?.uid;
+ 
+   // print(userid);
+   return userid.toString();
+ }
+ 
+ String owner = " ";
+ String event = " ";
+ bool isValid = false;
+ bool isTransferring = false;
+ 
+ List<Ticket>? _ticketList;
+ 
+ }
 */

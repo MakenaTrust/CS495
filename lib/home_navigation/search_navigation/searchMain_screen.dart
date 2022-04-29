@@ -9,7 +9,6 @@ import '/custom/ticketBuilder.dart';
 import '/custom/userQuery.dart';
 
 /*
- 
 */
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -171,6 +170,7 @@ class _ExamplePageState extends State<Search> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     String EVID = snapshot.data!.docs[index].reference.id;
+                    String UName = "$fname" + " " + "$lname";
                     String name = data['EventName'];
                     String pic = data['ticketFile'];
                     // String picName = pic + ".png";
@@ -184,6 +184,7 @@ class _ExamplePageState extends State<Search> {
                                     builder: (context) => SearchDetailScreen(
                                         EVID: EVID,
                                         EVName: name,
+                                        UName: UName,
                                         EVPicture: pic,
                                         EVDate: date),
                                   ))
@@ -207,6 +208,7 @@ class _ExamplePageState extends State<Search> {
                                           builder: (context) =>
                                               SearchDetailScreen(
                                                   EVID: EVID,
+                                                  UName: UName,
                                                   EVName: name,
                                                   EVPicture: pic,
                                                   EVDate: date),
@@ -256,8 +258,7 @@ class _ExamplePageState extends State<Search> {
                     String name = data['EventName'];
                     String pic = data['ticketFile'];
                     String date = data['Date'];
-                    return y.ticketBuilder(
-                        name, "fname" + " " + "lname", pic, date);
+                    return y.ticketBuilder(name, " ", pic, date);
                   },
                 );
         },

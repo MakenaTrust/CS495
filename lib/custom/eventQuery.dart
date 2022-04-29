@@ -5,43 +5,102 @@ import 'package:uuid/uuid.dart';
 // import 'package:firebase_database/firebase_database.dart';
 
 class EventQuery {
-  getUser() async {
-    final _auth = FirebaseAuth.instance;
-    final user1 = _auth.currentUser;
-    final userid = user1?.uid;
+  String date = " ";
+  String name = " ";
+  String capacity = " ";
+  String endTime = " ";
+  String location = " ";
+  String startTime = " ";
+  String type = " ";
+  String picture = " ";
 
-    // print(userid);
-    return userid.toString();
-  }
+  //Fetchers
 
-  String getUniqueEVID() {
-    String unique = Uuid().v1();
-    return unique;
-  }
-
-  // String lname = " ";
-  // String uName = " ";
-  // bool coordinator = false;
-
-  Future<QuerySnapshot> fetchEventName() async {
-    final QuerySnapshot result = FirebaseFirestore.instance
+  Future<String> fetchEventDate(String eventID) async {
+    await FirebaseFirestore.instance
         .collection('Events')
-        .snapshots() as QuerySnapshot<Object?>;
-    // final List<QueryDocumentSnapshot> eventName = result.docs.toList();
-    // eventName.forEach((data) => print(data));
-    // String uid = FirebaseAuth.instance.currentUser!.uid;
-    // await FirebaseFirestore.instance
-    //     .collection('Artists')
-    //     .doc()
-    //     .get()
-    //     .then((user) {
-    //   // setState(() {
-    //   eventName = user.data()!['EventName'];
-    //   // lname = user.data()!['lastName'];
-    //   // uName = user.data()!['username'];
-    //   // coordinator = user.data()!['holder'];
-    // });
-    // print(eventName);
-    return result;
+        .doc(eventID)
+        .get()
+        .then((event) {
+      date = event.data()!['Date'].toString();
+    });
+    return date;
+  }
+
+  Future<String> fetchEventName(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      name = event.data()!['EventName'].toString();
+    });
+    return name;
+  }
+
+  Future<String> fetchEventCapacity(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      capacity = event.data()!['capacity'].toString();
+    });
+    return capacity;
+  }
+
+  Future<String> fetchEventEndTime(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      endTime = event.data()!['eventEndTime'].toString();
+    });
+    return endTime;
+  }
+
+  Future<String> fetchEventLocation(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      location = event.data()!['eventLocation'].toString();
+    });
+    return location;
+  }
+
+  Future<String> fetchEventStartTime(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      startTime = event.data()!['eventStartTime'].toString();
+    });
+    return startTime;
+  }
+
+  Future<String> fetchEventType(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      type = event.data()!['eventType'].toString();
+    });
+    return type;
+  }
+
+  Future<String> fetchEventPicture(String eventID) async {
+    await FirebaseFirestore.instance
+        .collection('Events')
+        .doc(eventID)
+        .get()
+        .then((event) {
+      picture = event.data()!['ticketFile'].toString();
+    });
+    return picture;
   }
 }

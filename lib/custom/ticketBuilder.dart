@@ -11,32 +11,6 @@ import 'package:uuid/uuid.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TicketToBuild {
-/*extends StatefulWidget {
- final EVName;
- final UName;
- final pic;
- final date;
- TicketToBuild(this.EVName, this.UName, this.pic, this.date);
- 
- @override
- TicketToBuildState createState() =>
-     TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
-}
- 
-class TicketToBuildState extends State<TicketToBuild> {
- String EVName;
- String UName;
- String pic;
- String date;
- 
- TicketToBuildState(this.EVName, this.UName, this.pic, this.date);
- 
- @override
- void initState() {
-   super.initState();
- }
- 
- @override*/
   Widget ticketBuilder(EVName, UName, pic, date) {
     return Container(
       height: 200,
@@ -110,7 +84,7 @@ class TicketToBuildState extends State<TicketToBuild> {
     );
   }
 
-  Widget renderPic(String pic, String name) {
+  Widget renderPic(pic, name) {
     // String pic1 = pic.replaceAll(",", "");
     // String picName = pic + '.png';
     if (pic == null) {
