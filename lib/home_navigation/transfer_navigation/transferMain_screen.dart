@@ -10,6 +10,7 @@ import '/custom/ticketUtils.dart';
 import 'ownedTickets_screen.dart';
 import '/custom/userTicketTools.dart';
 
+/*
 Future<List<TicketInfo>> makeTicketList() async {
   List<TicketInfo> ticketlist =
       await getUserCurEventList('28CilJAsu2fYIeozyadCgRVBhdx2');
@@ -22,7 +23,7 @@ void convertFutureListToList() async {
   List<TicketInfo> list = await _futureOfList;
   print('ConvertList list @ build is length ' + list.length.toString());
 }
-
+*/
 class Transfer extends StatefulWidget {
   const Transfer({Key? key}) : super(key: key);
 
@@ -91,11 +92,11 @@ class _TransferState extends State<Transfer> {
 
   @override
   Widget build(BuildContext context) {
-    convertFutureListToList();
-    ticketlist = [];
+    //convertFutureListToList();
+    //ticketlist = [];
     TextEditingController input = new TextEditingController();
-    print(
-        'TransferState list @ build is length ' + ticketlist.length.toString());
+    //print(
+    //   'TransferState list @ build is length ' + ticketlist.length.toString());
 
     return Scaffold(
       appBar: AppBar(

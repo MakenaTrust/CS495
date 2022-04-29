@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/custom/Queries/userTicketQuery.dart';
-import '/custom/Queries/eventTicketQuery.dart';
+import 'package:flutter_application_1/custom/queries/userTicketQuery.dart';
+import '/custom/queries/eventTicketQuery.dart';
 
 //Current Tickets (Users/curEvents)
 
@@ -139,3 +139,6 @@ Future<void> useOwnedTicket(String owner, String transFrom, String transTo,
     removeTicketFromUserCurEvent(owner, tid),
   ]);
 }
+
+// Find Unowned ticket
+

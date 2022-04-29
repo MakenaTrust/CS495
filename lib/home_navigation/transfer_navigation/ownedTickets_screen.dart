@@ -107,16 +107,14 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
   Widget allOwned(uid) {
     // print("fullsearch");
     // print('fullSearch' + name);
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
     return GestureDetector(
       child: Container(
         width: 800,
         height: 800,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-              .doc(uid)
-              .collection("curEvents")
-              .snapshots(),
+        child: FutureBuilder<QuerySnapshot>(
+          future: users.doc(uid).collection('curEvents').get(),
           builder: (context, snapshot) {
             return (snapshot.connectionState == ConnectionState.waiting)
                 ? const Center(child: const CircularProgressIndicator())
