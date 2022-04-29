@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import '/custom/locationQuery.dart';
+import '/custom/locationFinder.dart';
 // import 'custom/rounded_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
