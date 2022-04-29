@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> addBlankTicketToEvent(String eventID) async {
+  print(eventID);
   await FirebaseFirestore.instance
       .collection('Events')
       .doc(eventID)

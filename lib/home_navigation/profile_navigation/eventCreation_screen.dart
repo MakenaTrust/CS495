@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -54,6 +55,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
   //   'Sorority',
   //   'Other'
   // ];
+  String docID = "";
 
   int index = 3; //CHANGE INDEX TO BE YOUR PAGE/PAGE YOU'RE ASSOCIATED WITH
   void _onItemTapped(int index, BuildContext context) {
@@ -245,19 +247,22 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                     height: 8.0,
                   ),
                   TextFormField(
-                    textAlign: TextAlign.center,
-                    controller: eventCapacityController,
-                    decoration: const InputDecoration(
-                      alignLabelWithHint: true,
-                      labelText: 'Event Capacity',
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Event Capacity';
-                      }
-                      return null;
-                    },
-                  ),
+                      textAlign: TextAlign.center,
+                      controller: eventCapacityController,
+                      decoration: const InputDecoration(
+                        alignLabelWithHint: true,
+                        labelText: 'Event Capacity',
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Event Capacity';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ]),
                   const SizedBox(
                     height: 8.0,
                   ),
@@ -290,23 +295,6 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                       });
                     },
                   ),
-                  // TextFormField(
-                  //   textAlign: TextAlign.center,
-                  //   controller: eventTypeController,
-                  //   decoration: const InputDecoration(
-                  //     alignLabelWithHint: true,
-                  //     labelText: 'Type of Event',
-                  //   ),
-                  //   onTap: () {
-
-                  //   },
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return 'Type of Event';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
                   const SizedBox(
                     height: 8.0,
                   ),
@@ -334,12 +322,13 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                                 eventNameController.text.toLowerCase(),
                             "capacity": eventCapacityController.text,
                             "eventType": eventTypeController.text,
+                          }).then((value) {
+                            for (int i = 0;
+                                i < int.parse(eventCapacityController.text);
+                                i++) {
+                              addBlankTicketToEvent(value.id);
+                            }
                           });
-                          for (int i = 0;
-                              i < int.parse(eventCapacityController.text);
-                              i++) {
-                            addBlankTicketToEvent(eventNameController.text);
-                          }
                           Navigator.pushNamed(
                               context, 'eventCreationSuccess_screen');
                           // errorMessage = '';

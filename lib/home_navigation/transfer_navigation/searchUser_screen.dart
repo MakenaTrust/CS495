@@ -180,27 +180,6 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                             width: 380,
                             // width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.only(left: 10, right: 10),
-                            // child:
-                            // Card(
-                            //   semanticContainer: true,
-                            //   child: InkWell(
-                            //     splashColor: const Color(0xFF6634B0),
-                            //     onTap: () {
-                            //       print("EVID " + widget.evid.toString());
-                            //       print("TID " + widget.tid.toString());
-                            //       print('To: ${toUser}');
-                            //       print('From: ${fromUser}');
-                            //       // Navigator.push(
-                            //       //     context,
-                            //       //     MaterialPageRoute(
-                            //       //       builder: (context) =>
-                            //       sendTicket(
-                            //           fromUser,
-                            //           toUser,
-                            //           widget.tid.toString(),
-                            //           widget.evid.toString());
-                            //       // ));
-                            //     },
                             child: Stack(children: <Widget>[
                               Positioned(
                                 bottom: 10,
