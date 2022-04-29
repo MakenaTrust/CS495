@@ -137,6 +137,7 @@ class _OwnedTicketsScreenState extends State<OwnedTicketsScreen> {
                       print(EVName + 'outside then, before fetchPicture');
                       a.fetchEventPicture(evid).then((String result) {
                         EVPicture = result;
+                        print('EV PICTURE' + EVPicture + ' ');
                       });
                       a.fetchEventDate(evid).then((String result) {
                         EVDate = result;

@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TicketToBuild {
   Widget ticketBuilder(EVName, UName, pic, date) {
+    print("Rendering: " + pic);
     return Container(
       height: 200,
       width: 800,
@@ -88,11 +89,13 @@ class TicketToBuild {
     // String pic1 = pic.replaceAll(",", "");
     // String picName = pic + '.png';
     if (pic == null) {
+      print("Rendering: " + pic);
       return Card(child: Text(name, textAlign: TextAlign.center));
     } else
-      return Image.network(pic,
-          fit: BoxFit.fill,
-          color: Color.fromRGBO(255, 255, 255, .86),
-          colorBlendMode: BlendMode.modulate);
+      print("Rendering: " + pic);
+    return Image.network(pic,
+        fit: BoxFit.fill,
+        color: Color.fromRGBO(255, 255, 255, .86),
+        colorBlendMode: BlendMode.modulate);
   }
 }
