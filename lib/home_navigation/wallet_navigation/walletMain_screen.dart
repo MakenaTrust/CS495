@@ -39,7 +39,17 @@ class _WalletState extends State<Wallet> {
         title: Image.asset('assets/images/bandedLogo.png', scale: 15),
         backgroundColor: Colors.white,
       ),
-      body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[]),
+      body: ListView(padding: const EdgeInsets.all(8), children: <Widget>[
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: const Color(0xFF6634B0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8))),
+            child: const Text('NFT Minting'),
+            onPressed: () {
+              Navigator.pushNamed(context, 'nft_screen');
+            }),
+      ]),
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
