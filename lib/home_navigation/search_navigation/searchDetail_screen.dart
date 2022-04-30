@@ -58,6 +58,12 @@ class SearchDetailScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8))),
                 child: const Text('Purchase and go to Wallet'),
                 onPressed: () {
+                  //preferably:
+                  //claimUnownedTicket(newOwnerID, tid, evid, eventName, eventDate, ticketFile)
+                  //but for now:
+                  //fill in userID and ticketID   v       v     (ticket ID can be hardcoded if need be)
+                  //addNewTicketToUserCurEvent(userID, ticketID, EVID, EVName, EVDate, EVPicture)
+
                   //Navigator.pushNamed(context, 'home_screen');
                   Navigator.pushNamed(context, 'walletMain_screen');
                 },

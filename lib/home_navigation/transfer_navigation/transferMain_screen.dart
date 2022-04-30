@@ -42,8 +42,8 @@ class _TransferState extends State<Transfer> {
 
   String errormessage = 'none';
   int numTickets = 0;
-  String testUser = '28CilJAsu2fYIeozyadCgRVBhdx2';
-  String testTicket = 'egdmA8ioxvawWJKvY0vQ';
+  //String testUser = '28CilJAsu2fYIeozyadCgRVBhdx2';
+  //String testTicket = 'egdmA8ioxvawWJKvY0vQ';
 
   // Future<List<TicketInfo>> _ticketList;
   List<TicketInfo> ticketlist = [];

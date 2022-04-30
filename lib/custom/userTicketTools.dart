@@ -5,7 +5,12 @@ import '/custom/queries/eventTicketQuery.dart';
 //Current Tickets (Users/curEvents)
 
 Future<void> addNewTicketToUserCurEvent(
-    String userID, String ticketID, String eventID) async {
+    String userID,
+    String ticketID,
+    String eventID,
+    String eventName,
+    String eventDate,
+    String ticketFile) async {
   await FirebaseFirestore.instance
       .collection('Users')
       .doc(userID)
@@ -15,6 +20,11 @@ Future<void> addNewTicketToUserCurEvent(
     'EVID': eventID,
     'transferringTo': ' ',
     'transferringFrom': ' ',
+    //Sprint 3
+    //future version needs to pull these from Events/TID
+    'EventName': eventName,
+    'Date': eventDate,
+    'ticketFile': ticketFile,
   });
 }
 
@@ -86,8 +96,15 @@ Future<void> addTicketToUserSentEvent(
 
 // Past Tickets (Users/pastEvents)
 
-Future<void> addTicketToUserPastEvent(String userID, String ticketID,
-    String eventID, String transFrom, String transTo) async {
+Future<void> addTicketToUserPastEvent(
+    String userID,
+    String ticketID,
+    String eventID,
+    String transFrom,
+    String transTo,
+    String eventName,
+    String eventDate,
+    String ticketFile) async {
   await FirebaseFirestore.instance
       .collection('Users')
       .doc(userID)
@@ -97,15 +114,21 @@ Future<void> addTicketToUserPastEvent(String userID, String ticketID,
     'EVID': eventID,
     'transferringTo': transTo,
     'transferringFrom': transFrom,
+    //Sprint 3
+    //future version needs to pull these from Events/TID
+    'EventName': eventName,
+    'Date': eventDate,
+    'ticketFile': ticketFile,
   });
 }
 
 // Ticket Movement/Ownership Tools
 
-Future<void> claimUnownedTicket(
-    String newOwnerID, String tid, String evid) async {
+Future<void> claimUnownedTicket(String newOwnerID, String tid, String evid,
+    String eventName, String eventDate, String ticketFile) async {
   await Future.wait([
-    addNewTicketToUserCurEvent(newOwnerID, tid, evid),
+    addNewTicketToUserCurEvent(
+        newOwnerID, tid, evid, eventName, eventDate, ticketFile),
     updateEventTicketOwner(evid, tid, newOwnerID),
   ]);
 }
@@ -132,13 +155,20 @@ Future<void> sendTicket(
 }
 
 //Needs to make sure that the Owned Ticket (curEvent) has no transferringTo
-Future<void> useOwnedTicket(String owner, String transFrom, String transTo,
-    String tid, String evid) async {
+Future<void> useOwnedTicket(
+    String owner,
+    String transFrom,
+    String transTo,
+    String tid,
+    String evid,
+    String eventName,
+    String eventDate,
+    String ticketFile) async {
   await Future.wait([
-    addTicketToUserPastEvent(owner, tid, evid, transFrom, transTo),
+    addTicketToUserPastEvent(
+        owner, tid, evid, transFrom, transTo, eventName, eventDate, ticketFile),
     removeTicketFromUserCurEvent(owner, tid),
   ]);
 }
 
 // Find Unowned ticket
-
